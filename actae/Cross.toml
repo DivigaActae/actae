@@ -1,0 +1,2 @@
+[build.env]
+passthrough = ["ACTAE_PG_EMBED_JAR", "ACTAE_PG_EMBED_PLATFORM"]
