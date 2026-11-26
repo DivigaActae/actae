@@ -36,6 +36,7 @@ setup(
         "crewai": ["crewai>=0.80"],
         "claude": ["claude-agent-sdk>=0.2"],
         "openai-agents": ["openai-agents>=0.19,<1"],
+        "dev": ["pytest>=8"],
         "all": [
             "langgraph>=1.0,<2",
             "langchain-core>=0.3",
