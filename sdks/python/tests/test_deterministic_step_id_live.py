@@ -29,7 +29,7 @@ import uuid
 import pytest
 
 from actae_client import ActaeClient
-from actae_client.session import AgentSession, _step_operation_id
+from actae_client.session import AgentSession
 
 _ENDPOINT = os.environ.get("ACTAE_URL") or os.environ.get("ACTAE_ENDPOINT")
 _API_KEY = os.environ.get("ACTAE_API_KEY")

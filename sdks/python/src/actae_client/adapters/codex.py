@@ -57,7 +57,6 @@ from __future__ import annotations
 import logging
 from typing import Any, Dict, Optional
 
-import aiohttp
 from aiohttp import web
 
 from ..client import ActaeClient

@@ -825,7 +825,10 @@ fn extract_zonky_into(jar_path: &Path, dest: &Path) -> Result<()> {
         let entry = archive
             .by_index(i)
             .with_context(|| format!("failed to read zip entry {i}"))?;
-        let name = entry.name().to_string();
+        let name = entry
+            .name()
+            .with_context(|| format!("zip entry {i} has an invalid name"))?
+            .to_string();
         if name.ends_with(".txz") || name.ends_with(".xz") {
             let mut limited = entry.take(MAX_JAR_BYTES + 1);
             limited

@@ -27,7 +27,7 @@ Mapping:
 """
 
 from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, Iterable, List, Optional, Protocol
+from typing import Any, Dict, Iterable, List, Optional, Protocol
 
 # OpenTelemetry GenAI semantic-convention attribute keys (subset). Kept as
 # literals so the core SDK carries no opentelemetry dependency.

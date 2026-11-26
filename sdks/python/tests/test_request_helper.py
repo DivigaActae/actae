@@ -385,7 +385,7 @@ class TestSSLMtlsConfig:
 
         with patch("ssl.create_default_context") as mock_ctx:
             mock_ctx.return_value.load_cert_chain = MagicMock()
-            client = ActaeClient(
+            ActaeClient(
                 api_key="sk-test", endpoint="http://localhost:8002",
                 client_cert="/path/to/cert.pem", client_key="/path/to/key.pem",
             )
@@ -398,7 +398,7 @@ class TestSSLMtlsConfig:
 
         with patch("ssl.create_default_context") as mock_ctx:
             mock_ctx.return_value.load_cert_chain = MagicMock()
-            client = ActaeClient(
+            ActaeClient(
                 api_key="sk-test", endpoint="http://localhost:8002",
                 client_cert="/path/to/cert.pem", ca_cert="/path/to/ca.pem",
             )

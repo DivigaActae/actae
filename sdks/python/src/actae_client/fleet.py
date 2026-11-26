@@ -20,7 +20,7 @@ import aiohttp
 
 from .errors import APIError, AuthError, ActaeConnectionError
 from .types import ChannelMetadata, Event, ForkReceipt, _unwrap_sonic
-from .manifest import ManifestOperation, MANIFEST_OPERATIONS, manifest_operation
+from .manifest import ManifestOperation, manifest_operation
 
 
 @dataclass(frozen=True)

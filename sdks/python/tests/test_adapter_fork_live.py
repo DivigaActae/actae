@@ -22,7 +22,6 @@ openai-agents). Env-gated live suite, same pattern as test_fork_resume_deep.py.
 import asyncio
 import os
 import uuid
-from types import SimpleNamespace
 
 import pytest
 

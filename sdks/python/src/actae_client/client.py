@@ -34,7 +34,10 @@ import ssl
 import uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any, Callable, Dict, Iterable, List, Optional, Union
+from typing import TYPE_CHECKING, Any, Callable, Dict, Iterable, List, Optional, Union
+
+if TYPE_CHECKING:
+    from .groups import GroupSession
 
 import aiohttp
 

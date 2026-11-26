@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import asyncio
-from unittest.mock import AsyncMock, MagicMock, patch, call
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
@@ -430,7 +430,7 @@ class TestFork:
                 }
                 # The next recorded step on the fork is step 6.
                 async with fork_session:
-                    ev = await fork_session.step("s6", input=6, output=6)
+                    await fork_session.step("s6", input=6, output=6)
                     # step() increments after recording, so step_count is now 6.
                     assert fork_session.step_count == 6
 
@@ -548,7 +548,7 @@ class TestResume:
         asyncio.run(run())
 
     def test_resume_fork_at_step(self):
-        actae = _make_mock_actae()
+        _make_mock_actae()
 
         actae_fork = MagicMock(spec=ActaeClient)
         actae_fork.record = AsyncMock(return_value=Event(
@@ -774,7 +774,7 @@ class TestRetry:
         asyncio.run(run())
 
     def test_retry_does_not_exceed_max_delay(self):
-        from actae_client.session import _retry, _RETRY_MAX_DELAY, _RETRY_BASE_DELAY
+        from actae_client.session import _retry, _RETRY_MAX_DELAY
         from actae_client.errors import ActaeConnectionError
 
         import time
@@ -1263,7 +1263,7 @@ class TestDeterministicStepOperationID:
     derives a distinct id."""
 
     def test_same_step_redrive_reuses_operation_id(self):
-        from actae_client.session import AgentSession, _step_operation_id
+        from actae_client.session import AgentSession
 
         actae = _make_mock_actae()
         captured = []

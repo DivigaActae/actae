@@ -2,13 +2,11 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import asyncio
-import sys
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import aiohttp
 import pytest
 
-from actae_client import Event
 from actae_client.errors import APIError
 from actae_client.client import _jittered_delay
 
@@ -612,7 +610,6 @@ class TestReader:
         asyncio.run(client._reader())  # Should not raise
 
     def test_reader_disconnect_triggers_reconnect(self):
-        from actae_client.errors import ActaeConnectionError
 
         client = _make_client()
         client._ws = AsyncMsgIterator([_close_msg()])
@@ -717,7 +714,6 @@ class TestDoConnect:
                 # Actually _do_connect sets _auth_event and _close_event internally
                 # We need to set them AFTER _do_connect creates them
                 # The easiest way: have the noop reader set the event
-                orig_reader = client._reader
                 async def reader_with_auth():
                     client._auth_event.set()
                 with patch.object(client, "_reader", reader_with_auth):

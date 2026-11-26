@@ -7,14 +7,11 @@ Verifies that every dataclass in actae_client.types correctly parses
 the response shapes returned by the Actae server.
 """
 
-import json
 
-import pytest
 
 from actae_client.types import (
     Event,
     HealthStatus,
-    HealthComponent,
     ReadinessResult,
     MetricsSnapshot,
     AuthResult,

@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import asyncio
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, patch
 
 import pytest
 
@@ -13,7 +13,6 @@ from actae_client import (
     MetricsSnapshot,
     AuthResult,
     UserInfo,
-    ChannelMetadata,
     ForkInfo,
     ForkReceipt,
 )
@@ -881,7 +880,7 @@ class TestWakeups:
     def test_schedule_wakeup(self):
         client = _make_client()
         mock = _mock_request(client, return_value={
-            "status": "scheduled", "id": "w-1", "channel_id": "ch-1",
+            "id": "w-1", "channel_id": "ch-1",
             "run_at": "2026-02-01T00:00:00Z", "status": "pending",
             "payload": {"step": "resume"}, "created_at": "t",
         })

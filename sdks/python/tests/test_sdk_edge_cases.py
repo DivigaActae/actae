@@ -8,7 +8,7 @@ corner cases that could cause issues in production. No server required.
 """
 
 import asyncio
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 

@@ -202,7 +202,7 @@ def _canonical_step_content(payload: Dict[str, Any], metadata: Dict[str, Any]) -
     order, not alphabetical), all dict keys recursively sorted, floats
     formatted exactly like Go's float encoder, raw UTF-8 for non-ASCII,
     `<`, `>`, `&` and U+2028/U+2029 escaped."""
-    return (
+    text = (
         '{"payload":'
         + _go_marshal_value(payload)
         + ',"metadata":'

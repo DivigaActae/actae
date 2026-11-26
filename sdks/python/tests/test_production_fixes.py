@@ -9,7 +9,7 @@ Run: python3 sdks/python/tests/test_production_fixes.py
 
 import asyncio
 import logging
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock
 
 
 #  Helper: create an async context manager from a mock 
@@ -113,7 +113,7 @@ def test_do_connect_cleans_up_session_on_failure():
             await client._do_connect()
             assert False, "Should have raised ActaeConnectionError"
         except ActaeActaeConnectionError:
-            assert client._session is None, f"Session should be None after failed connect"
+            assert client._session is None, "Session should be None after failed connect"
         except Exception as exc:
             assert False, f"Should raise ActaeActaeConnectionError, got {type(exc).__name__}: {exc}"
 

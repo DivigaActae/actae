@@ -7,7 +7,6 @@ import asyncio
 import copy
 from typing import Any, Dict, List, Optional
 
-import pytest
 
 from actae_client.adapters.codex import CodexOTLPReceiver, _channel_for_conversation
 

@@ -10,7 +10,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from actae_client import Event, ChannelMetadata, ForkReceipt
+from actae_client import Event, ForkReceipt
 
 
 def test_from_env_cloud_configuration(monkeypatch):
@@ -98,7 +98,6 @@ class TestNamespaceFacades:
 
 class TestMultiCallback:
     def test_multiple_message_callbacks_all_invoked(self):
-        from actae_client.client import ActaeClient
 
         client = _make_client()
         seen = []
