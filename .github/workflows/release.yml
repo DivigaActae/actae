@@ -40,7 +40,7 @@ jobs:
         working-directory: dashboard
 
       - name: Fetch the embedded PostgreSQL jar
-        run: bash scripts/fetch-pg-jar.sh "${{ matrix.pg }}" /tmp/pg.jar
+        run: bash scripts/fetch-pg-jar.sh "${{ matrix.pg }}" "$GITHUB_WORKSPACE/.pg.jar"
 
       - name: Install cross (linux arm64 only)
         if: matrix.target == 'aarch64-unknown-linux-gnu'
@@ -55,7 +55,7 @@ jobs:
           fi
         working-directory: actae
         env:
-          ACTAE_PG_EMBED_JAR: /tmp/pg.jar
+          ACTAE_PG_EMBED_JAR: ../.pg.jar
           ACTAE_PG_EMBED_PLATFORM: ${{ matrix.pg }}
 
       - name: Package
@@ -76,6 +76,7 @@ jobs:
 
       - uses: softprops/action-gh-release@v2
         with:
+          overwrite_files: true
           files: |
             actae-*.tar.gz
             SHA256SUMS-${{ matrix.target }}

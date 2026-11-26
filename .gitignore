@@ -99,3 +99,6 @@ examples/langgraph_actae_agent/reports/
 **/*.p12
 **/*.pfx
 secrets/
+
+# Embedded PostgreSQL jar fetched for release builds
+.pg.jar

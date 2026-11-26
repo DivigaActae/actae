@@ -10,6 +10,8 @@ One binary. Embedded PostgreSQL. No account, no card, no phone-home.
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/DivigaActae/actae/main/install.sh | sh
+# or
+brew install divigaactae/tap/actae
 # or build from source
 git clone https://github.com/DivigaActae/actae.git
 cd actae/actae && cargo build --release && ./target/release/actae
