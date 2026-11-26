@@ -101,4 +101,4 @@ examples/langgraph_actae_agent/reports/
 secrets/
 
 # Embedded PostgreSQL jar fetched for release builds
-.pg.jar
+actae/.pg.jar
