@@ -28,7 +28,7 @@ Now a fork: keep the prefix, change the decision at the boundary.
 The child run applies a partial refund. The confirmation email is inherited and replayed, never resent.
 
 00:01:22.000 --> 00:01:29.500
-The inspector shows the resolved cursor, the inherited state hash, and the restorable boundary.
+The fork event records the boundary, the reason, and the inherited state. The original run is untouched.
 
 00:01:30.000 --> 00:01:37.000
 One charge, one email, and a second branch you can compare, then promote.
