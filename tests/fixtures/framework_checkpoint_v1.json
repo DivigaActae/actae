@@ -1,0 +1,30 @@
+{
+  "schema": "actae.framework-checkpoint/v1",
+  "framework": "conformance",
+  "framework_version": "1.0.0",
+  "adapter_version": "2",
+  "channel_id": "conformance:run-1",
+  "event_cursor": 42,
+  "event_id": "event-42",
+  "created_at": "2026-08-27T00:00:00Z",
+  "portable_state": {
+    "messages": [
+      {"role": "user", "content": "hello"}
+    ],
+    "step": 3
+  },
+  "native_checkpoint": {
+    "checkpoint_id": "native-1"
+  },
+  "application_state": {
+    "account_id": "acct-1"
+  },
+  "pending_work": {
+    "tool_calls": 1
+  },
+  "manifest": {
+    "model": "test-model",
+    "prompt_revision": "sha256:abc"
+  }
+}
+

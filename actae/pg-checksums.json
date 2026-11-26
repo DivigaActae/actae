@@ -1,0 +1,12 @@
+{
+  "postgresql_version": "18.2.0",
+  "zonky_jars": {
+    "linux-amd64": "d721bbbd8f3a04dc3cf6d6c39c56bc6936f440cdeda98f7e723f371519e7b774",
+    "linux-arm64v8": "86def1210353456a9e2bb43caef75204dda4d5840e4a6b5581d9f2e79369fd3c",
+    "linux-amd64-alpine": "8b1c9f48714bd2a644b6330b0486348f56326f31dbd9f92d95f084a8ee554bea",
+    "linux-arm64v8-alpine": "93da2d35ef4d43604404ae31cc68632fe3165e75268bf53c5e07370d85adb9f4",
+    "darwin-amd64": "6a53f2563e35733a22244cd7163b9b2e2bd998629a307787772a1ccee0fc2b07",
+    "darwin-arm64v8": "c6bf7e8f699f645b37f22d540761bf3289499dbbbb5bdba747d4006acfc0a4ec",
+    "windows-amd64": "9e60094bf6e542c666f1b40a94825f03620b226fa8c260d0a72c876ebc3d694d"
+  }
+}

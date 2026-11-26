@@ -1,0 +1,125 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: actae-postgres
+    environment:
+      POSTGRES_DB: actae
+      POSTGRES_USER: actae
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-actae_dev_password}
+    ports:
+      # Loopback-only: the database is never exposed to the LAN. Host-side
+      # tooling (pytest's requires_pg suite, psql) still reaches it.
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2g
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U actae"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - actae-net
+
+  actae:
+    build:
+      context: .
+      dockerfile: docker/actae/Dockerfile
+      args:
+        - FEATURES=${ACTAE_FEATURES:-rustls}
+    container_name: actae-server
+    environment:
+      # Single port: API + dashboard + WebSocket + health/metrics
+      ACTAE_PORT: "8002"
+
+      # Existing (unchanged)
+      ACTAE_HOST: 0.0.0.0
+      DATABASE_URL: postgres://actae:${POSTGRES_PASSWORD:-actae_dev_password}@postgres:5432/actae
+      POSTGRES_USER: actae
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-actae_dev_password}
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: actae
+      CLIENT_POSTGRES_USER: actae
+      CLIENT_POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-actae_dev_password}
+      CLIENT_POSTGRES_HOST: postgres
+      CLIENT_POSTGRES_PORT: "5432"
+      CLIENT_POSTGRES_DB: actae
+      JWT_SECRET: ${JWT_SECRET:-dev-jwt-secret-must-be-at-least-32-chars!!}
+      # API-key hashing secret — defaults to JWT_SECRET (backward compat).
+      # Set independently so rotating one does not invalidate the other.
+      API_KEY_HASH_SECRET: ${API_KEY_HASH_SECRET:-${JWT_SECRET:-dev-jwt-secret-must-be-at-least-32-chars!!}}
+      # Password signup/login is opt-in (off by default) — the SaaS-issued
+      # API key is the primary credential.
+      ENABLE_SIGNUP: ${ENABLE_SIGNUP:-false}
+      # One-shot first-boot key: seeded only when the api_keys table is
+      # empty. The default provisions the well-known integration-test key
+      # (the dev/test stack needs a deterministic key); standalone installs
+      # generate their own on first boot (printed once). See
+      # docs/PRODUCTION.md.
+      ACTAE_INITIAL_API_KEY: ${ACTAE_INITIAL_API_KEY:-test-api-key-for-integration-tests}
+      LOG_LEVEL: info
+      ENABLE_TLS: "true"
+      # The entrypoint copies the read-only /certs mount to /app/certs
+      # (app-owned) before dropping privileges — keys stay mode 600 on the
+      # host, the container never runs as root.
+      TLS_CERT_PATH: /app/certs/cert.pem
+      TLS_KEY_PATH: /app/certs/key.pem
+      # mTLS (client-certificate auth) is an opt-in hardening tier — off by
+      # default. Enable for machine-bound credentials + compliance:
+      #   ENABLE_MTLS: "true"
+      #   CA_CERT_PATH: /app/certs/client/client-ca.crt
+      # API-key auth on the same port protects all endpoints; /metrics is
+      # API-key-gated, /healthz stays open for probes.
+      ENABLE_MTLS: ${ENABLE_MTLS:-false}
+      CA_CERT_PATH: ${CA_CERT_PATH:-/app/certs/client/client-ca.crt}
+      WEBSOCKET_MAX_CONNECTIONS_PER_IP: "500"
+      WEBSOCKET_MAX_MESSAGE_RATE: "5000"
+      AUTH_FAILURE_LOCKOUT_THRESHOLD: "1000"
+      AUTH_FAILURE_LOCKOUT_DURATION_SECONDS: "30"
+      # Control plane (SaaS enrollment + subscription enforcement — see
+      # docs/CONTROL_PLANE.md). Unset = standalone (no enforcement).
+      # The portal's "Add instance" flow generates these values:
+      # ACTAE_CONTROL_PLANE_URL: https://actae.dev
+      # ACTAE_INSTALL_ID: ins_abc123
+      # ACTAE_ENROLL_SECRET: es_xyz789
+      # ACTAE_CA_BUNDLE: /certs/corp-ca.pem          # TLS interception
+      # ACTAE_INITIAL_API_KEY: 'sk-...'              # first-boot seed (empty table only)
+      # ACTAE_SYNC_INTERVAL_SECS: "60"
+      # ACTAE_SUBSCRIPTION_GRACE_SECS: "259200"
+    volumes:
+      - ./certs:/certs:ro
+    ports:
+      - "8002:8002"   # API + dashboard + WebSocket + health/metrics (single port)
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 1g
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8002/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - actae-net
+
+networks:
+  # Dedicated project network: the stack is isolated from other compose
+  # projects, and the Postgres service is reachable only by Actae + the
+  # loopback-published port (never the LAN).
+  actae-net:
+    driver: bridge
+
+volumes:
+  postgres_data:

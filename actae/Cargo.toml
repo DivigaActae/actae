@@ -1,0 +1,182 @@
+[package]
+name = "actae"
+version = "0.2.3"
+edition = "2021"
+authors = ["The Actae Authors"]
+description = "Durable execution history for AI agents — record, subscribe, replay"
+license = "Apache-2.0"
+repository = "https://github.com/actae-dev/actae"
+rust-version = "1.75.0"
+default-run = "actae"
+
+[[bin]]
+name = "actae"
+path = "src/main.rs"
+
+# The fleet gateway (Phase 5): authenticated, typed router/aggregator for the
+# canonical instance API. A second, deliberately narrow binary — authentication,
+# routing, aggregation, bounded live fan-out and typed dispatch only (RUST-007).
+# It never links to a second event store, migration set, channel-state
+# implementation, or data-plane authorization engine, and it holds no
+# data-plane DB credential.
+[[bin]]
+name = "actae-federation-gateway"
+path = "src/bin/federation_gateway.rs"
+required-features = ["federation-gateway"]
+
+
+[dependencies]
+tokio = { version = "1.45.1", features = ["full"] }
+tokio-websockets = { version = "0.11.4", features = ["server", "client", "fastrand", "sha1_smol"] }
+tokio-postgres = { version = "0.7.13", features = ["with-chrono-0_4", "with-uuid-1"] }
+deadpool-postgres = "0.14.1"
+tokio-postgres-rustls = "0.13"
+webpki-roots = "0.26"
+mimalloc = { version = "0.1.43", default-features = false, optional = true }
+sonic-rs = { version = "0.5.1", features = ["arbitrary_precision"] }
+serde_json = "1"
+parking_lot = "0.12.4"
+flume = "0.11.1"
+
+jsonwebtoken = "9.3.1"
+axum = { version = "0.8.4", features = ["ws"] }
+axum-server = { version = "0.7.1", features = ["tls-rustls-no-provider"] }
+prometheus = "0.14.0"
+anyhow = "1.0.95"
+thiserror = "1.0.69"
+tracing = "0.1.41"
+# Signal delivery for the managed dev-mode postgres child (SIGINT/SIGKILL).
+libc = "0.2"
+# Only keep serde for config crate compatibility, but minimize usage
+serde = { version = "1.0.219", features = ["derive"] }
+uuid = { version = "1.11.0", features = ["v4", "v5", "serde"] }
+chrono = { version = "0.4.38", features = ["serde"] }
+num_cpus = "1.16.0"
+tracing-subscriber = { version = "0.3.19", features = ["env-filter", "json"] }
+url = "2.5.4"
+async-trait = "0.1.87"
+tracing-appender = "0.2.3"
+once_cell = "1.21.0"
+sha2 = "0.10.9"
+hmac = "0.12.1"
+bytes = { version = "1.10.1", features = ["serde"] }
+futures-util = "0.3.31"
+tokio-rustls = { version = "0.26.0", optional = true, default-features = false, features = ["ring", "tls12", "logging"] }
+# rustls is unified across actae, axum-server, hyper-rustls (reqwest) and
+# the PG downloader. We force the `ring` provider everywhere (instead of the
+# default aws-lc-rs) so the dependency tree stays free of aws-lc-sys — a
+# heavy C build that complicates cross-compilation (musl static, Windows
+# from a macOS host). ring is the battle-tested, cross-target provider.
+rustls = { version = "0.23.19", optional = true, default-features = false, features = ["ring", "std", "tls12", "logging"] }
+# rustls-tls-webpki-roots = ring provider + bundled Mozilla roots (no
+# aws-lc-sys; the existing ACTAE_CA_BUNDLE mechanism covers corporate MITM).
+reqwest = { version = "0.12.9", default-features = false, features = ["rustls-tls-webpki-roots", "json", "stream"] }
+regex = "1.11.1"
+percent-encoding = "2.3.1"
+ipnet = "2.11.0"
+
+tempfile = "3.14.0"
+lru = "0.18.1"
+
+dashmap = "6.1.0"
+tokio-util = { version = "0.7.19", features = ["rt"] }
+hyper = { version = "1.11.0", features = ["server", "http1"] }
+hyper-util = { version = "0.1.20", features = ["tokio", "server", "http1"] }
+postgres-protocol = "0.6.8"
+postgres-types = "0.2.8"
+postgres = "0.19.9"
+
+# Embedded PostgreSQL runtime binaries (managed storage): extracted from the
+# bytes embedded in the binary (pg-embedded feature), downloaded from the
+# zonky Maven repo by our own downloader (ring-based reqwest — no sqlx /
+# second reqwest / aws-lc-sys like pg-embed dragged in), or provided
+# explicitly via ACTAE_PG_BIN_DIR. The zonky jar is a ZIP containing an
+# XZ-compressed tar; `zip`/`lzma-rs`/`tar` unpack it (all pure Rust).
+zip = { version = "2.2", default-features = false, features = ["deflate"] }
+lzma-rs = "0.3"
+tar = "0.4"
+# Cross-platform advisory file locking (flock on Unix, LockFileEx on
+# Windows) — the data-dir ownership signal for managed storage.
+fs2 = "0.4"
+rustls-pemfile = { version = "2.2.0", features = ["std"] }
+# Utilities
+fastrand = "2.1.1"
+# Hidden (no-echo) interactive prompt for `actae login --url` (paste an API
+# key without it landing in the shell history or the terminal).
+rpassword = "7"
+dotenvy = "0.15"
+# Typed config file support (`--config <file.toml>`).
+toml = "0.8"
+rand = "0.8"
+hex = "0.4"
+base64 = { version = "0.22.1", features = ["std"] }
+chacha20poly1305 = "0.10.1"
+zeroize = "1.8.1"
+pbkdf2 = "0.12.2"
+tower = "0.5.2"
+ed25519-dalek = { version = "2", features = ["pkcs8"] }
+bcrypt = "0.17.0"
+
+x509-parser = "0.17.0"
+tower-http = { version = "0.6.2", features = ["compression-br", "cors", "trace", "fs", "set-header", "limit"] }
+# NATS Core live transport for the fleet gateway (optional; JetStream never
+# used for payload subjects). Default build omits it — local tests use the
+# in-memory live bus.
+async-nats = { version = "0.47", optional = true }
+# Dashboard static export embedded in the binary (dashboard-embed feature).
+# include_dir embeds the files raw (the server's compression middleware gzips
+# responses on the fly); mime_guess provides content types.
+include_dir = { version = "0.7", optional = true }
+mime_guess = "2"
+
+[features]
+default = ["rustls", "compression", "allocator"]
+rustls = ["dep:tokio-rustls", "dep:rustls"]
+compression = []
+allocator = ["mimalloc"]
+allocator-secure = ["mimalloc", "allocator"]
+allocator-stats = ["mimalloc", "allocator"]
+# Embed the dashboard static export (dashboard/out) into the binary.
+# Production builds require the dashboard to be built first (the release
+# workflow does `npm run build`); dev/default builds serve from the
+# filesystem instead.
+dashboard-embed = ["dep:include_dir"]
+# Embed the zonky PostgreSQL jar inside the binary. build.rs requires
+# ACTAE_PG_EMBED_JAR to be set (the release workflow provides it per
+# platform); default builds omit the bytes and managed storage downloads instead.
+pg-embedded = []
+# Fleet gateway binary (Phase 5). NATS Core live transport is a further
+# feature (`gateway-nats`) so the default gateway builds/tests without a NATS
+# server (the in-memory live bus is used); release deployments enable it.
+federation-gateway = []
+# NATS Core transient live frames (no JetStream persistence). Disabled by
+# default: local tests use the in-memory live bus.
+gateway-nats = ["federation-gateway", "dep:async-nats"]
+# The full self-contained binary: secure allocator, compression, rustls,
+# dashboard + PostgreSQL embedded.
+production = [
+    "allocator-secure",
+    "compression",
+    "rustls",
+    "dashboard-embed",
+    "pg-embedded",
+]
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["async_tokio"] }
+rcgen = { version = "0.13", default-features = false, features = ["ring", "pem"] }
+
+[build-dependencies]
+base64 = "0.22"
+
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+
+[profile.release.package.sonic-rs]
+opt-level = 3
+
+[patch.crates-io]

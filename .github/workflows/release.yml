@@ -1,0 +1,47 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - x86_64-unknown-linux-gnu
+          - aarch64-unknown-linux-gnu
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with: { targets: "${{ matrix.target }}" }
+      - run: cargo build --release --target ${{ matrix.target }}
+        working-directory: actae
+      - run: |
+          tar -czf "actae-${GITHUB_REF_NAME}-${{ matrix.target }}.tar.gz" \
+            -C "actae/target/${{ matrix.target }}/release" actae
+          sha256sum actae-*.tar.gz > "SHA256SUMS-${{ matrix.target }}"
+      - uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: "actae-*.tar.gz"
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            actae-*.tar.gz
+            SHA256SUMS-${{ matrix.target }}
+          generate_release_notes: true
+
+  sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: anchore/sbom-action@v0
+        with:
+          format: spdx-json
+          artifact-name: actae.spdx.json

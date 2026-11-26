@@ -1,0 +1,71 @@
+name: Publish SDKs
+
+on:
+  push:
+    tags:
+      - "python-v*"
+      - "typescript-v*"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  python:
+    name: Publish Python SDK to PyPI
+    if: startsWith(github.ref_name, 'python-v')
+    runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: sdks/python
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install build tools
+        run: python -m pip install --upgrade pip setuptools wheel build
+      - name: Verify tag matches package version
+        run: |
+          tag_version="${GITHUB_REF_NAME#python-v}"
+          package_version="$(python setup.py --version)"
+          test "$tag_version" = "$package_version" || {
+            echo "Tag version $tag_version does not match package version $package_version"
+            exit 1
+          }
+      - name: Build wheel and source distribution
+        run: python -m build
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: sdks/python/dist/
+
+  typescript:
+    name: Publish TypeScript SDK to npm
+    if: startsWith(github.ref_name, 'typescript-v')
+    runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: sdks/typescript
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+          cache: npm
+          cache-dependency-path: sdks/typescript/package-lock.json
+      - name: Verify tag matches package version
+        run: |
+          tag_version="${GITHUB_REF_NAME#typescript-v}"
+          package_version="$(node -p "require('./package.json').version")"
+          test "$tag_version" = "$package_version" || {
+            echo "Tag version $tag_version does not match package version $package_version"
+            exit 1
+          }
+      - run: npm ci
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run build
+      - name: Publish to npm
+        run: npm publish --access public --provenance

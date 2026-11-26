@@ -1,0 +1,41 @@
+name: Start local PostgreSQL
+description: >-
+  Bring up the in-runner PostgreSQL 16 instance (initialized in the runner
+  image) and ensure the actae / actae_saas test role + database exist. The
+  database listens on 127.0.0.1:5432 inside the runner container, so jobs can
+  connect to it as if it were a service container — without the Docker
+  networking that does not work on a containerized self-hosted runner.
+
+runs:
+  using: composite
+  steps:
+    - name: Start PostgreSQL
+      shell: bash
+      run: |
+        set -euo pipefail
+        PGDATA=/var/lib/postgresql/16/main
+
+        # Bring the cluster online (idempotent — it is already initialized
+        # in the runner image, this just starts it if not running).
+        if ! pg_isready -q 2>/dev/null; then
+          sudo pg_ctlcluster 16 main start
+          sleep 2
+        fi
+
+        # Idempotent role + database provisioning.
+        sudo -u postgres psql -v ON_ERROR_STOP=0 <<'SQL'
+        DO $$ BEGIN
+          IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'actae') THEN
+            CREATE ROLE actae LOGIN PASSWORD 'actae_dev' SUPERUSER;
+          END IF;
+          IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'actae_saas') THEN
+            CREATE ROLE actae_saas LOGIN PASSWORD 'actae_saas_test' SUPERUSER;
+          END IF;
+        END $$;
+        SELECT 'CREATE DATABASE actae OWNER actae'
+          WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'actae')\gexec
+        SELECT 'CREATE DATABASE actae_saas_test OWNER actae_saas'
+          WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'actae_saas_test')\gexec
+        SQL
+
+        pg_isready -h 127.0.0.1 -p 5432

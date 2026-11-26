@@ -1,0 +1,3276 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Actae Instance API (actae.api.v1)",
+    "version": "actae.api.v1",
+    "description": "Generated from spec/api-parity/v1/manifest.json — the source of truth for all 75 canonical operations.  Do not edit by hand."
+  },
+  "paths": {
+    "/api/v1/auth/api-key-login": {
+      "post": {
+        "operationId": "actae.api.v1.auth.api_key_login",
+        "summary": "Exchange an API key for a dashboard session JWT.",
+        "x-actae-scope": "public",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "none",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": false,
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKeyLoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthTokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/capabilities": {
+      "get": {
+        "operationId": "actae.api.v1.auth.capabilities.get",
+        "summary": "Discover instance API version, capabilities, limits, operation manifest reference, and the caller's principal grants.",
+        "x-actae-scope": "events:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "events"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Capabilities"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/config": {
+      "get": {
+        "operationId": "actae.api.v1.auth.config.get",
+        "summary": "Public auth configuration (e.g. whether signup is enabled).",
+        "x-actae-scope": "public",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": false,
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthConfig"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "operationId": "actae.api.v1.auth.login",
+        "summary": "Password login. Opt-in via ENABLE_SIGNUP (403 otherwise).",
+        "x-actae-scope": "public",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "none",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": false,
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthTokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "operationId": "actae.api.v1.auth.logout",
+        "summary": "Log out (client-side session invalidation; stateless server response).",
+        "x-actae-scope": "public",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "none",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": false,
+        "tags": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/me": {
+      "get": {
+        "operationId": "actae.api.v1.auth.me.get",
+        "summary": "Return the authenticated principal profile.",
+        "x-actae-scope": "events:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "events"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/signup": {
+      "post": {
+        "operationId": "actae.api.v1.auth.signup",
+        "summary": "Create a password account. Opt-in via ENABLE_SIGNUP (403 otherwise).",
+        "x-actae-scope": "public",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "none",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": false,
+        "tags": [
+          "public"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignupRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthTokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/channels": {
+      "get": {
+        "operationId": "actae.api.v1.channels.list",
+        "summary": "List active channels with per-channel stats.",
+        "x-actae-scope": "channels:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "channels"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChannelList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/channels/compare": {
+      "get": {
+        "operationId": "actae.api.v1.channels.compare",
+        "summary": "Compare two channels: combined what-changed doc (state/config/tools/output/metrics).",
+        "x-actae-scope": "channels:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "channels"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompareResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/channels/diff": {
+      "get": {
+        "operationId": "actae.api.v1.channels.diff",
+        "summary": "Structural state diff between two channels' latest saved states.",
+        "x-actae-scope": "state:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "state"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StateDiffResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/channels/fork": {
+      "post": {
+        "operationId": "actae.api.v1.forks.create",
+        "summary": "Fork a channel at a cursor into a new child channel. Returns the exact child_channel_id + immutable ForkReceipt. Fork is storage, not execution.",
+        "x-actae-scope": "forks:create",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "forks"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForkRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/channels/{channel_id}": {
+      "delete": {
+        "operationId": "actae.api.v1.channels.delete",
+        "summary": "Delete a channel. Fails 410 when already deleted, 409 when it has children.",
+        "x-actae-scope": "channels:delete",
+        "x-actae-action": "delete",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "none",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "channels"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/channels/{channel_id}/close": {
+      "post": {
+        "operationId": "actae.api.v1.channels.close",
+        "summary": "Close a channel lifecycle (stamps closed_at on the registry).",
+        "x-actae-scope": "channels:write",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "channels"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/channels/{channel_id}/fork-tree": {
+      "get": {
+        "operationId": "actae.api.v1.channels.fork_tree.get",
+        "summary": "Get the recursive execution tree rooted at a channel.",
+        "x-actae-scope": "channels:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "channels"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionTree"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/channels/{channel_id}/forks": {
+      "get": {
+        "operationId": "actae.api.v1.channels.forks.list",
+        "summary": "List direct child forks of a channel.",
+        "x-actae-scope": "channels:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "channels"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForkList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/channels/{channel_id}/metadata": {
+      "get": {
+        "operationId": "actae.api.v1.channels.metadata.get",
+        "summary": "Get channel metadata (fork boundary, manifest, provenance).",
+        "x-actae-scope": "channels:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "channels"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChannelMetadata"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "actae.api.v1.channels.metadata.put",
+        "summary": "Update channel metadata (display name, reason, experiment metadata).",
+        "x-actae-scope": "channels:write",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "none",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "channels"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMetadataRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/channels/{channel_id}/outcome": {
+      "patch": {
+        "operationId": "actae.api.v1.channels.outcome.set",
+        "summary": "Record a fork outcome for ranking.",
+        "x-actae-scope": "channels:write",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "channels"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetOutcomeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/channels/{channel_id}/promote": {
+      "post": {
+        "operationId": "actae.api.v1.forks.promote",
+        "summary": "Promote a child channel into its parent (experiment promotion).",
+        "x-actae-scope": "forks:promote",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "forks"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromoteResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/channels/{channel_id}/receipt": {
+      "get": {
+        "operationId": "actae.api.v1.channels.receipt.get",
+        "summary": "Get the immutable fork receipt for a channel (provenance record).",
+        "x-actae-scope": "channels:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "channels"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForkReceipt"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/channels/{channel_id}/steps": {
+      "get": {
+        "operationId": "actae.api.v1.channels.steps.latest",
+        "summary": "Highest step number recorded on a channel (0 = none); O(1) crash-recovery probe.",
+        "x-actae-scope": "channels:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "channels"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LatestStepResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/channels/{channel_id}/steps/{step_number}": {
+      "get": {
+        "operationId": "actae.api.v1.channels.steps.resolve",
+        "summary": "Resolve a server-owned step index entry (step -> event/cursor).",
+        "x-actae-scope": "channels:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "channels"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "step_number",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResolveStepResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/channels/{channel_id}/trail": {
+      "get": {
+        "operationId": "actae.api.v1.channels.trail.get",
+        "summary": "Get the decision trail: lineage chain + boundary state + tool-execution ledger.",
+        "x-actae-scope": "channels:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "channels"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionTrail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/events/cursor/{channel_id}": {
+      "get": {
+        "operationId": "actae.api.v1.events.cursor.get",
+        "summary": "Get the latest per-channel cursor for resume.",
+        "x-actae-scope": "events:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "events"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CursorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/events/query": {
+      "post": {
+        "operationId": "actae.api.v1.events.query",
+        "summary": "Query events across channels with filters and optional opaque keyset page_token (additive).",
+        "x-actae-scope": "events:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "events"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/events/record": {
+      "post": {
+        "operationId": "actae.api.v1.events.record",
+        "summary": "Record a single event on a channel. Idempotent when operation_id is supplied.",
+        "x-actae-scope": "events:write",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "events"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublishEventRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/events/replay/{channel_id}": {
+      "get": {
+        "operationId": "actae.api.v1.events.replay",
+        "summary": "Replay events from a channel, optionally from a per-channel cursor.",
+        "x-actae-scope": "events:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "events"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/events/transition": {
+      "post": {
+        "operationId": "actae.api.v1.events.transition",
+        "summary": "Atomic event + state transition with optimistic version guard.",
+        "x-actae-scope": "events:write",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "events"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransitionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecordResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/events/verify/{channel_id}": {
+      "get": {
+        "operationId": "actae.api.v1.events.verify_chain",
+        "summary": "Verify the tamper-evident hash chain for a channel.",
+        "x-actae-scope": "payloads:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "payloads"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyChainResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/events/{event_id}/causal-graph": {
+      "get": {
+        "operationId": "actae.api.v1.events.causal_graph.get",
+        "summary": "Get the causal dependency graph rooted at an event.",
+        "x-actae-scope": "events:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "events"
+        ],
+        "parameters": [
+          {
+            "name": "event_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CausalGraphResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/execution-group-forks": {
+      "post": {
+        "operationId": "actae.api.v1.execution_groups.forks.create",
+        "summary": "Create a fork group for counterfactual execution across an execution group.",
+        "x-actae-scope": "forks:create",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "forks"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateExecutionGroupForkRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionGroupFork"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/execution-group-forks/{fork_group_id}": {
+      "get": {
+        "operationId": "actae.api.v1.execution_groups.forks.get",
+        "summary": "Get an execution group fork.",
+        "x-actae-scope": "forks:create",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "forks"
+        ],
+        "parameters": [
+          {
+            "name": "fork_group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionGroupFork"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/execution-group-forks/{fork_group_id}/members/{member_id}/promote": {
+      "post": {
+        "operationId": "actae.api.v1.execution_groups.forks.promote",
+        "summary": "Promote an execution group fork member (counterfactual adoption).",
+        "x-actae-scope": "forks:promote",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "forks"
+        ],
+        "parameters": [
+          {
+            "name": "fork_group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "member_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/execution-group-messages/{message_id}/ack": {
+      "post": {
+        "operationId": "actae.api.v1.execution_groups.messages.ack",
+        "summary": "Acknowledge an execution group message.",
+        "x-actae-scope": "execution_groups:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "execution_groups"
+        ],
+        "parameters": [
+          {
+            "name": "message_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/execution-groups": {
+      "post": {
+        "operationId": "actae.api.v1.execution_groups.create",
+        "summary": "Create an execution group for coordinated parallel agents.",
+        "x-actae-scope": "execution_groups:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "execution_groups"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateExecutionGroupRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionGroup"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "actae.api.v1.execution_groups.list",
+        "summary": "List execution groups.",
+        "x-actae-scope": "execution_groups:manage",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "execution_groups"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionGroupList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/execution-groups/{group_id}/members": {
+      "post": {
+        "operationId": "actae.api.v1.execution_groups.members.add",
+        "summary": "Add a member to an execution group.",
+        "x-actae-scope": "execution_groups:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "execution_groups"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddExecutionGroupMemberRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionGroupMember"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "actae.api.v1.execution_groups.members.list",
+        "summary": "List execution group members.",
+        "x-actae-scope": "execution_groups:manage",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "execution_groups"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionGroupMemberList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/execution-groups/{group_id}/members/{member_id}/claim": {
+      "post": {
+        "operationId": "actae.api.v1.execution_groups.members.claim",
+        "summary": "Claim an execution group member (fenced lease).",
+        "x-actae-scope": "execution_groups:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "execution_groups"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "member_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionGroupMember"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/execution-groups/{group_id}/members/{member_id}/heartbeat": {
+      "post": {
+        "operationId": "actae.api.v1.execution_groups.members.heartbeat",
+        "summary": "Heartbeat an execution group member lease.",
+        "x-actae-scope": "execution_groups:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "execution_groups"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "member_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionGroupMember"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/execution-groups/{group_id}/members/{member_id}/messages": {
+      "get": {
+        "operationId": "actae.api.v1.execution_groups.messages.list",
+        "summary": "List messages addressed to an execution group member.",
+        "x-actae-scope": "execution_groups:manage",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "execution_groups"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "member_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionGroupMessageList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/execution-groups/{group_id}/members/{member_id}/release": {
+      "post": {
+        "operationId": "actae.api.v1.execution_groups.members.release",
+        "summary": "Release an execution group member (end lease).",
+        "x-actae-scope": "execution_groups:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "execution_groups"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "member_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/execution-groups/{group_id}/messages": {
+      "post": {
+        "operationId": "actae.api.v1.execution_groups.messages.send",
+        "summary": "Send a message within an execution group.",
+        "x-actae-scope": "execution_groups:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "execution_groups"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendExecutionGroupMessageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/executions": {
+      "get": {
+        "operationId": "actae.api.v1.executions.list",
+        "summary": "List tool executions.",
+        "x-actae-scope": "executions:manage",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "executions"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExecutionList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/executions/claim": {
+      "post": {
+        "operationId": "actae.api.v1.executions.claim",
+        "summary": "Claim an idempotent tool execution.",
+        "x-actae-scope": "executions:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "execution_key",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "executions"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClaimExecutionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Execution"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/executions/{id}": {
+      "get": {
+        "operationId": "actae.api.v1.executions.get",
+        "summary": "Get one tool execution.",
+        "x-actae-scope": "executions:manage",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "executions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Execution"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "actae.api.v1.executions.delete",
+        "summary": "Delete a tool execution (destructive).",
+        "x-actae-scope": "executions:manage",
+        "x-actae-action": "delete",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "none",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "executions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/executions/{id}/cancel": {
+      "post": {
+        "operationId": "actae.api.v1.executions.cancel",
+        "summary": "Cancel a claimed tool execution.",
+        "x-actae-scope": "executions:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "execution_key",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "executions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelExecutionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Execution"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/executions/{id}/complete": {
+      "post": {
+        "operationId": "actae.api.v1.executions.complete",
+        "summary": "Complete a tool execution with its result.",
+        "x-actae-scope": "executions:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "execution_key",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "executions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteExecutionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Execution"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/executions/{id}/fail": {
+      "post": {
+        "operationId": "actae.api.v1.executions.fail",
+        "summary": "Fail a tool execution with error details.",
+        "x-actae-scope": "executions:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "execution_key",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "executions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FailExecutionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Execution"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/executions/{id}/heartbeat": {
+      "post": {
+        "operationId": "actae.api.v1.executions.heartbeat",
+        "summary": "Heartbeat a claimed tool execution.",
+        "x-actae-scope": "executions:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "execution_key",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "executions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeartbeatExecutionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Execution"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/experiments": {
+      "post": {
+        "operationId": "actae.api.v1.experiments.create",
+        "summary": "Create an experiment group.",
+        "x-actae-scope": "experiments:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "experiments"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateExperimentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExperimentGroup"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "actae.api.v1.experiments.list",
+        "summary": "List experiment groups.",
+        "x-actae-scope": "experiments:manage",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "experiments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExperimentGroupList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/experiments/{group_id}": {
+      "get": {
+        "operationId": "actae.api.v1.experiments.get",
+        "summary": "Get one experiment group with members.",
+        "x-actae-scope": "experiments:manage",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "experiments"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExperimentGroup"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/experiments/{group_id}/members": {
+      "post": {
+        "operationId": "actae.api.v1.experiments.members.add",
+        "summary": "Add a fork to an experiment group.",
+        "x-actae-scope": "experiments:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "experiments"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddExperimentMemberRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExperimentGroup"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/experiments/{group_id}/rank": {
+      "get": {
+        "operationId": "actae.api.v1.experiments.rank",
+        "summary": "Rank experiment members by score.",
+        "x-actae-scope": "experiments:manage",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "experiments"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RankResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/groups": {
+      "post": {
+        "operationId": "actae.api.v1.groups.create",
+        "summary": "Create a durable consumer group.",
+        "x-actae-scope": "groups:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "groups"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGroupRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupInfo"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "actae.api.v1.groups.list",
+        "summary": "List consumer groups.",
+        "x-actae-scope": "groups:manage",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "groups"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/groups/{group_id}": {
+      "delete": {
+        "operationId": "actae.api.v1.groups.delete",
+        "summary": "Delete a consumer group (destructive).",
+        "x-actae-scope": "groups:manage",
+        "x-actae-action": "delete",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "none",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "groups"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/groups/{group_id}/ack": {
+      "post": {
+        "operationId": "actae.api.v1.groups.ack",
+        "summary": "Acknowledge completed work; advances the consumer's offset.",
+        "x-actae-scope": "groups:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "groups"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AckRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/groups/{group_id}/heartbeat": {
+      "post": {
+        "operationId": "actae.api.v1.groups.heartbeat",
+        "summary": "Heartbeat a consumer lease.",
+        "x-actae-scope": "groups:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "groups"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeartbeatRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/groups/{group_id}/join": {
+      "post": {
+        "operationId": "actae.api.v1.groups.join",
+        "summary": "Join a consumer group as a worker.",
+        "x-actae-scope": "groups:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "groups"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JoinGroupRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JoinGroupResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/groups/{group_id}/offsets": {
+      "get": {
+        "operationId": "actae.api.v1.groups.offsets.get",
+        "summary": "Get per-consumer offsets for a group.",
+        "x-actae-scope": "groups:manage",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "groups"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffsetsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/groups/{group_id}/work": {
+      "post": {
+        "operationId": "actae.api.v1.groups.claim_work",
+        "summary": "Claim a work item from a consumer group (lease).",
+        "x-actae-scope": "groups:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "groups"
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClaimWorkRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClaimWorkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/instance": {
+      "get": {
+        "operationId": "actae.api.v1.instance.get",
+        "summary": "Return this instance's immutable identity (installation id, version, mode, feature/capability metadata) for federation and diagnostics.",
+        "x-actae-scope": "events:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "events"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstanceInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/scheduler/wakeups": {
+      "post": {
+        "operationId": "actae.api.v1.scheduler.wakeups.create",
+        "summary": "Create a persisted wake-up.",
+        "x-actae-scope": "scheduler:manage",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "scheduler"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWakeupRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WakeupInfo"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "actae.api.v1.scheduler.wakeups.list",
+        "summary": "List wake-ups.",
+        "x-actae-scope": "scheduler:manage",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "scheduler"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WakeupList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/scheduler/wakeups/{id}": {
+      "get": {
+        "operationId": "actae.api.v1.scheduler.wakeups.get",
+        "summary": "Get one wake-up.",
+        "x-actae-scope": "scheduler:manage",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "scheduler"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WakeupInfo"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "actae.api.v1.scheduler.wakeups.cancel",
+        "summary": "Cancel a wake-up (destructive).",
+        "x-actae-scope": "scheduler:manage",
+        "x-actae-action": "delete",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "none",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "scheduler"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/state/{channel_id}": {
+      "post": {
+        "operationId": "actae.api.v1.state.save",
+        "summary": "Save a cursor-aligned immutable state snapshot for a channel.",
+        "x-actae-scope": "state:write",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "operation_id",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "state"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveStateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaveStateResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "actae.api.v1.state.load",
+        "summary": "Load the latest state snapshot for a channel (resume).",
+        "x-actae-scope": "state:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "state"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StateResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/state/{channel_id}/version/{version}": {
+      "get": {
+        "operationId": "actae.api.v1.state.version.get",
+        "summary": "Load a specific state version.",
+        "x-actae-scope": "state:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "state"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StateResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "actae.api.v1.state.version.delete",
+        "summary": "Delete a specific state version (destructive; requires write permission).",
+        "x-actae-scope": "state:delete",
+        "x-actae-action": "delete",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "none",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "state"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/state/{channel_id}/versions": {
+      "get": {
+        "operationId": "actae.api.v1.state.versions.list",
+        "summary": "List state version history for a channel.",
+        "x-actae-scope": "state:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "state"
+        ],
+        "parameters": [
+          {
+            "name": "channel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StateVersionList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/preferences": {
+      "get": {
+        "operationId": "actae.api.v1.user.preferences.get",
+        "summary": "Get the caller's opaque preferences JSON (<=64 KB).",
+        "x-actae-scope": "events:read",
+        "x-actae-action": "read",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "n/a",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "events"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPreferences"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "actae.api.v1.user.preferences.put",
+        "summary": "Upsert the caller's opaque preferences JSON (whole-object replace, <=64 KB).",
+        "x-actae-scope": "events:write",
+        "x-actae-action": "write",
+        "x-actae-confirmation": false,
+        "x-actae-idempotency": "none",
+        "x-actae-transport": "http",
+        "x-actae-fleet-supported": true,
+        "tags": [
+          "events"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserPreferencesPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPreferences"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AckRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.AckRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.AckRequest"
+      },
+      "AddExecutionGroupMemberRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.AddExecutionGroupMemberRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.AddExecutionGroupMemberRequest"
+      },
+      "AddExperimentMemberRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.AddExperimentMemberRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.AddExperimentMemberRequest"
+      },
+      "ApiKeyLoginRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ApiKeyLoginRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ApiKeyLoginRequest"
+      },
+      "AuthConfig": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.AuthConfig — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.AuthConfig"
+      },
+      "AuthTokenResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.AuthTokenResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.AuthTokenResponse"
+      },
+      "CancelExecutionRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.CancelExecutionRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.CancelExecutionRequest"
+      },
+      "Capabilities": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.Capabilities — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.Capabilities"
+      },
+      "CausalGraphResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.CausalGraphResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.CausalGraphResponse"
+      },
+      "ChannelList": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ChannelList — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ChannelList"
+      },
+      "ChannelMetadata": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ChannelMetadata — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ChannelMetadata"
+      },
+      "ClaimExecutionRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ClaimExecutionRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ClaimExecutionRequest"
+      },
+      "ClaimWorkRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ClaimWorkRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ClaimWorkRequest"
+      },
+      "ClaimWorkResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ClaimWorkResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ClaimWorkResponse"
+      },
+      "CompareResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.CompareResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.CompareResponse"
+      },
+      "CompleteExecutionRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.CompleteExecutionRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.CompleteExecutionRequest"
+      },
+      "CreateExecutionGroupForkRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.CreateExecutionGroupForkRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.CreateExecutionGroupForkRequest"
+      },
+      "CreateExecutionGroupRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.CreateExecutionGroupRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.CreateExecutionGroupRequest"
+      },
+      "CreateExperimentRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.CreateExperimentRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.CreateExperimentRequest"
+      },
+      "CreateGroupRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.CreateGroupRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.CreateGroupRequest"
+      },
+      "CreateWakeupRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.CreateWakeupRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.CreateWakeupRequest"
+      },
+      "CursorResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.CursorResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.CursorResponse"
+      },
+      "DecisionTrail": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.DecisionTrail — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.DecisionTrail"
+      },
+      "Event": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.Event — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.Event",
+        "properties": {
+          "id": {
+            "type": "object"
+          },
+          "channel_id": {
+            "type": "object"
+          },
+          "type": {
+            "type": "object"
+          },
+          "payload": {
+            "type": "object"
+          },
+          "actor": {
+            "type": "object"
+          },
+          "cursor": {
+            "type": "object"
+          },
+          "channel_cursor": {
+            "type": "object"
+          },
+          "timestamp": {
+            "type": "object"
+          },
+          "depends_on": {
+            "type": "object"
+          }
+        }
+      },
+      "EventList": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.EventList — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.EventList"
+      },
+      "Execution": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.Execution — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.Execution"
+      },
+      "ExecutionGroup": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ExecutionGroup — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ExecutionGroup"
+      },
+      "ExecutionGroupFork": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ExecutionGroupFork — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ExecutionGroupFork"
+      },
+      "ExecutionGroupList": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ExecutionGroupList — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ExecutionGroupList"
+      },
+      "ExecutionGroupMember": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ExecutionGroupMember — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ExecutionGroupMember"
+      },
+      "ExecutionGroupMemberList": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ExecutionGroupMemberList — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ExecutionGroupMemberList"
+      },
+      "ExecutionGroupMessageList": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ExecutionGroupMessageList — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ExecutionGroupMessageList"
+      },
+      "ExecutionList": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ExecutionList — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ExecutionList"
+      },
+      "ExecutionTree": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ExecutionTree — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ExecutionTree"
+      },
+      "ExperimentGroup": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ExperimentGroup — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ExperimentGroup"
+      },
+      "ExperimentGroupList": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ExperimentGroupList — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ExperimentGroupList"
+      },
+      "FailExecutionRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.FailExecutionRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.FailExecutionRequest"
+      },
+      "ForkList": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ForkList — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ForkList"
+      },
+      "ForkReceipt": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ForkReceipt — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ForkReceipt"
+      },
+      "ForkRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ForkRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ForkRequest"
+      },
+      "ForkResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ForkResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ForkResponse"
+      },
+      "GroupInfo": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.GroupInfo — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.GroupInfo"
+      },
+      "GroupList": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.GroupList — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.GroupList"
+      },
+      "HeartbeatExecutionRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.HeartbeatExecutionRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.HeartbeatExecutionRequest"
+      },
+      "HeartbeatRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.HeartbeatRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.HeartbeatRequest"
+      },
+      "InstanceInfo": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.InstanceInfo — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.InstanceInfo"
+      },
+      "JoinGroupRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.JoinGroupRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.JoinGroupRequest"
+      },
+      "JoinGroupResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.JoinGroupResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.JoinGroupResponse"
+      },
+      "LatestStepResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.LatestStepResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.LatestStepResponse"
+      },
+      "LoginRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.LoginRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.LoginRequest"
+      },
+      "MeResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.MeResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.MeResponse"
+      },
+      "OffsetsResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.OffsetsResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.OffsetsResponse"
+      },
+      "OkResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.OkResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.OkResponse"
+      },
+      "PromoteResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.PromoteResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.PromoteResponse"
+      },
+      "PublishEventRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.PublishEventRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.PublishEventRequest"
+      },
+      "QueryRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.QueryRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.QueryRequest"
+      },
+      "QueryResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.QueryResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.QueryResponse"
+      },
+      "RankResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.RankResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.RankResponse"
+      },
+      "RecordResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.RecordResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.RecordResponse"
+      },
+      "ResolveStepResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.ResolveStepResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.ResolveStepResponse"
+      },
+      "SaveStateRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.SaveStateRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.SaveStateRequest"
+      },
+      "SaveStateResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.SaveStateResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.SaveStateResponse"
+      },
+      "SendExecutionGroupMessageRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.SendExecutionGroupMessageRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.SendExecutionGroupMessageRequest"
+      },
+      "SetOutcomeRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.SetOutcomeRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.SetOutcomeRequest"
+      },
+      "SignupRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.SignupRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.SignupRequest"
+      },
+      "StateDiffResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.StateDiffResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.StateDiffResponse"
+      },
+      "StateResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.StateResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.StateResponse"
+      },
+      "StateVersionList": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.StateVersionList — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.StateVersionList"
+      },
+      "TransitionRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.TransitionRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.TransitionRequest"
+      },
+      "UpdateMetadataRequest": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.UpdateMetadataRequest — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.UpdateMetadataRequest"
+      },
+      "UserPreferences": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.UserPreferences — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.UserPreferences"
+      },
+      "UserPreferencesPut": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.UserPreferencesPut — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.UserPreferencesPut"
+      },
+      "VerifyChainResponse": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.VerifyChainResponse — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.VerifyChainResponse"
+      },
+      "WakeupInfo": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.WakeupInfo — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.WakeupInfo"
+      },
+      "WakeupList": {
+        "type": "object",
+        "description": "Stub for actae.api.v1.WakeupList — full schema lives in the Rust types.",
+        "x-actae-full-name": "actae.api.v1.WakeupList"
+      }
+    }
+  },
+  "x-actae-generated-from": "manifest.json",
+  "x-actae-operation-count": 76,
+  "x-actae-schema-count": 75,
+  "x-actae-path-count": 65
+}

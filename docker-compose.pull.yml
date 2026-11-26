@@ -1,0 +1,73 @@
+# Pull-based compose for the released Actae image (no local build). The image
+# is a single self-contained binary (dashboard + managed PostgreSQL baked in).
+# With no database env set it runs self-contained; this file points it at an
+# external PostgreSQL via POSTGRES_* (which always wins over managed storage).
+# For the self-contained variant, drop the `postgres` service and the
+# POSTGRES_* / CLIENT_POSTGRES_* environment entries.
+#
+#   docker compose -f docker-compose.pull.yml up -d
+#
+# Secrets: override POSTGRES_PASSWORD / JWT_SECRET via .env (see .env.example).
+services:
+  actae:
+    image: ghcr.io/diviga/actae:${ACTAE_TAG:-latest}
+    container_name: actae-server
+    environment:
+      ACTAE_PORT: "8002"
+      ACTAE_HOST: 0.0.0.0
+
+      # External PostgreSQL (env always wins over managed storage).
+      POSTGRES_USER: actae
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-actae_dev_password}
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: actae
+      POSTGRES_SSL_MODE: ${POSTGRES_SSL_MODE:-disable}
+      CLIENT_POSTGRES_USER: actae
+      CLIENT_POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-actae_dev_password}
+      CLIENT_POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      CLIENT_POSTGRES_PORT: "5432"
+      CLIENT_POSTGRES_DB: actae
+      CLIENT_POSTGRES_SSL: ${POSTGRES_SSL_MODE:-disable}
+
+      JWT_SECRET: ${JWT_SECRET:-dev-jwt-secret-must-be-at-least-32-chars!!}
+      API_KEY_HASH_SECRET: ${API_KEY_HASH_SECRET:-${JWT_SECRET:-dev-jwt-secret-must-be-at-least-32-chars!!}}
+      ENABLE_SIGNUP: ${ENABLE_SIGNUP:-false}
+      # First-boot key seed (empty table only); omit for auto-generated.
+      ACTAE_INITIAL_API_KEY: ${ACTAE_INITIAL_API_KEY:-}
+      LOG_LEVEL: info
+
+      # Control plane (see docs/CONTROL_PLANE.md)
+      # ACTAE_CONTROL_PLANE_URL: https://actae.dev
+      # ACTAE_INSTALL_ID: ins_...
+      # ACTAE_ENROLL_SECRET: es_...
+    ports:
+      - "${ACTAE_PORT:-8002}:8002"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8002/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: actae-postgres
+    environment:
+      POSTGRES_DB: actae
+      POSTGRES_USER: actae
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-actae_dev_password}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U actae"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

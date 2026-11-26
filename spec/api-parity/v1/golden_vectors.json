@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "deterministic_operation_keys": [
+    {
+      "scope": "agent-session",
+      "type": "s",
+      "channel": "ch-det",
+      "step": "1",
+      "payload": {"step_number": 1, "input": "p", "output": "r"},
+      "metadata": {"step_number": 1},
+      "canonical": "{\"payload\":{\"input\":\"p\",\"output\":\"r\",\"step_number\":1},\"metadata\":{\"step_number\":1}}",
+      "operation_id": "07ca53db-606e-5b76-95bc-697e73bc4c41"
+    },
+    {
+      "scope": "agent-session",
+      "type": "inference",
+      "channel": "ch-x",
+      "step": "3",
+      "payload": {"input": "a < b & c > d", "z": 1, "ctx": {"nested": "é<&>"}},
+      "metadata": {"note": "x&y"},
+      "canonical": "{\"payload\":{\"ctx\":{\"nested\":\"é\\u003c\\u0026\\u003e\"},\"input\":\"a \\u003c b \\u0026 c \\u003e d\",\"z\":1},\"metadata\":{\"note\":\"x\\u0026y\"}}",
+      "operation_id": "f1f23da4-abd0-50f9-b62c-1f1d0edd2fbf"
+    },
+    {
+      "scope": "agent-session",
+      "type": "float",
+      "channel": "ch-float",
+      "step": "7",
+      "payload": {
+        "f1": 1.0,
+        "f2": 1e-07,
+        "f3": 1e+20,
+        "f4": 1e+15,
+        "f5": -0.0,
+        "f6": 1.5,
+        "f7": 3.14159,
+        "arr": [null, true, "é<&>", " "]
+      },
+      "metadata": {"f8": 2.5e-07, "n": 3},
+      "canonical": "{\"payload\":{\"arr\":[null,true,\"é\\u003c\\u0026\\u003e\",\"\\u2028\"],\"f1\":1,\"f2\":1e-7,\"f3\":100000000000000000000,\"f4\":1000000000000000,\"f5\":0,\"f6\":1.5,\"f7\":3.14159},\"metadata\":{\"f8\":2.5e-7,\"n\":3}}",
+      "operation_id": "72e64e65-2f85-54e5-a7b7-490509d3c0ca"
+    }
+  ]
+}

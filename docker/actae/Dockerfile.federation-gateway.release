@@ -1,0 +1,17 @@
+# Production fleet-gateway image.  The gateway is built as an independent,
+# static musl artifact by scripts/publish-federation-gateway.sh and deliberately
+# contains no Actae PostgreSQL payload, dashboard, Docker socket, or data-plane
+# database configuration.
+FROM alpine:3.20
+
+RUN apk add --no-cache ca-certificates \
+    && addgroup -S -g 1001 actae \
+    && adduser -S -u 1001 -G actae -h /nonexistent actae
+
+ARG TARGETARCH
+COPY bins/${TARGETARCH}/actae-federation-gateway /usr/local/bin/actae-federation-gateway
+RUN chmod 0755 /usr/local/bin/actae-federation-gateway
+
+USER actae
+EXPOSE 8810 8811
+ENTRYPOINT ["actae-federation-gateway"]

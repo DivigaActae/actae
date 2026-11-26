@@ -1,0 +1,16 @@
+pytest>=9.0.3,<10.0
+pytest-xdist>=3.7,<4.0
+pytest-timeout>=2.3,<3.0
+httpx>=0.28.0,<1.0
+websockets>=13.0,<14.0
+psycopg2-binary>=2.9.0,<3.0
+pytest-html>=4.0,<5.0
+pytest-rerunfailures>=15.0,<17.0
+pytest-asyncio>=1.0,<2.0
+# test keypair; the SaaS backend already depends on this same package.
+cryptography>=42.0,<52.0
+# tests/test_sdk_full_coverage.py (control-plane conformance) uses requests
+# for its stub control-plane HTTP driver.
+requests>=2.32,<3.0
+# Deep-004 Fleet live-bus E2E: real protocol readiness probe + subscriber.
+nats-py>=2.9,<3.0

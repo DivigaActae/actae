@@ -1,0 +1,17 @@
+# Cargo configuration for production builds.
+#
+# NOTE: no `target-cpu=native` here — it would (1) break cross-compilation
+# (the host CPU is resolved against the target arch) and (2) bake the build
+# machine's CPU extensions into the binary, making a distributed release
+# fail on older CPUs. We ship baseline CPU targets.
+#
+# NOTE: no +crt-static here — rust-lang/rust#83481: proc-macros must be
+# dynamically linked, so crt-static breaks every native Linux build
+# (`cannot produce proc-macro ... does not support these crate types`).
+# Static-linked release binaries are produced by the release workflow
+# (musl targets via cargo-zigbuild).
+# The docker build (docker/actae/Dockerfile) does not copy this file.
+
+[env]
+# Default logging level
+RUST_LOG = "info"

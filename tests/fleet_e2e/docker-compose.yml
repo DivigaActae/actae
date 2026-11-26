@@ -1,0 +1,119 @@
+# Hermetic fleet E2E topology (Deep-004) for CI.
+#
+# Production-shaped stack with the SAME components the suite drives over
+# real HTTP/WS:
+#   saas      — the Diviga control plane / fleet-token issuer (PostgreSQL)
+#   nats      — TLS NATS Core live transport
+#   gateway   — actae-federation-gateway (relay mTLS listener on :8611)
+#   instance-1/2 — hosted Actae instances (relay-mode instance-2 dials out)
+#
+# The Python suite (`tests/fleet_e2e/`) boots the same topology itself with
+# embedded instances when run locally (`ACTAE_E2E=1`). This compose file is
+# the CI topology so the mandatory job runs the real production services
+# (including TLS NATS + the relay mTLS listener) rather than only embedded
+# instances.
+#
+# Secrets are injected from the environment (never committed).
+
+services:
+  saas:
+    build:
+      context: ../../
+      dockerfile: saas/backend/Dockerfile
+    environment:
+      SAAS_DB_PATH: /var/lib/actae-saas/saas.db
+      SAAS_KEY_ENCRYPTION_KEY: ${SAAS_KEY_ENCRYPTION_KEY}
+      SAAS_FEDERATION_SIGNING_KEY: ${SAAS_FEDERATION_SIGNING_KEY}
+      SAAS_LICENSE_SIGNING_KEY: ${SAAS_LICENSE_SIGNING_KEY}
+      SAAS_INTERNAL_TOKEN: ${SAAS_INTERNAL_TOKEN}
+      SAAS_SIGNUP_ENABLED: "1"
+      SAAS_PUBLIC_BASE_URL: http://saas:8004
+    ports:
+      - "8004:8004"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8004/healthz')"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  nats:
+    image: nats:2.10
+    command:
+      - "--tls"
+      - "--tlsverify"
+      - "--tlscert=/certs/nats-server.crt"
+      - "--tlskey=/certs/nats-server.key"
+      - "--tlscacert=/certs/ca.crt"
+    volumes:
+      - ${NATS_CERTS_DIR}:/certs:ro
+    ports:
+      - "4222:4222"
+
+  gateway:
+    build:
+      context: ../../
+      dockerfile: docker/gateway.Dockerfile
+    environment:
+      GATEWAY_BIND: 0.0.0.0:8810
+      GATEWAY_RELAY_PORT: 8611
+      GATEWAY_CONTROL_PLANE_URL: http://saas:8004
+      GATEWAY_INTERNAL_TOKEN: ${SAAS_INTERNAL_TOKEN}
+      GATEWAY_ID: gw-e2e
+      GATEWAY_FEDERATION_VERIFICATION_KEYS: fk1:${FEDERATION_PUBLIC_KEY}
+      GATEWAY_NATS_SERVERS: tls://nats:4222
+      GATEWAY_NATS_CA_BUNDLE: /certs/ca.crt
+      GATEWAY_NATS_CLIENT_CERT: /certs/nats-client.crt
+      GATEWAY_NATS_CLIENT_KEY: /certs/nats-client.key
+      GATEWAY_RELAY_CA_BUNDLE: /certs/ca.crt
+      GATEWAY_RELAY_TLS_CERT: /certs/relay-server.crt
+      GATEWAY_RELAY_TLS_KEY: /certs/relay-server.key
+      GATEWAY_SAAS_ALLOW_HTTP: "1"
+    volumes:
+      - ${TLS_CERTS_DIR}:/certs:ro
+    ports:
+      - "8810:8810"
+      - "8611:8611"
+    depends_on:
+      saas:
+        condition: service_healthy
+      nats:
+        condition: service_started
+
+  instance-1:
+    build:
+      context: ../../
+      dockerfile: docker/Dockerfile
+    environment:
+      ACTAE_CONTROL_PLANE_URL: http://saas:8004
+      ACTAE_INSTALL_ID: ins_e2e_1
+      ACTAE_ENROLL_SECRET: ${ACTAE_ENROLL_SECRET_1}
+      ACTAE_PORT: 8002
+      ACTAE_AUTO_BUMP: "0"
+      ACTAE_SYNC_INTERVAL_SECS: "3"
+    ports:
+      - "8002:8002"
+    depends_on:
+      saas:
+        condition: service_healthy
+
+  instance-2:
+    build:
+      context: ../../
+      dockerfile: docker/Dockerfile
+    environment:
+      ACTAE_CONTROL_PLANE_URL: http://saas:8004
+      ACTAE_INSTALL_ID: ins_e2e_2
+      ACTAE_ENROLL_SECRET: ${ACTAE_ENROLL_SECRET_2}
+      ACTAE_RELAY_ENABLED: "1"
+      ACTAE_RELAY_URL: wss://gateway:8611
+      ACTAE_RELAY_CREDENTIAL: ${ACTAE_RELAY_CREDENTIAL}
+      ACTAE_PORT: 8003
+      ACTAE_AUTO_BUMP: "0"
+      ACTAE_SYNC_INTERVAL_SECS: "3"
+    ports:
+      - "8003:8003"
+    depends_on:
+      saas:
+        condition: service_healthy
+      gateway:
+        condition: service_started

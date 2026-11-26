@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "generatedFrom": "examples/langgraph-comparison/02_actae_langgraph.py",
+  "topic": "How durable execution changes multi-agent research",
+  "metrics": { "connections": 4, "sent": 38, "received": 38, "events": 76, "states": 6, "forks": 2 },
+  "agents": [
+    { "id": "researcher", "label": "Researcher", "status": "completed", "color": "#c8ff3d", "events": 18 },
+    { "id": "analyst", "label": "Analyst", "status": "completed", "color": "#68d5ff", "events": 14 },
+    { "id": "writer", "label": "Writer", "status": "completed", "color": "#b895ff", "events": 16 },
+    { "id": "critic", "label": "Critic", "status": "completed", "color": "#ffb86b", "events": 12 }
+  ],
+  "events": [
+    { "id": "evt_0001", "type": "pipeline.started", "agent": "researcher", "channel": "langgraph-research", "cursor": 1, "time": "2026-08-12 14:02:11", "payload": { "topic": "How durable execution changes multi-agent research" } },
+    { "id": "evt_0007", "type": "tool.web_search.completed", "agent": "researcher", "channel": "langgraph-research", "cursor": 7, "time": "2026-08-12 14:02:14", "payload": { "sources": 8, "result": "8 sources accepted" } },
+    { "id": "evt_0018", "type": "state.saved", "agent": "researcher", "channel": "langgraph-research", "cursor": 18, "time": "2026-08-12 14:02:18", "payload": { "version": 3, "fields": 6 } },
+    { "id": "evt_0021", "type": "agent.completed", "agent": "analyst", "channel": "langgraph-research", "cursor": 21, "time": "2026-08-12 14:02:21", "payload": { "insights": 5 } },
+    { "id": "evt_0034", "type": "agent.completed", "agent": "writer", "channel": "langgraph-research", "cursor": 34, "time": "2026-08-12 14:02:29", "payload": { "draft_chars": 2840 } },
+    { "id": "evt_0042", "type": "fork.created", "agent": "critic", "channel": "langgraph-research-fork", "cursor": 42, "time": "2026-08-12 14:02:35", "payload": { "parent_cursor": 34, "reason": "Compare revised conclusion" } },
+    { "id": "evt_0051", "type": "tool.calculate.completed", "agent": "researcher", "channel": "langgraph-research", "cursor": 51, "time": "2026-08-12 14:02:40", "payload": { "result": "replayed", "operation_id": "op_calc_44" } },
+    { "id": "evt_0068", "type": "pipeline.completed", "agent": "critic", "channel": "langgraph-research", "cursor": 68, "time": "2026-08-12 14:02:52", "payload": { "score": 9, "revisions": 1 } }
+  ],
+  "states": [
+    { "version": 1, "cursor": 1, "agent": "researcher", "label": "Pipeline initialized", "time": "14:02:11", "fields": 2 },
+    { "version": 2, "cursor": 18, "agent": "researcher", "label": "Research findings committed", "time": "14:02:18", "fields": 6 },
+    { "version": 3, "cursor": 21, "agent": "analyst", "label": "Key insights committed", "time": "14:02:21", "fields": 7 },
+    { "version": 4, "cursor": 34, "agent": "writer", "label": "Draft committed", "time": "14:02:29", "fields": 8 },
+    { "version": 5, "cursor": 42, "agent": "critic", "label": "Fork boundary captured", "time": "14:02:35", "fields": 8 },
+    { "version": 6, "cursor": 68, "agent": "critic", "label": "Review passed · 9/10", "time": "14:02:52", "fields": 9 }
+  ],
+  "fork": { "parent": "langgraph-research", "child": "langgraph-research-fork", "cursor": 34, "status": "completed", "receipt": "fork_7f2a" }
+}

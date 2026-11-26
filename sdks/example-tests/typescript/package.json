@@ -1,0 +1,14 @@
+{
+  "name": "actae-sdk-example-tests",
+  "private": true,
+  "type": "module",
+  "description": "Monorepo-only tests that couple the Actae TS SDK to repo fixtures/spec (kept out of the publishable SDK).",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.2",
+    "vitest": "^3.0.0"
+  }
+}

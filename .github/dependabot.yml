@@ -1,0 +1,27 @@
+version: 2
+
+updates:
+  - package-ecosystem: cargo
+    directory: /actae
+    schedule: { interval: weekly }
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: gomod
+    directory: /sdks/go
+    schedule: { interval: weekly }
+
+  - package-ecosystem: pip
+    directory: /sdks/python
+    schedule: { interval: weekly }
+
+  - package-ecosystem: npm
+    directory: /dashboard
+    schedule: { interval: weekly }
+
+  - package-ecosystem: npm
+    directory: /sdks/typescript
+    schedule: { interval: weekly }
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: monthly }

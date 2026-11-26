@@ -1,0 +1,3 @@
+# Actae coordination demo dependencies.
+# Install the SDK first: pip install -e ./sdks/python
+actae-client>=1.2

@@ -1,0 +1,14 @@
+Actae
+Copyright 2026 Diviga
+
+This product includes software developed at Diviga (https://diviga.com).
+
+This product bundles PostgreSQL, distributed under the PostgreSQL License.
+See THIRD_PARTY.md for the bundled version and source.
+
+This product includes third-party Rust crates, Go modules, Python packages and
+JavaScript packages. Their licenses are listed in THIRD_PARTY.md and in the SBOM
+published with each release.
+
+Actae is a trademark of Diviga. The Apache-2.0 license grants rights to the
+code, not to the name or logo. See TRADEMARK.md.

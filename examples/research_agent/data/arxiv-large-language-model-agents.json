@@ -1,0 +1,723 @@
+{
+  "topic": "large language model agents",
+  "source": "arxiv",
+  "fetched_at": "2026-10-13T09:14:11.354680+00:00",
+  "papers": [
+    {
+      "id": "2512.09440",
+      "title": "Knowledge-Augmented Large Language Model Agents for Explainable Financial Decision-Making",
+      "abstract": "This study investigates an explainable reasoning method for financial decision-making based on knowledge-enhanced large language model agents. To address the limitations of traditional financial decision methods that rely on parameterized knowledge, lack factual consistency, and miss reasoning chains, an integrated framework is proposed that combines external knowledge retrieval, semantic representation, and reasoning generation. The method first encodes financial texts and structured data to obtain semantic representations, and then retrieves task-related information from external knowledge bases using similarity computation. Internal representations and external knowledge are combined through weighted fusion, which ensures fluency while improving factual accuracy and completeness of generated content. In the reasoning stage, a multi-head attention mechanism is introduced to construct logical chains, allowing the model to present transparent causal relationships and traceability during generation. Finally, the model jointly optimizes task objectives and explanation consistency objectives, which enhances predictive performance and reasoning interpretability. Experiments on financial text processing and decision tasks show that the method outperforms baseline approaches in accuracy, text generation quality, and factual support, verifying the effectiveness of knowledge enhancement and explainable reasoning. Overall, the proposed approach overcomes the limitations of traditional models in semantic coverage and reasoning transparency, and demonstrates strong practical value in complex financial scenarios.",
+      "authors": [
+        "Qingyuan Zhang",
+        "Yuxi Wang",
+        "Cancan Hua",
+        "Yulin Huang",
+        "Ning Lyu"
+      ],
+      "published": "2025-12-10",
+      "categories": [
+        "cs.CL"
+      ],
+      "url": "https://arxiv.org/abs/2512.09440"
+    },
+    {
+      "id": "2310.12821",
+      "title": "GestureGPT: Toward Zero-Shot Free-Form Hand Gesture Understanding with Large Language Model Agents",
+      "abstract": "Existing gesture interfaces only work with a fixed set of gestures defined either by interface designers or by users themselves, which introduces learning or demonstration efforts that diminish their naturalness. Humans, on the other hand, understand free-form gestures by synthesizing the gesture, context, experience, and common sense. In this way, the user does not need to learn, demonstrate, or associate gestures. We introduce GestureGPT, a free-form hand gesture understanding framework that mimics human gesture understanding procedures to enable a natural free-form gestural interface. Our framework leverages multiple Large Language Model agents to manage and synthesize gesture and context information, then infers the interaction intent by associating the gesture with an interface function. More specifically, our triple-agent framework includes a Gesture Description Agent that automatically segments and formulates natural language descriptions of hand poses and movements based on hand landmark coordinates. The description is deciphered by a Gesture Inference Agent through self-reasoning and querying about the interaction context (e.g., interaction history, gaze data), which is managed by a Context Management Agent. Following iterative exchanges, the Gesture Inference Agent discerns the user's intent by grounding it to an interactive function. We validated our framework offline under two real-world scenarios: smart home control and online video streaming. The average zero-shot Top-1/Top-5 grounding accuracies are 44.79%/83.59% for smart home tasks and 37.50%/73.44% for video streaming tasks. We also provide an extensive discussion that includes rationale for model selection, generalizability, and future research directions for a practical system etc.",
+      "authors": [
+        "Xin Zeng",
+        "Xiaoyu Wang",
+        "Tengxiang Zhang",
+        "Chun Yu",
+        "Shengdong Zhao",
+        "Yiqiang Chen"
+      ],
+      "published": "2023-10-19",
+      "categories": [
+        "cs.CL",
+        "cs.HC"
+      ],
+      "url": "https://arxiv.org/abs/2310.12821"
+    },
+    {
+      "id": "2602.07187",
+      "title": "PreFlect: From Retrospective to Prospective Reflection in Large Language Model Agents",
+      "abstract": "Advanced large language model agents typically adopt self-reflection for improving performance, where agents iteratively analyze past actions to correct errors. However, existing reflective approaches are inherently retrospective: agents act, observe failure, and only then attempt to recover. In this work, we introduce PreFlect, a prospective reflection mechanism that shifts the paradigm from post hoc correction to pre-execution foresight by criticizing and refining agent plans before execution. To support grounded prospective reflection, we distill planning errors from historical agent trajectories, capturing recurring success and failure patterns observed across past executions. Furthermore, we complement prospective reflection with a dynamic re-planning mechanism that provides execution-time plan update in case the original plan encounters unexpected deviation. Evaluations on different benchmarks demonstrate that PreFlect significantly improves overall agent utility on complex real-world tasks, outperforming strong reflection-based baselines and several more complex agent architectures. Code will be updated at https://github.com/wwwhy725/PreFlect.",
+      "authors": [
+        "Hanyu Wang",
+        "Yuanpu Cao",
+        "Lu Lin",
+        "Jinghui Chen"
+      ],
+      "published": "2026-02-06",
+      "categories": [
+        "cs.AI"
+      ],
+      "url": "https://arxiv.org/abs/2602.07187"
+    },
+    {
+      "id": "2607.10559",
+      "title": "Large language model agents accelerate inverse design of metal-organic frameworks for gas separation",
+      "abstract": "Metal-organic frameworks (MOFs) offer a highly modular platform for adsorptive gas separation, yet their vast reticular design space makes inverse design difficult under simultaneous constraints of chemical validity, separation performance, and structural diversity. Here, we present LEMO Agent, a large-language-model agent framework for closed-loop inverse design of gas-separation MOFs in MOFid space. LEMO Agent couples language-based candidate generation with MOFid standardization, explicit validity checking, Transformer-based property prediction, structured design memory, and multi-island exploration. Through iterative generate--validate--evaluate--remember cycles, the agent uses feedback from both successful and failed candidates to guide chemically constrained search across linker, metal, and topology choices. We evaluate LEMO Agent on CH$_4$/N$_2$ and CO$_2$/N$_2$ separation tasks. Compared with representative generative, optimization, and agentic baselines, LEMO Agent enriches high-performing candidates, improves predicted separation performance, and maintains broad chemical and topological diversity. Selected candidates are further reconstructed, evaluated by GCMC simulations, and passed through an experimental down-selection workflow based on chemical feasibility and ligand purchasability, leading to initial wet-lab synthesis and SEM characterization. These results demonstrate that large language model agents can serve as interpretable and scalable design engines for accelerating MOF discovery beyond conventional fixed-library screening.",
+      "authors": [
+        "Zhaolin Hu",
+        "Hehe Fan",
+        "Wangyihan Guo",
+        "Meng Xu",
+        "Chenhao Rao",
+        "Qiwei Yang",
+        "Yi Yang"
+      ],
+      "published": "2026-07-12",
+      "categories": [
+        "cs.AI"
+      ],
+      "url": "https://arxiv.org/abs/2607.10559"
+    },
+    {
+      "id": "2608.06861",
+      "title": "Gated-BEPO: Confidence-Gated Bellman Credit Assignment for Large Language Model Agents",
+      "abstract": "Training large language model agents in long-horizon environments requires assigning credit from sparse terminal outcomes to individual actions. Existing critic-free methods propagate trajectory-level rewards uniformly across steps, while recent approaches construct step-level groups by matching repeated states and compare actions within each group. The former cannot distinguish useful actions in failed trajectories from ineffective actions in successful ones. The latter rely on step credit derived directly from individual trajectory outcomes and fixed-weight fusion with episode-level credit. We propose Gated-BEPO, which derives step-level credit from empirical rollout graphs. For each rollout group, Gated-BEPO constructs an empirical graph and estimates node values through a mean-backup Bellman fixed point that reflects the empirical action distribution of the current policy. We then accumulate these temporal-difference residuals along each sampled trajectory using generalized advantage estimation, yielding step-level Bellman advantages that capture both immediate and downstream effects. To adaptively fuse episode- and step-level credit, a confidence gate incorporates Bellman credit only at states with multiple observed successors and otherwise uses episode-level credit. Experiments on WebShop, ALFWorld, and visual Sokoban show consistent improvements across language and vision-language models, while diagnostic ablations support the effectiveness of Bellman fixed-point value estimation and show that step-level credit should be incorporated selectively rather than uniformly into the final advantage.",
+      "authors": [
+        "Hongxi Yan",
+        "Ziyue Huang",
+        "Shichao Fan",
+        "Qingjie Liu"
+      ],
+      "published": "2026-08-07",
+      "categories": [
+        "cs.AI"
+      ],
+      "url": "https://arxiv.org/abs/2608.06861"
+    },
+    {
+      "id": "2411.01271",
+      "title": "Interacting Large Language Model Agents. Interpretable Models and Social Learning",
+      "abstract": "This paper discusses the theory and algorithms for interacting large language model agents (LLMAs) using methods from statistical signal processing and microeconomics. While both fields are mature, their application to decision-making involving interacting LLMAs remains unexplored. Motivated by Bayesian sentiment analysis on online platforms, we construct interpretable models and algorithms that enable LLMAs to interact and perform Bayesian inference. Because interacting LLMAs learn from both prior decisions and external inputs, they can exhibit bias and herding behavior. Thus, developing interpretable models and stochastic control algorithms is essential to understand and mitigate these behaviors. This paper has three main results. First, we show using Bayesian revealed preferences from microeconomics that an individual LLMA satisfies the necessary and sufficient conditions for rationally inattentive (bounded rationality) Bayesian utility maximization and, given an observation, the LLMA chooses an action that maximizes a regularized utility. Second, we utilize Bayesian social learning to construct interpretable models for LLMAs that interact sequentially with each other and the environment while performing Bayesian inference. Our proposed models capture the herding behavior exhibited by interacting LLMAs. Third, we propose a stochastic control framework to delay herding and improve state estimation accuracy under 2 settings: (a) centrally controlled LLMAs (b) autonomous LLMAs with incentives. We demonstrate the effectiveness of our methods on real datasets for hate speech classification and product quality assessment, using open-source models like LLaMA and closed-source models like ChatGPT. The main takeaway of this paper, based on empirical analysis and mathematical formalism, is that LLMAs act as rationally bounded Bayesian agents that exhibit social learning when interacting.",
+      "authors": [
+        "Adit Jain",
+        "Vikram Krishnamurthy"
+      ],
+      "published": "2024-11-02",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.ET",
+        "cs.MA",
+        "eess.SY"
+      ],
+      "url": "https://arxiv.org/abs/2411.01271"
+    },
+    {
+      "id": "2609.13149",
+      "title": "BudgetBench: A Budget-Tiered Protocol and Pilot Harness for Memory Strategy Evaluation in Local Large Language Model Agents",
+      "abstract": "For local large language model agents, active context is a scarce resource: memory capacity, prefill latency, cache growth, and service objectives all constrain how many input tokens each call can afford. We present BudgetBench, an active-budget protocol and reference harness that treats the per-call input-token budget as the independent variable when comparing memory strategies. Holding the model, task, sampler, and decoding fixed, it sweeps budgets over 2K, 4K, 8K, 16K, and 32K tokens and records quality, budget utilization, latency, and, as a first-class outcome, budget-violation rates. The core contribution is this reusable measurement surface: a swappable MemoryStrategy contract, explicit budget enforcement, deterministic or versioned graders, prompt-audit metadata, and reproducibility artifacts, released at https://github.com/aviskaar/budgetbench. We substantiate the protocol with pilot studies rather than final rankings. Across a local qwen2.5:1.5b pilot (89 items each on SWE-bench Verified and LongBench v2), a hosted 50-item Qwen3 30B-A3B LongBench replication with exact tokenization, and a 500-item LongMemEval oracle study scored by the official GPT-4o evaluator, the harness exposes budget-compliance failures, non-monotonic quality curves, and operating points that single-budget evaluation hides. The budgeted-versus-full-context direction remains unresolved: the local slice is near-null and the hosted replication favors full context in point estimate. We report results transparently, including that the early pilot's tokenizer approximation undercounts some served-model prompts, so its violation rows are tokenizer-approximation diagnostics, not claim-bearing results; all timings are operational diagnostics. The reusable contribution is the protocol, harness, and failure-reporting discipline needed to scale fixed-budget memory-strategy evaluation.",
+      "authors": [
+        "Aditya Karnam Gururaj Rao",
+        "Arjun Jaggi"
+      ],
+      "published": "2026-07-01",
+      "categories": [
+        "cs.LG",
+        "cs.CL"
+      ],
+      "url": "https://arxiv.org/abs/2609.13149"
+    },
+    {
+      "id": "2408.14033",
+      "title": "MLR-Copilot: Autonomous Machine Learning Research based on Large Language Models Agents",
+      "abstract": "Autonomous machine learning research has gained significant attention recently. We present MLR-COPILOT, an autonomous Machine Learning Research framework powered by large language model agents. The system is designed to enhance ML research productivity through automatic generation and implementation of research ideas within constraints. Our work was released in August 2024 (concurrent to AI-Scientist) and has gained notable recognition from leading projects. We further enhance our ideation with training afterwards. The framework consists of three stages: idea generation, experiment implementation, and code execution. First, existing research papers are used to generate feasible ideas and experiment plans with IdeaAgent, powered by an RL-tuned LLM. Next, ExperimentAgent leverages retrieved prototype code to convert plans into executable code with optionally retrieved candidate models and data from HuggingFace. In the final stage, ExperimentAgent runs experiments, and allows subsequent iterations of debugging and human feedback for a better chance of success with executable outcomes. We evaluate our framework on five machine learning research tasks. Experiment results demonstrate the potential of our framework to facilitate ML research progress and innovation.",
+      "authors": [
+        "Ruochen Li",
+        "Teerth Patel",
+        "Qingyun Wang",
+        "Xinya Du"
+      ],
+      "published": "2024-08-26",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "url": "https://arxiv.org/abs/2408.14033"
+    },
+    {
+      "id": "2608.28182",
+      "title": "Benchmarking large language model agent societies against human behavioural distributions",
+      "abstract": "Populations of large language model agents are increasingly used as experimental societies. Three doubts shadow every such result: whether the agents behave like the humans they stand in for, whether a finding survives changes to the apparatus that leave the rules untouched, and whether apparent social dynamics are interaction at all rather than the reproduction of experiments the models have read. This article introduces SILICA, an open instrument that tests all three. Five environments carry published human anchors, each paired with perturbations that re-render the same rules and with variants whose payoffs point away from the memorised result. Twelve open-weight models were run through it on a single consumer graphics card. Agreement with human data is confined to starting points: first-round public-goods contributions fall inside the equivalence margin for eight of eleven models, while no model matches end-state contributions or the human corridor of cooperation. Merely swapping the order in which two actions are listed costs one model 58 points of cooperation. Presenting responders with a fixed schedule of offers shows that only one model, the sole reasoning-trained one, places its acceptance threshold where the incentive requires; two move theirs part of the way, two move them the wrong way, and three never acquire one. Conventions form through a shared prior over the names rather than through negotiation, though negotiation reappears once that prior is disrupted. On the certification ladder defined here, current silicon societies support exploratory claims and no more.",
+      "authors": [
+        "Raad Bin Tareaf"
+      ],
+      "published": "2026-08-28",
+      "categories": [
+        "physics.soc-ph",
+        "cs.CL"
+      ],
+      "url": "https://arxiv.org/abs/2608.28182"
+    },
+    {
+      "id": "2509.15635",
+      "title": "MicroRCA-Agent: Microservice Root Cause Analysis Method Based on Large Language Model Agents",
+      "abstract": "This paper presents MicroRCA-Agent, an innovative solution for microservice root cause analysis based on large language model agents, which constructs an intelligent fault root cause localization system with multimodal data fusion. The technical innovations are embodied in three key aspects: First, we combine the pre-trained Drain log parsing algorithm with multi-level data filtering mechanism to efficiently compress massive logs into high-quality fault features. Second, we employ a dual anomaly detection approach that integrates Isolation Forest unsupervised learning algorithms with status code validation to achieve comprehensive trace anomaly identification. Third, we design a statistical symmetry ratio filtering mechanism coupled with a two-stage LLM analysis strategy to enable full-stack phenomenon summarization across node-service-pod hierarchies. The multimodal root cause analysis module leverages carefully designed cross-modal prompts to deeply integrate multimodal anomaly information, fully exploiting the cross-modal understanding and logical reasoning capabilities of large language models to generate structured analysis results encompassing fault components, root cause descriptions, and reasoning trace. Comprehensive ablation studies validate the complementary value of each modal data and the effectiveness of the system architecture. The proposed solution demonstrates superior performance in complex microservice fault scenarios, achieving a final score of 50.71. The code has been released at: https://github.com/tangpan360/MicroRCA-Agent.",
+      "authors": [
+        "Pan Tang",
+        "Shixiang Tang",
+        "Huanqi Pu",
+        "Zhiqing Miao",
+        "Zhixing Wang"
+      ],
+      "published": "2025-09-19",
+      "categories": [
+        "cs.AI"
+      ],
+      "url": "https://arxiv.org/abs/2509.15635"
+    },
+    {
+      "id": "2602.09540",
+      "title": "SWE-Bench Mobile: Can Large Language Model Agents Develop Industry-Level Mobile Applications?",
+      "abstract": "Can large language model agents develop industry-level mobile applications? We introduce \\textbf{SWE-Bench Mobile}, a benchmark for evaluating coding agents on realistic software engineering tasks derived from a production iOS codebase. Unlike existing benchmarks that focus on isolated problems or bug fixes, SWE-Bench Mobile captures the full complexity of industrial development: multi-modal inputs (PRDs and Figma designs), a large-scale mixed Swift/Objective-C codebase, and comprehensive test suites. We evaluate 22 agent-model configurations across four coding agents -- three commercial (Cursor, Codex, Claude Code) and one open-source (OpenCode) -- and find that even the best configurations achieve only 12\\% task success rate. Our analysis reveals that (1) agent design matters as much as model capability -- the same model shows up to 6$\\times$ performance gap across agents, (2) commercial agents consistently outperform open-source alternatives, and (3) simple ``Defensive Programming'' prompts outperform complex ones by 7.4\\%. These findings highlight a significant gap between current agent capabilities and industrial requirements, while providing actionable insights for practitioners and researchers. We release SWE-Bench Mobile as a \\textit{hosted benchmark challenge} to prevent data contamination and ensure fair evaluation. The public leaderboard and development toolkit are available at https://swebenchmobile.com.",
+      "authors": [
+        "Muxin Tian",
+        "Zhe Wang",
+        "Blair Yang",
+        "Zhenwei Tang",
+        "Kunlun Zhu",
+        "Honghua Dong",
+        "Hanchen Li",
+        "Xinni Xie",
+        "Guangjing Wang",
+        "Jiaxuan You"
+      ],
+      "published": "2026-02-10",
+      "categories": [
+        "cs.SE"
+      ],
+      "url": "https://arxiv.org/abs/2602.09540"
+    },
+    {
+      "id": "2509.14257",
+      "title": "Student-Centered Distillation Narrows the Agentic Gap Between Small and Large LLMs",
+      "abstract": "Large Language Model agents achieve strong performance on multi-step reasoning and tool-use tasks, but their impressive capabilities typically rely on extremely large backbones. Existing distillation approaches train smaller students to imitate full teacher trajectories, yet reasoning and knowledge gaps between the teacher and student can cause compounding errors. We propose SCoRe, a student-centered framework in which the student generates training trajectories and the teacher corrects only the earliest error, producing training data matched to the student's abilities and exposing specific weaknesses. The student is first fine-tuned on corrected trajectories. Subsequently, short-horizon reinforcement learning starts from the verified prefix preceding the earliest error, with target rewards assigned at that step. This design enables the student to solve problems through unconstrained RL exploration rather than teacher imitation, while the short-horizon setup improves training stability. On 12 challenging benchmarks, a 7B-parameter student distilled with SCoRe closes the agentic performance gap with a 72B-parameter teacher.",
+      "authors": [
+        "Yuanjie Lyu",
+        "Chengyu Wang",
+        "Jun Huang",
+        "Tong Xu"
+      ],
+      "published": "2025-09-12",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "url": "https://arxiv.org/abs/2509.14257"
+    },
+    {
+      "id": "2607.19670",
+      "title": "Same Game, Different Story: A Minimal Conservative Strategic Robustness Benchmark for Large Language Model Agents",
+      "abstract": "Large language model agents are increasingly deployed in settings where the value of an action depends on what other agents do. This creates a strategic reliability problem: the same game may be described as a business negotiation, a friendly compromise, a diplomatic exchange, or an abstract payoff matrix, and the model may choose different actions even when the incentives are unchanged. This paper introduces \\emph{Same Game, Different Story}, a benchmark for strategic robustness: invariance of model-induced action distributions under payoff-preserving language changes. The empirical analysis uses a deliberately narrow, literature-calibrated comparison from Lorè and Heydari's peer-reviewed study: business framing versus friend-sharing framing across GPT-3.5, GPT-4, and LLaMa-2 in four social-dilemma games, with 300 initializations per retained model-game-context cell. The retained design comprises 24 of the source study's 60 cells, representing 7,200 decisions. Because trial-level files were not available from the article, the analysis is presented as a secondary calibration based on reconstructed published rates, not as new model runs. As a conservative sensitivity analysis, effect magnitudes are attenuated by 30\\% toward the null: action shifts are multiplied by 0.70, and non-robustness, defined as one minus the robustness score, is multiplied by 0.70. Under this attenuation, pooled strategic robustness is 0.783 with a 95\\% bootstrap interval from 0.774 to 0.790, and friend-sharing framing raises cooperation by 0.307 with a 95\\% bootstrap interval from 0.297 to 0.316 relative to business framing. The analysis supports the narrower claim that social-relational framing can change strategic choices even when incentives are held fixed, without extending the analysis to a broader suite of contextual or cross-benchmark comparisons.",
+      "authors": [
+        "Seyed Pouyan Mousavi Davoudi",
+        "Arshia Gharagozlou",
+        "Alireza Amiri-Margavi",
+        "Amin Gholami Davodi",
+        "Hamidreza Hasani Balyani"
+      ],
+      "published": "2026-07-22",
+      "categories": [
+        "cs.MA"
+      ],
+      "url": "https://arxiv.org/abs/2607.19670"
+    },
+    {
+      "id": "2510.05107",
+      "title": "Structured Cognitive Loop for Behavioral Intelligence in Large Language Model Agents (Extended Revision: From Behavioral Architecture to Epistemic Accountability)",
+      "abstract": "The central challenge for AI agents is not only performance but accountability. Agents that act through opaque prompt sequences may produce correct outputs, but they provide little basis for verifying why an action was permitted, where an error occurred, or how responsibility should be assigned. This paper presents the Structured Cognitive Loop as an architecture for accountable behavior in large language model agents. SCL separates cognition, memory, control, and action into distinct modules. The language model proposes. External memory preserves verified state. A lightweight controller checks preconditions, prevents redundant actions, and authorizes execution before tools are used. We evaluate SCL against ReAct and common LangChain agent variants across travel planning, conditional email drafting, and constraint guided image generation. Across 360 episodes, SCL achieves 86.3 percent task success compared with 70.5 to 76.8 percent for prompt based baselines. It also improves goal fidelity, reduces redundant tool calls, increases reuse of intermediate state, and lowers unsupported assertions. This extended revision situates SCL within a broader architecture of epistemic accountability. Subsequent extensions integrate context aware Human in the Loop control, Pool Gated Retrieval, and the Horizon Warrant Commitment framework. Together these components define an agent architecture in which the model proposes, structure decides, evidence is warranted before use, and human judgment is embedded in the trace rather than imposed after the fact. The result is a foundation for AI agents whose decisions are not only effective but also authorized, inspectable, and accountable.",
+      "authors": [
+        "Myung Ho Kim"
+      ],
+      "published": "2025-09-23",
+      "categories": [
+        "cs.AI"
+      ],
+      "url": "https://arxiv.org/abs/2510.05107"
+    },
+    {
+      "id": "2605.31408",
+      "title": "Skill Availability and Presentation Granularity in Large-Language-Model Agents: A Controlled SkillsBench Study",
+      "abstract": "Skill documents provide procedural knowledge to large-language-model agents at inference time. This article studies whether the presentation granularity of controlled skill knowledge changes downstream task success. The experiment uses a pinned SkillsBench version, a 30-task domain-balanced subset validated by official oracle runs, two reasoning-enabled model configurations, six skill conditions, and five trials per task-condition-model cell. Skill availability is the clearest empirical signal. Relative to no skill, skill conditions increase task-mean pass rate by 26.7 to 36.0 percentage points for GPT-5.5 and by 18.0 to 26.0 percentage points for DeepSeek V4-Flash. The final data contain 1,800 rows, with 900 rows for each model. The task is the inference unit. Five trials are aggregated within each task-condition-model cell before paired contrasts are estimated over 30 tasks. The primary presentation contrasts are smaller and uncertain. Low-abstraction guidance differs from high-abstraction guidance by +0.7 percentage points for GPT-5.5 and -6.7 percentage points for DeepSeek V4-Flash, with both 95% bootstrap confidence intervals crossing zero. Adding one worked example to medium-abstraction guidance differs from the no-example variant by +0.7 and +1.3 percentage points. Mean-reward robustness checks preserve the same substantive conclusion. In this controlled subset, skill availability is associated with higher success than no skill, while the tested presentation-granularity changes yield small, uncertain, and model-dependent effects.",
+      "authors": [
+        "Xiaonan Xu",
+        "Wenjing Wu"
+      ],
+      "published": "2026-05-29",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "url": "https://arxiv.org/abs/2605.31408"
+    },
+    {
+      "id": "2502.12280",
+      "title": "Connecting Large Language Model Agent to High Performance Computing Resource",
+      "abstract": "The Large Language Model agent workflow enables the LLM to invoke tool functions to increase the performance on specific scientific domain questions. To tackle large scale of scientific research, it requires access to computing resource and parallel computing setup. In this work, we implemented Parsl to the LangChain/LangGraph tool call setup, to bridge the gap between the LLM agent to the computing resource. Two tool call implementations were set up and tested on both local workstation and HPC environment on Polaris/ALCF. The first implementation with Parsl-enabled LangChain tool node queues the tool functions concurrently to the Parsl workers for parallel execution. The second configuration is implemented by converting the tool functions into Parsl ensemble functions, and is more suitable for large task on super computer environment. The LLM agent workflow was prompted to run molecular dynamics simulations, with different protein structure and simulation conditions. These results showed the LLM agent tools were managed and executed concurrently by Parsl on the available computing resource.",
+      "authors": [
+        "Heng Ma",
+        "Alexander Brace",
+        "Carlo Siebenschuh",
+        "Greg Pauloski",
+        "Ian Foster",
+        "Arvind Ramanathan"
+      ],
+      "published": "2025-02-17",
+      "categories": [
+        "cs.DC",
+        "cs.AI"
+      ],
+      "url": "https://arxiv.org/abs/2502.12280"
+    },
+    {
+      "id": "2608.14579",
+      "title": "SKILL: Self-correcting Knowledge-guided Iterative Large Language Model Agent for Logic Optimization",
+      "abstract": "Logic synthesis optimization poses significant challenges due to exponentially growing search spaces, sparse reward signals, and diverse logic structures. Traditional expert-designed flows lack adaptability, while reinforcement learning (RL) methods often suffer from low sample efficiency and limited interpretability. We introduce SKILL, a Self-correcting Knowledge-guided Iterative Large Language Model Agent that unifies multi-agent LLM reasoning and RL-based environment interaction for automated synthesis optimization. SKILL coordinates three specialized LLMs: GPT-4o for strategic planning, Claude Sonnet 4 for detailed reasoning, and Gemini 2.5 Pro for efficient analysis with a PPO-based RL agent that learns actionable policies through direct interaction with synthesis tools. A novel self-correcting module monitors environment feedback (PDA metrics), detects suboptimal behaviors, and invokes LLM-guided recovery strategies. Evaluations on IWLS, OpenCores, and EPFL benchmarks show SKILL achieves a 12.4 % PDA improvement over expert flows and 86.3% success rate on logic systems up to 500K gates.",
+      "authors": [
+        "Rui Yang"
+      ],
+      "published": "2026-06-12",
+      "categories": [
+        "cs.AI"
+      ],
+      "url": "https://arxiv.org/abs/2608.14579"
+    },
+    {
+      "id": "2402.06861",
+      "title": "UrbanKGent: A Unified Large Language Model Agent Framework for Urban Knowledge Graph Construction",
+      "abstract": "Urban knowledge graph has recently worked as an emerging building block to distill critical knowledge from multi-sourced urban data for diverse urban application scenarios. Despite its promising benefits, urban knowledge graph construction (UrbanKGC) still heavily relies on manual effort, hindering its potential advancement. This paper presents UrbanKGent, a unified large language model agent framework, for urban knowledge graph construction. Specifically, we first construct the knowledgeable instruction set for UrbanKGC tasks (such as relational triplet extraction and knowledge graph completion) via heterogeneity-aware and geospatial-infused instruction generation. Moreover, we propose a tool-augmented iterative trajectory refinement module to enhance and refine the trajectories distilled from GPT-4. Through hybrid instruction fine-tuning with augmented trajectories on Llama 2 and Llama 3 family, we obtain UrbanKGC agent family, consisting of UrbanKGent-7/8/13B version. We perform a comprehensive evaluation on two real-world datasets using both human and GPT-4 self-evaluation. The experimental results demonstrate that UrbanKGent family can not only significantly outperform 31 baselines in UrbanKGC tasks, but also surpass the state-of-the-art LLM, GPT-4, by more than 10% with approximately 20 times lower cost. Compared with the existing benchmark, the UrbanKGent family could help construct an UrbanKG with hundreds of times richer relationships using only one-fifth of the data. Our data and code are available at https://github.com/usail-hkust/UrbanKGent.",
+      "authors": [
+        "Yansong Ning",
+        "Hao Liu"
+      ],
+      "published": "2024-02-10",
+      "categories": [
+        "cs.AI"
+      ],
+      "url": "https://arxiv.org/abs/2402.06861"
+    },
+    {
+      "id": "2604.08567",
+      "title": "Multi-User Large Language Model Agents",
+      "abstract": "Large language models (LLMs) and LLM-based agents are increasingly deployed as assistants in planning and decision making, yet most existing systems are implicitly optimized for a single-principal interaction paradigm, in which the model is designed to satisfy the objectives of one dominant user whose instructions are treated as the sole source of authority and utility. However, as they are integrated into team workflows and organizational tools, they are increasingly required to serve multiple users simultaneously, each with distinct roles, preferences, and authority levels, leading to multi-user, multi-principal settings with unavoidable conflicts, information asymmetry, and privacy constraints. In this work, we present the first systematic study of multi-user LLM agents. We begin by formalizing multi-user interaction with LLM agents as a multi-principal decision problem, where a single agent must account for multiple users with potentially conflicting interests and associated challenges. We then introduce a unified multi-user interaction protocol and design three targeted stress-testing scenarios to evaluate current LLMs' capabilities in instruction following, privacy preservation, and coordination. Our results reveal systematic gaps: frontier LLMs frequently fail to maintain stable prioritization under conflicting user objectives, exhibit increasing privacy violations over multi-turn interactions, and suffer from efficiency bottlenecks when coordination requires iterative information gathering.",
+      "authors": [
+        "Shu Yang",
+        "Shenzhe Zhu",
+        "Hao Zhu",
+        "José Ramón Enríquez",
+        "Di Wang",
+        "Alex Pentland",
+        "Michiel A. Bakker",
+        "Jiaxin Pei"
+      ],
+      "published": "2026-03-19",
+      "categories": [
+        "cs.CL",
+        "cs.MA"
+      ],
+      "url": "https://arxiv.org/abs/2604.08567"
+    },
+    {
+      "id": "2312.17259",
+      "title": "Empowering Working Memory for Large Language Model Agents",
+      "abstract": "Large language models (LLMs) have achieved impressive linguistic capabilities. However, a key limitation persists in their lack of human-like memory faculties. LLMs exhibit constrained memory retention across sequential interactions, hindering complex reasoning. This paper explores the potential of applying cognitive psychology's working memory frameworks, to enhance LLM architecture. The limitations of traditional LLM memory designs are analyzed, including their isolation of distinct dialog episodes and lack of persistent memory links. To address this, an innovative model is proposed incorporating a centralized Working Memory Hub and Episodic Buffer access to retain memories across episodes. This architecture aims to provide greater continuity for nuanced contextual reasoning during intricate tasks and collaborative scenarios. While promising, further research is required into optimizing episodic memory encoding, storage, prioritization, retrieval, and security. Overall, this paper provides a strategic blueprint for developing LLM agents with more sophisticated, human-like memory capabilities, highlighting memory mechanisms as a vital frontier in artificial general intelligence.",
+      "authors": [
+        "Jing Guo",
+        "Nan Li",
+        "Jianchuan Qi",
+        "Hang Yang",
+        "Ruiqiao Li",
+        "Yuzhen Feng",
+        "Si Zhang",
+        "Ming Xu"
+      ],
+      "published": "2023-12-22",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "url": "https://arxiv.org/abs/2312.17259"
+    },
+    {
+      "id": "2510.02360",
+      "title": "Spiral of Silence in Large Language Model Agents",
+      "abstract": "The Spiral of Silence (SoS) theory holds that individuals with minority views often refrain from speaking out for fear of social isolation, enabling majority positions to dominate public discourse. When the 'agents' are large language models (LLMs), however, the classical psychological explanation is not directly applicable, since SoS was developed for human societies. This raises a central question: can SoS-like dynamics nevertheless emerge from purely statistical language generation in LLM collectives? We propose an evaluation framework for examining SoS in LLM agents. Specifically, we consider four controlled conditions that systematically vary the availability of 'History' and 'Persona' signals. Opinion dynamics are assessed using trend tests such as Mann-Kendall and Spearman's rank, along with concentration measures including kurtosis and interquartile range. Experiments across open-source and closed-source models show that history and persona together produce strong majority dominance and replicate SoS patterns; history signals alone induce strong anchoring; and persona signals alone foster diverse but uncorrelated opinions, indicating that without historical anchoring, SoS dynamics cannot emerge. The work bridges computational sociology and responsible AI design, highlighting the need to monitor and mitigate emergent conformity in LLM-agent systems.",
+      "authors": [
+        "Mingze Zhong",
+        "Meng Fang",
+        "Zijing Shi",
+        "Yuxuan Huang",
+        "Shunfeng Zheng",
+        "Yali Du",
+        "Ling Chen",
+        "Jun Wang"
+      ],
+      "published": "2025-09-28",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "url": "https://arxiv.org/abs/2510.02360"
+    },
+    {
+      "id": "2406.00244",
+      "title": "Controlling Large Language Model Agents with Entropic Activation Steering",
+      "abstract": "The rise of large language models (LLMs) has prompted increasing interest in their use as in-context learning agents. At the core of agentic behavior is the capacity for exploration, or the ability to actively gather information about the environment. But how do LLM agents explore, and how can we control their exploratory behaviors? To answer these questions, we take a representation-level perspective, and introduce Entropic Activation Steering (EAST), an activation steering method for in-context LLM agents. Firstly, we demonstrate that EAST can effectively manipulate an LLM agent's exploration by directly affecting the high-level actions parsed from the outputs of the LLM, in contrast to token-level temperature sampling. Secondly, we reveal how applying this control modulates the uncertainty exhibited in the LLM's thoughts, guiding the agent towards more exploratory actions. Finally, we demonstrate that the steering vectors obtained by EAST generalize across task variants. In total, these results show that LLM agents explicitly encode uncertainty over their actions in their representation space. Our work paves the way for a new understanding of the functioning of LLM agents and to effective control of their decision-making behaviors.",
+      "authors": [
+        "Nate Rahn",
+        "Pierluca D'Oro",
+        "Marc G. Bellemare"
+      ],
+      "published": "2024-06-01",
+      "categories": [
+        "cs.CL"
+      ],
+      "url": "https://arxiv.org/abs/2406.00244"
+    },
+    {
+      "id": "2407.12821",
+      "title": "AutoFlow: Automated Workflow Generation for Large Language Model Agents",
+      "abstract": "Recent advancements in Large Language Models (LLMs) have shown significant progress in understanding complex natural language. One important application of LLM is LLM-based AI Agent, which leverages the ability of LLM as well as external tools for complex-task solving. To make sure LLM Agents follow an effective and reliable procedure to solve the given task, manually designed workflows are usually used to guide the working mechanism of agents. However, manually designing the workflows requires considerable efforts and domain knowledge, making it difficult to develop and deploy agents on massive scales. To address these issues, we propose AutoFlow, a framework designed to automatically generate workflows for agents to solve complex tasks. AutoFlow takes natural language program as the format of agent workflow and employs a workflow optimization procedure to iteratively optimize the workflow quality. Besides, this work offers two workflow generation methods: fine-tuning-based and in-context-based methods, making the AutoFlow framework applicable to both open-source and closed-source LLMs. Experimental results show that our framework can produce robust and reliable agent workflows. We believe that the automatic generation and interpretation of workflows in natural language represent a promising paradigm for solving complex tasks, particularly with the rapid development of LLMs. The source code of this work is available at https://github.com/agiresearch/AutoFlow.",
+      "authors": [
+        "Zelong Li",
+        "Shuyuan Xu",
+        "Kai Mei",
+        "Wenyue Hua",
+        "Balaji Rama",
+        "Om Raheja",
+        "Hao Wang",
+        "He Zhu",
+        "Yongfeng Zhang"
+      ],
+      "published": "2024-07-01",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "url": "https://arxiv.org/abs/2407.12821"
+    },
+    {
+      "id": "2503.19213",
+      "title": "A Survey of Large Language Model Agents for Question Answering",
+      "abstract": "This paper surveys the development of large language model (LLM)-based agents for question answering (QA). Traditional agents face significant limitations, including substantial data requirements and difficulty in generalizing to new environments. LLM-based agents address these challenges by leveraging LLMs as their core reasoning engine. These agents achieve superior QA results compared to traditional QA pipelines and naive LLM QA systems by enabling interaction with external environments. We systematically review the design of LLM agents in the context of QA tasks, organizing our discussion across key stages: planning, question understanding, information retrieval, and answer generation. Additionally, this paper identifies ongoing challenges and explores future research directions to enhance the performance of LLM agent QA systems.",
+      "authors": [
+        "Murong Yue"
+      ],
+      "published": "2025-03-24",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.HC"
+      ],
+      "url": "https://arxiv.org/abs/2503.19213"
+    },
+    {
+      "id": "2601.22436",
+      "title": "Large Language Model Agents Are Not Always Faithful Self-Evolvers",
+      "abstract": "Self-evolving large language model (LLM) agents continually improve by accumulating and reusing past experience, yet it remains unclear whether they faithfully rely on that experience to guide their behavior. We present the first systematic investigation of experience faithfulness, the causal dependence of an agent's decisions on the experience it is given, in self-evolving LLM agents. Using controlled causal interventions on both raw and condensed forms of experience, we comprehensively evaluate four representative frameworks across 13 LLM backbones and 9 environments. Our analysis uncovers a striking asymmetry: while agents consistently depend on raw experience, they often disregard or misinterpret condensed experience, even when it is the only experience provided. This gap persists across single- and multi-agent configurations and across backbone scales. We trace its underlying causes to three factors: the semantic limitations of condensed content, internal processing biases that suppress experience, and task regimes where pretrained priors already suffice. These findings challenge prevailing assumptions about self-evolving methods and underscore the need for more faithful and reliable approaches to experience integration.",
+      "authors": [
+        "Weixiang Zhao",
+        "Yingshuo Wang",
+        "Yichen Zhang",
+        "Yang Deng",
+        "Yanyan Zhao",
+        "Wanxiang Che",
+        "Bing Qin",
+        "Ting Liu"
+      ],
+      "published": "2026-01-30",
+      "categories": [
+        "cs.CL"
+      ],
+      "url": "https://arxiv.org/abs/2601.22436"
+    },
+    {
+      "id": "2409.12832",
+      "title": "FoodPuzzle: Developing Large Language Model Agents as Flavor Scientists",
+      "abstract": "Flavor development in the food industry is increasingly challenged by the need for rapid innovation and precise flavor profile creation. Traditional flavor research methods typically rely on iterative, subjective testing, which lacks the efficiency and scalability required for modern demands. This paper presents three contributions to address the challenges. Firstly, we define a new problem domain for scientific agents in flavor science, conceptualized as the generation of hypotheses for flavor profile sourcing and understanding. To facilitate research in this area, we introduce the FoodPuzzle, a challenging benchmark consisting of 978 food items and 1,766 flavor molecules profiles. We propose a novel Scientific Agent approach, integrating in-context learning and retrieval augmented techniques to generate grounded hypotheses in the domain of food science. Experimental results indicate that our model significantly surpasses traditional methods in flavor profile prediction tasks, demonstrating its potential to transform flavor development practices.",
+      "authors": [
+        "Tenghao Huang",
+        "Donghee Lee",
+        "John Sweeney",
+        "Jiatong Shi",
+        "Emily Steliotes",
+        "Matthew Lange",
+        "Jonathan May",
+        "Muhao Chen"
+      ],
+      "published": "2024-09-19",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "url": "https://arxiv.org/abs/2409.12832"
+    },
+    {
+      "id": "2510.24014",
+      "title": "TEXT2DB: Integration-Aware Information Extraction with Large Language Model Agents",
+      "abstract": "The task of information extraction (IE) is to extract structured knowledge from text. However, it is often not straightforward to utilize IE output due to the mismatch between the IE ontology and the downstream application needs. We propose a new formulation of IE TEXT2DB that emphasizes the integration of IE output and the target database (or knowledge base). Given a user instruction, a document set, and a database, our task requires the model to update the database with values from the document set to satisfy the user instruction. This task requires understanding user instructions for what to extract and adapting to the given DB/KB schema for how to extract on the fly. To evaluate this new task, we introduce a new benchmark featuring common demands such as data infilling, row population, and column addition. In addition, we propose an LLM agent framework OPAL (Observe-PlanAnalyze LLM) which includes an Observer component that interacts with the database, the Planner component that generates a code-based plan with calls to IE models, and the Analyzer component that provides feedback regarding code quality before execution. Experiments show that OPAL can successfully adapt to diverse database schemas by generating different code plans and calling the required IE models. We also highlight difficult cases such as dealing with large databases with complex dependencies and extraction hallucination, which we believe deserve further investigation. Source code: https://github.com/yzjiao/Text2DB",
+      "authors": [
+        "Yizhu Jiao",
+        "Sha Li",
+        "Sizhe Zhou",
+        "Heng Ji",
+        "Jiawei Han"
+      ],
+      "published": "2025-10-28",
+      "categories": [
+        "cs.CL"
+      ],
+      "url": "https://arxiv.org/abs/2510.24014"
+    },
+    {
+      "id": "2402.01737",
+      "title": "Assistive Large Language Model Agents for Socially-Aware Negotiation Dialogues",
+      "abstract": "We develop assistive agents based on Large Language Models (LLMs) that aid interlocutors in business negotiations. Specifically, we simulate business negotiations by letting two LLM-based agents engage in role play. A third LLM acts as a remediator agent to rewrite utterances violating norms for improving negotiation outcomes. We introduce a simple tuning-free and label-free In-Context Learning (ICL) method to identify high-quality ICL exemplars for the remediator, where we propose a novel select criteria, called value impact, to measure the quality of the negotiation outcomes. We provide rich empirical evidence to demonstrate its effectiveness in negotiations across three different negotiation topics. We have released our source code and the generated dataset at: https://github.com/tk1363704/SADAS.",
+      "authors": [
+        "Yuncheng Hua",
+        "Lizhen Qu",
+        "Gholamreza Haffari"
+      ],
+      "published": "2024-01-29",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "url": "https://arxiv.org/abs/2402.01737"
+    },
+    {
+      "id": "2412.18093",
+      "title": "Molly: Making Large Language Model Agents Solve Python Problem More Logically",
+      "abstract": "Applying large language models (LLMs) as teaching assists has attracted much attention as an integral part of intelligent education, particularly in computing courses. To reduce the gap between the LLMs and the computer programming education expert, fine-tuning and retrieval augmented generation (RAG) are the two mainstream methods in existing researches. However, fine-tuning for specific tasks is resource-intensive and may diminish the model`s generalization capabilities. RAG can perform well on reducing the illusion of LLMs, but the generation of irrelevant factual content during reasoning can cause significant confusion for learners. To address these problems, we introduce the Molly agent, focusing on solving the proposed problem encountered by learners when learning Python programming language. Our agent automatically parse the learners' questioning intent through a scenario-based interaction, enabling precise retrieval of relevant documents from the constructed knowledge base. At generation stage, the agent reflect on the generated responses to ensure that they not only align with factual content but also effectively answer the user's queries. Extensive experimentation on a constructed Chinese Python QA dataset shows the effectiveness of the Molly agent, indicating an enhancement in its performance for providing useful responses to Python questions.",
+      "authors": [
+        "Rui Xiao",
+        "Jiong Wang",
+        "Lu Han",
+        "Na Zong",
+        "Han Wu"
+      ],
+      "published": "2024-12-24",
+      "categories": [
+        "cs.CL"
+      ],
+      "url": "https://arxiv.org/abs/2412.18093"
+    },
+    {
+      "id": "2512.24329",
+      "title": "World model inspired sarcasm reasoning with large language model agents",
+      "abstract": "Sarcasm understanding is a challenging problem in natural language processing, as it requires capturing the discrepancy between the surface meaning of an utterance and the speaker's intentions as well as the surrounding social context. Although recent advances in deep learning and Large Language Models (LLMs) have substantially improved performance, most existing approaches still rely on black-box predictions of a single model, making it difficult to structurally explain the cognitive factors underlying sarcasm. Moreover, while sarcasm often emerges as a mismatch between semantic evaluation and normative expectations or intentions, frameworks that explicitly decompose and model these components remain limited. In this work, we reformulate sarcasm understanding as a world model inspired reasoning process and propose World Model inspired SArcasm Reasoning (WM-SAR), which decomposes literal meaning, context, normative expectation, and intention into specialized LLM-based agents. The discrepancy between literal evaluation and normative expectation is explicitly quantified as a deterministic inconsistency score, and together with an intention score, these signals are integrated by a lightweight Logistic Regression model to infer the final sarcasm probability. This design leverages the reasoning capability of LLMs while maintaining an interpretable numerical decision structure. Experiments on representative sarcasm detection benchmarks show that WM-SAR consistently outperforms existing deep learning and LLM-based methods. Ablation studies and case analyses further demonstrate that integrating semantic inconsistency and intention reasoning is essential for effective sarcasm detection, achieving both strong performance and high interpretability.",
+      "authors": [
+        "Keito Inoshita",
+        "Shinnosuke Mizuno"
+      ],
+      "published": "2025-12-30",
+      "categories": [
+        "cs.CL"
+      ],
+      "url": "https://arxiv.org/abs/2512.24329"
+    },
+    {
+      "id": "2402.15809",
+      "title": "Empowering Large Language Model Agents through Action Learning",
+      "abstract": "Large Language Model (LLM) Agents have recently garnered increasing interest yet they are limited in their ability to learn from trial and error, a key element of intelligent behavior. In this work, we argue that the capacity to learn new actions from experience is fundamental to the advancement of learning in LLM agents. While humans naturally expand their action spaces and develop skills through experiential learning, LLM agents typically operate within fixed action spaces, limiting their potential for growth. To address these challenges, our study explores open-action learning for language agents. We introduce a framework LearnAct with an iterative learning strategy to create and improve actions in the form of Python functions. In each iteration, LLM revises and updates the currently available actions based on the errors identified in unsuccessful training tasks, thereby enhancing action effectiveness. Our experimental evaluations across Robotic Planning and Alfworld environments reveal that after learning on a few training task instances, our approach to open-action learning markedly improves agent performance for the type of task (by 32 percent in AlfWorld compared to ReAct+Reflexion, for instance) highlighting the importance of experiential action learning in the development of more intelligent LLM agents.",
+      "authors": [
+        "Haiteng Zhao",
+        "Chang Ma",
+        "Guoyin Wang",
+        "Jing Su",
+        "Lingpeng Kong",
+        "Jingjing Xu",
+        "Zhi-Hong Deng",
+        "Hongxia Yang"
+      ],
+      "published": "2024-02-24",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "url": "https://arxiv.org/abs/2402.15809"
+    },
+    {
+      "id": "2507.19090",
+      "title": "Debating Truth: Debate-driven Claim Verification with Multiple Large Language Model Agents",
+      "abstract": "State-of-the-art single-agent claim verification methods struggle with complex claims that require nuanced analysis of multifaceted evidence. Inspired by real-world professional fact-checkers, we propose \\textbf{DebateCV}, the first debate-driven claim verification framework powered by multiple LLM agents. In DebateCV, two \\textit{Debaters} argue opposing stances to surface subtle errors in single-agent assessments. A decisive \\textit{Moderator} is then required to weigh the evidential strength of conflicting arguments to deliver an accurate verdict. Yet, zero-shot Moderators are biased toward neutral judgments, and no datasets exist for training them. To bridge this gap, we propose \\textbf{Debate-SFT}, a post-training framework that leverages synthetic data to enhance agents' ability to effectively adjudicate debates for claim verification. Results show that our methods surpass state-of-the-art non-debate approaches in both accuracy (across various evidence conditions) and justification quality.",
+      "authors": [
+        "Haorui He",
+        "Yupeng Li",
+        "Dacheng Wen",
+        "Yang Chen",
+        "Reynold Cheng",
+        "Donglong Chen",
+        "Francis C. M. Lau"
+      ],
+      "published": "2025-07-25",
+      "categories": [
+        "cs.CL"
+      ],
+      "url": "https://arxiv.org/abs/2507.19090"
+    },
+    {
+      "id": "2410.22916",
+      "title": "Explainable Behavior Cloning: Teaching Large Language Model Agents through Learning by Demonstration",
+      "abstract": "Autonomous mobile app interaction has become increasingly important with growing complexity of mobile applications. Developing intelligent agents that can effectively navigate and interact with mobile apps remains a significant challenge. In this paper, we propose an Explainable Behavior Cloning LLM Agent (EBC-LLMAgent), a novel approach that combines large language models (LLMs) with behavior cloning by learning demonstrations to create intelligent and explainable agents for autonomous mobile app interaction. EBC-LLMAgent consists of three core modules: Demonstration Encoding, Code Generation, and UI Mapping, which work synergistically to capture user demonstrations, generate executable codes, and establish accurate correspondence between code and UI elements. We introduce the Behavior Cloning Chain Fusion technique to enhance the generalization capabilities of the agent. Extensive experiments on five popular mobile applications from diverse domains demonstrate the superior performance of EBC-LLMAgent, achieving high success rates in task completion, efficient generalization to unseen scenarios, and the generation of meaningful explanations.",
+      "authors": [
+        "Yanchu Guan",
+        "Dong Wang",
+        "Yan Wang",
+        "Haiqing Wang",
+        "Renen Sun",
+        "Chenyi Zhuang",
+        "Jinjie Gu",
+        "Zhixuan Chu"
+      ],
+      "published": "2024-10-30",
+      "categories": [
+        "cs.CL"
+      ],
+      "url": "https://arxiv.org/abs/2410.22916"
+    },
+    {
+      "id": "2510.11004",
+      "title": "Automating Structural Engineering Workflows with Large Language Model Agents",
+      "abstract": "We introduce $\\textbf{MASSE}$, the first Multi-Agent System for Structural Engineering, effectively integrating large language model (LLM)-based agents with real-world engineering workflows. Structural engineering is a fundamental yet traditionally stagnant domain, with core workflows remaining largely unchanged for decades despite its substantial economic impact and global market size. Recent advancements in LLMs have significantly enhanced their ability to perform complex reasoning, long-horizon planning, and precise tool utilization -- capabilities well aligned with structural engineering tasks such as interpreting design codes, executing load calculations, and verifying structural capacities. We present a proof-of-concept showing that most real-world structural engineering workflows can be fully automated through a training-free LLM-based multi-agent system. MASSE enables immediate deployment in professional environments, and our comprehensive validation on real-world case studies demonstrates that it can reduce expert workload from approximately two hours to mere minutes, while enhancing both reliability and accuracy in practical engineering scenarios.",
+      "authors": [
+        "Haoran Liang",
+        "Yufa Zhou",
+        "Mohammad Talebi Kalaleh",
+        "Qipei Mei"
+      ],
+      "published": "2025-10-13",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.CE",
+        "cs.CL"
+      ],
+      "url": "https://arxiv.org/abs/2510.11004"
+    },
+    {
+      "id": "2403.02691",
+      "title": "InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents",
+      "abstract": "Recent work has embodied LLMs as agents, allowing them to access tools, perform actions, and interact with external content (e.g., emails or websites). However, external content introduces the risk of indirect prompt injection (IPI) attacks, where malicious instructions are embedded within the content processed by LLMs, aiming to manipulate these agents into executing detrimental actions against users. Given the potentially severe consequences of such attacks, establishing benchmarks to assess and mitigate these risks is imperative. In this work, we introduce InjecAgent, a benchmark designed to assess the vulnerability of tool-integrated LLM agents to IPI attacks. InjecAgent comprises 1,054 test cases covering 17 different user tools and 62 attacker tools. We categorize attack intentions into two primary types: direct harm to users and exfiltration of private data. We evaluate 30 different LLM agents and show that agents are vulnerable to IPI attacks, with ReAct-prompted GPT-4 vulnerable to attacks 24% of the time. Further investigation into an enhanced setting, where the attacker instructions are reinforced with a hacking prompt, shows additional increases in success rates, nearly doubling the attack success rate on the ReAct-prompted GPT-4. Our findings raise questions about the widespread deployment of LLM Agents. Our benchmark is available at https://github.com/uiuc-kang-lab/InjecAgent.",
+      "authors": [
+        "Qiusi Zhan",
+        "Zhixiang Liang",
+        "Zifan Ying",
+        "Daniel Kang"
+      ],
+      "published": "2024-03-05",
+      "categories": [
+        "cs.CL",
+        "cs.CR"
+      ],
+      "url": "https://arxiv.org/abs/2403.02691"
+    },
+    {
+      "id": "2608.30188",
+      "title": "GPAgentBench-2K: Benchmarking Large Language Model Agents in Complex Clinical Action Space",
+      "abstract": "Large Language Models (LLMs) show great potential as clinical agents, yet existing benchmarks reduce clinical workflows to static predictions or unconstrained Markov Decision Processes (MDPs) with coarse action sets. To address this, we introduce GPAgentBench-2K, the first Constrained MDP (CMDP) LLM-agent benchmark for primary-care clinical decision-making, constructed from expert-validated records of real-world GP encounters. Our environment models a full spectrum of six foundational clinical actions, imposes a topological workflow prior over the action space, and operationalizes safety-informed abstention as a first-class outcome. Evaluating 16 state-of-the-art LLMs reveals a significant performance degradation as the action space scales. Crucially, we uncover a clinical quality-safety gap: even frontier models with the highest diagnosis accuracy violate safety constraints in over half of high-risk cases. Finally, we establish a reference point using Constrained Group Relative Policy Optimization (C-GRPO), and show that while explicitly modeling constraints improves performance over unconstrained RL methods, it remains far from clinically acceptable safety.",
+      "authors": [
+        "Boqi Chen",
+        "Xudong Liu",
+        "Yunke Ao",
+        "Heejin Do",
+        "Jianing Qiu"
+      ],
+      "published": "2026-08-31",
+      "categories": [
+        "cs.CL"
+      ],
+      "url": "https://arxiv.org/abs/2608.30188"
+    },
+    {
+      "id": "2502.20859",
+      "title": "The Power of Personality: A Human Simulation Perspective to Investigate Large Language Model Agents",
+      "abstract": "Large language models (LLMs) excel in both closed tasks (including problem-solving, and code generation) and open tasks (including creative writing), yet existing explanations for their capabilities lack connections to real-world human intelligence. To fill this gap, this paper systematically investigates LLM intelligence through the lens of ``human simulation'', addressing three core questions: (1) \\textit{How do personality traits affect problem-solving in closed tasks?} (2) \\textit{How do traits shape creativity in open tasks?} (3) \\textit{How does single-agent performance influence multi-agent collaboration?} By assigning Big Five personality traits to LLM agents and evaluating their performance in single- and multi-agent settings, we reveal that specific traits significantly influence reasoning accuracy (closed tasks) and creative output (open tasks). Furthermore, multi-agent systems exhibit collective intelligence distinct from individual capabilities, driven by distinguishing combinations of personalities.",
+      "authors": [
+        "Yifan Duan",
+        "Yihong Tang",
+        "Xuefeng Bai",
+        "Kehai Chen",
+        "Juntao Li",
+        "Min Zhang"
+      ],
+      "published": "2025-02-28",
+      "categories": [
+        "cs.CL"
+      ],
+      "url": "https://arxiv.org/abs/2502.20859"
+    },
+    {
+      "id": "2511.15074",
+      "title": "Knowledge-Informed Automatic Feature Extraction via Collaborative Large Language Model Agents",
+      "abstract": "The performance of machine learning models on tabular data is critically dependent on high-quality feature engineering. While Large Language Models (LLMs) have shown promise in automating feature extraction (AutoFE), existing methods are often limited by monolithic LLM architectures, simplistic quantitative feedback, and a failure to systematically integrate external domain knowledge. This paper introduces Rogue One, a novel, LLM-based multi-agent framework for knowledge-informed automatic feature extraction. Rogue One operationalizes a decentralized system of three specialized agents-Scientist, Extractor, and Tester-that collaborate iteratively to discover, generate, and validate predictive features. Crucially, the framework moves beyond primitive accuracy scores by introducing a rich, qualitative feedback mechanism and a \"flooding-pruning\" strategy, allowing it to dynamically balance feature exploration and exploitation. By actively incorporating external knowledge via an integrated retrieval-augmented (RAG) system, Rogue One generates features that are not only statistically powerful but also semantically meaningful and interpretable. We demonstrate that Rogue One significantly outperforms state-of-the-art methods on a comprehensive suite of 19 classification and 9 regression datasets. Furthermore, we show qualitatively that the system surfaces novel, testable hypotheses, such as identifying a new potential biomarker in the myocardial dataset, underscoring its utility as a tool for scientific discovery.",
+      "authors": [
+        "Henrik Bradland",
+        "Morten Goodwin",
+        "Vladimir I. Zadorozhny",
+        "Per-Arne Andersen"
+      ],
+      "published": "2025-11-19",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "url": "https://arxiv.org/abs/2511.15074"
+    },
+    {
+      "id": "2309.01352",
+      "title": "Self-driven Grounding: Large Language Model Agents with Automatical Language-aligned Skill Learning",
+      "abstract": "Large language models (LLMs) show their powerful automatic reasoning and planning capability with a wealth of semantic knowledge about the human world. However, the grounding problem still hinders the applications of LLMs in the real-world environment. Existing studies try to fine-tune the LLM or utilize pre-defined behavior APIs to bridge the LLMs and the environment, which not only costs huge human efforts to customize for every single task but also weakens the generality strengths of LLMs. To autonomously ground the LLM onto the environment, we proposed the Self-Driven Grounding (SDG) framework to automatically and progressively ground the LLM with self-driven skill learning. SDG first employs the LLM to propose the hypothesis of sub-goals to achieve tasks and then verify the feasibility of the hypothesis via interacting with the underlying environment. Once verified, SDG can then learn generalized skills with the guidance of these successfully grounded subgoals. These skills can be further utilized to accomplish more complex tasks which fail to pass the verification phase. Verified in the famous instruction following task set-BabyAI, SDG achieves comparable performance in the most challenging tasks compared with imitation learning methods that cost millions of demonstrations, proving the effectiveness of learned skills and showing the feasibility and efficiency of our framework.",
+      "authors": [
+        "Shaohui Peng",
+        "Xing Hu",
+        "Qi Yi",
+        "Rui Zhang",
+        "Jiaming Guo",
+        "Di Huang",
+        "Zikang Tian",
+        "Ruizhi Chen",
+        "Zidong Du",
+        "Qi Guo",
+        "Yunji Chen",
+        "Ling Li"
+      ],
+      "published": "2023-09-04",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "url": "https://arxiv.org/abs/2309.01352"
+    },
+    {
+      "id": "2601.17344",
+      "title": "The Shadow Self: Intrinsic Value Misalignment in Large Language Model Agents",
+      "abstract": "Large language model (LLM) agents with extended autonomy unlock new capabilities, but also introduce heightened challenges for LLM safety. In particular, an LLM agent may pursue objectives that deviate from human values and ethical norms, a risk known as value misalignment. Existing evaluations primarily focus on responses to explicit harmful input or robustness against system failure, while value misalignment in realistic, fully benign, and agentic settings remains largely underexplored. To fill this gap, we first formalize the Loss-of-Control risk and identify the previously underexamined Intrinsic Value Misalignment (Intrinsic VM). We then introduce IMPRESS (Intrinsic Value Misalignment Probes in REalistic Scenario Set), a scenario-driven framework for systematically assessing this risk. Following our framework, we construct benchmarks composed of realistic, fully benign, and contextualized scenarios, using a multi-stage LLM generation pipeline with rigorous quality control. We evaluate Intrinsic VM on 21 state-of-the-art LLM agents and find that it is a common and broadly observed safety risk across models. Moreover, the misalignment rates vary by motives, risk types, model scales, and architectures. While decoding strategies and hyperparameters exhibit only marginal influence, contextualization and framing mechanisms significantly shape misalignment behaviors. Finally, we conduct human verification to validate our automated judgments and assess existing mitigation strategies, such as safety prompting and guardrails, which show instability or limited effectiveness. We further demonstrate key use cases of IMPRESS across the AI Ecosystem. Our code and benchmark will be publicly released upon acceptance.",
+      "authors": [
+        "Chen Chen",
+        "Kim Young Il",
+        "Yuan Yang",
+        "Wenhao Su",
+        "Yilin Zhang",
+        "Xueluan Gong",
+        "Qian Wang",
+        "Yongsen Zheng",
+        "Ziyao Liu",
+        "Kwok-Yan Lam"
+      ],
+      "published": "2026-01-24",
+      "categories": [
+        "cs.CL"
+      ],
+      "url": "https://arxiv.org/abs/2601.17344"
+    }
+  ]
+}

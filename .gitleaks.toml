@@ -1,0 +1,24 @@
+title = "Actae gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Test fixtures and documented development placeholders"
+paths = [
+  '''actae/target/.*''',
+  '''tests/.*''',
+  '''sdks/python/tests/.*''',
+  '''sdks/go/.*_test\.go''',
+  '''sdks/typescript/test.*''',
+  '''docs/EDITIONS\.md''',
+]
+regexes = [
+  '''0123456789abcdef0123456789abcdef''',
+  '''operator-secret-1234567890abcdefghij''',
+  '''c3RhdGljLXRlc3Qta2V5''',
+  '''diviga_[0-9a-f]{64}''',
+  '''diviga_abc''',
+  '''Rt5-Pm9v-Kw3q-Zx8n''',
+  '''invalid-key-12345''',
+]

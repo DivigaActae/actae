@@ -1,0 +1,7 @@
+{
+  "schema": "actae.run-carrier/v1",
+  "channel_id": "temporal:workflow-42",
+  "run_id": "workflow-42",
+  "framework": "temporal",
+  "workflow_id": "workflow-42"
+}

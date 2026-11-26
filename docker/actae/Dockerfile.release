@@ -1,0 +1,35 @@
+# Release runtime image: takes a PREBUILT, self-contained `actae` binary
+# (dashboard + managed PostgreSQL baked in; static musl on Linux) and wraps
+# it in a minimal image. No compilation here — the binary is the artifact.
+#
+# Build context must contain `bins/<targetarch>/actae` (see the release
+# workflow); `--platform linux/amd64,linux/arm64` + buildx set TARGETARCH.
+FROM alpine:3.20
+
+# The binary is fully static (musl) and reqwest embeds webpki-roots, but
+# ca-certificates keeps any system-verifier or operator TLS tooling working.
+RUN apk add --no-cache ca-certificates wget
+
+ARG TARGETARCH
+COPY bins/${TARGETARCH}/actae /usr/local/bin/actae
+RUN chmod 0755 /usr/local/bin/actae
+
+# Non-root runtime user with a writable HOME (enrollment + log files).
+RUN addgroup -S -g 1001 actae \
+    && adduser -S -u 1001 -G actae -h /home/actae actae \
+    && mkdir -p /app/logs \
+    && chown -R actae:actae /app /home/actae
+ENV HOME=/home/actae
+USER actae
+
+EXPOSE 8002
+ENV ACTAE_PORT=8002
+
+HEALTHCHECK --interval=10s --timeout=5s --retries=3 --start-period=15s \
+    CMD wget -q --spider http://127.0.0.1:8002/healthz || exit 1
+
+# The image is fully self-contained (dashboard + Alpine PostgreSQL baked in)
+# and works offline: it never downloads PostgreSQL on first start. Managed
+# storage is the default; an operator who sets DATABASE_URL / POSTGRES_* (or
+# passes --database-url) gets external PostgreSQL instead.
+CMD ["actae"]

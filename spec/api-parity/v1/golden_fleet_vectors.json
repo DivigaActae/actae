@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "description": "Cross-SDK golden corpus for the fleet wire format (Deep-004 / PR-020). Every Python/Go/TypeScript SDK validates its JSON number handling, response-envelope unwrapping, error-envelope mapping, pagination token shape, fork-receipt fields, and WS broadcast frame shapes against these exact vectors, so a wire-format regression in one SDK fails loudly in all three.",
+  "fleet_wire": {
+    "http_envelope": {
+      "input": { "data": { "ok": true, "cursor": 5 } },
+      "unwrap": { "ok": true, "cursor": 5 },
+      "note": "Fleet responses wrap the payload under `data`; SDKs unwrap it transparently (and return the raw value when there is no `data` object)."
+    },
+    "error_envelope": {
+      "input": { "code": "idempotency_conflict", "message": "replay conflict", "retryable": false, "request_id": "rq-1" },
+      "status": 409,
+      "message": "replay conflict",
+      "note": "PR-021: gateway errors are typed envelopes; the SDK surfaces the HTTP status + message."
+    },
+    "arbitrary_precision": {
+      "input": {
+        "big": { "$sonic_rs::private::JsonNumber": "9007199254740993" },
+        "negative": { "$sonic_rs::private::JsonNumber": "-9007199254740993" },
+        "float": { "$sonic_rs::private::JsonNumber": "3.5" },
+        "nested": { "a": { "$sonic_rs::private::JsonNumber": "123" } },
+        "list": [ { "$sonic_rs::private::JsonNumber": "42" } ]
+      },
+      "big_value": "9007199254740993",
+      "negative_value": "-9007199254740993",
+      "float_value": "3.5",
+      "nested_value": "123",
+      "list_value": "42",
+      "note": "sonic-rs wraps numbers > i64/u64 or unusual values as {\"$sonic_rs::private::JsonNumber\":\"…\"}. Python unwraps to int, Go to int64/float64, TypeScript to bigint (never a silently rounded Number). Values past Number.MAX_SAFE_INTEGER must NOT be silently rounded."
+    },
+    "pagination": {
+      "page_tokens": { "ins_a": "tok-a", "ins_b": "tok-b" },
+      "note": "PR-008: multi-instance continuation is an opaque map instance_id -> token; SDKs must preserve the full map and never collapse it to a single token."
+    },
+    "fork_receipt": {
+      "input": {
+        "child_channel_id": "ch_child",
+        "source_channel_id": "ch_src",
+        "source_state_version": 3,
+        "requested_cursor": 2,
+        "resolved_cursor": 2,
+        "restorable": true,
+        "manifest": { "prompt": "p" }
+      },
+      "child_channel_id": "ch_child",
+      "source_channel_id": "ch_src",
+      "source_state_version": 3,
+      "restorable": true,
+      "note": "ForkReceipt carries immutable provenance: child + source channel, source state version, boundary cursors, restorability and the immutable manifest."
+    },
+    "ws_broadcast": {
+      "legacy": { "Broadcast": { "topic": "ch", "payload": { "event": { "id": "evt-1", "channel_id": "ch", "event_type": "tool.x", "cursor": 2 } } } },
+      "type_tagged": { "type": "broadcast", "topic": "ch", "payload": { "event": { "id": "evt-2", "channel_id": "ch", "event_type": "tool.y", "cursor": 3 } } },
+      "note": "The canonical server emits BOTH broadcast encodings on the wire. Consumers must treat both as events (never as control frames) so live fan-out and the live bus stay fed."
+    },
+    "confirmation": {
+      "header": "X-Actae-Confirm-Target",
+      "value": "ch_child",
+      "note": "Destructive fleet operations carry the confirmation target in this header; SDKs forward it unchanged."
+    }
+  }
+}

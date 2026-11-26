@@ -1,0 +1,83 @@
+name: ci
+
+on:
+  push: { branches: [main] }
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  rust:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: actae } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with: { components: "clippy,rustfmt" }
+      - uses: Swatinem/rust-cache@v2
+        with: { workspaces: actae }
+      - run: cargo fmt --check
+      - run: cargo clippy --all-targets -- -D warnings
+      - run: cargo test -- --test-threads=1
+      - run: cargo build --release
+      # TODO(docs/control-plane-split.md): extend this to reject diviga/actae.dev
+      # strings once the control-plane client is removed from the community build.
+      - name: no local paths in the release binary
+        run: |
+          if strings target/release/actae | grep -E '/Users/'; then
+            echo "local path found in binary"; exit 1
+          fi
+
+  go:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: sdks/go } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: "stable" }
+      - run: go vet ./...
+      - run: go test -race ./...
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -e "./sdks/python[dev]"
+      - run: ruff check sdks/python
+      - run: pytest sdks/python/tests -q
+
+  dashboard:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: dashboard } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22", cache: npm, cache-dependency-path: dashboard/package-lock.json }
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test -- --run
+
+  hygiene:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: gitleaks/gitleaks-action@v2
+        env: { GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+      - name: no private identifiers
+        run: |
+          # Ignore files that assert on the marker strings themselves.
+          ! git grep -InE '/Users/|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----' -- \
+            ':!NOTICE' ':!TRADEMARK.md' ':!SECURITY.md' ':!tests' ':!sdks/python/tests' \
+            ':!actae/src/mtls_config.rs' ':!actae/src/https_server.rs' \
+            ':!.github' ':!.gitleaks.toml'
+      - name: license headers
+        run: |
+          missing=$(git ls-files 'actae/src/**' 'sdks/go/**' 'sdks/python/**' \
+            'sdks/typescript/src/**' 'dashboard/src/**' 'scripts/**' |
+            grep -E '\.(rs|go|ts|tsx|py|sh)$' |
+            xargs grep -L "SPDX-License-Identifier" || true)
+          if [ -n "$missing" ]; then echo "$missing"; exit 1; fi

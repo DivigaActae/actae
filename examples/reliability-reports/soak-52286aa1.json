@@ -1,0 +1,39 @@
+{
+  "schema": "actae.soak.v1",
+  "run_id": "soak-52286aa1",
+  "generated_at": "2026-10-07T16:27:30Z",
+  "actae_url": "http://127.0.0.1:8002",
+  "fork_replay": {
+    "iterations": 40,
+    "concurrency": 8,
+    "statuses": {
+      "replayed": 40
+    },
+    "errors": 0,
+    "throughput_per_sec": 599.9,
+    "latency_ms": {
+      "p50": 6.71,
+      "p95": 43.72,
+      "p99": 53.38
+    },
+    "passed": true
+  },
+  "step_throughput": {
+    "steps": 200,
+    "seconds": 1.883,
+    "steps_per_sec": 106.2,
+    "passed": true,
+    "channel_id": "soak-steps-73c581e4"
+  },
+  "resume_latency": {
+    "last_step_number": 200,
+    "repeats": 20,
+    "latency_ms": {
+      "p50": 1.74,
+      "p95": 2.55
+    },
+    "passed": true
+  },
+  "passed": true,
+  "verdict": "PASS"
+}

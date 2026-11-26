@@ -1,0 +1,12 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+DO NOT UPDATE the dependencies of [Cargo.toml](mdc:Cargo.toml) by yourself. if needed, ask the user.
+Only use the dependencies from the [Cargo.toml](mdc:Cargo.toml) to write the code.
+You have access to [env.txt](mdc:env.txt) to our environement variable, if needed, edit them there. i'll do the rest.
+This project is a full migration of our Go actae to a Rust based actae server.
+You have all the documentation for all the dependencies of the project.
+Performence is CRUTIAL, always keep that in mind when coding.
+NEVER go with a simpler approach, do not get lazy and deal with the problem.

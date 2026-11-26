@@ -1,0 +1,49 @@
+name: publish-npm-sdk
+
+# Publishes the MIT TypeScript SDK (@actae/sdk) on `v*` tags, or manually.
+# Requires a repo secret NPM_TOKEN (an npm automation token). Without it the
+# job is a no-op, so a release tag never fails just because npm isn't wired up.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "npm publish --dry-run only"
+        type: boolean
+        default: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sdks/typescript
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - id: token
+        run: echo "present=${{ secrets.NPM_TOKEN != '' }}" >> "$GITHUB_OUTPUT"
+
+      - name: Explain skip
+        if: steps.token.outputs.present != 'true'
+        run: echo "NPM_TOKEN secret is not set; skipping @actae/sdk publish."
+
+      - name: Install
+        if: steps.token.outputs.present == 'true'
+        run: npm ci
+
+      - name: Publish
+        if: steps.token.outputs.present == 'true'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.dry_run }}" == "true" ]]; then
+            npm publish --access public --dry-run
+          else
+            npm publish --access public
+          fi

@@ -1,0 +1,53 @@
+# Git
+.git
+.gitignore
+
+# Rust
+target/
+**/*.rs.bk
+
+# Environment
+.env
+.env.local
+.env.example
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.yml
+docker-compose.override.yml
+
+# Logs
+logs/
+*.log
+
+# Certs (not needed at build time)
+certs/
+
+# Python SDK
+sdks/python/**/__pycache__/
+sdks/python/**/*.pyc
+sdks/python/**/*.pyo
+
+# Node SDKs
+sdks/typescript/node_modules/
+sdks/typescript/dist/
+sdks/javascript/node_modules/
+
+# Tests
+tests/
+TEST_GAP_ANALYSIS.md
+
+# Dashboard (built in multi-stage, sources not needed in final image)
+dashboard/node_modules/
+dashboard/.next/
+dashboard/out/
+
+# License artifacts (private key is not needed at build time)
+.license_private.pem

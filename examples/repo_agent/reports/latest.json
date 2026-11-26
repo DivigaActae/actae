@@ -1,0 +1,72 @@
+{
+  "run_id": "b9e5abf2",
+  "actae_url": "http://localhost:8002",
+  "mode": "dry-run",
+  "baseline_channel": "repo-b9e5abf2-base",
+  "fork_channel": "repo-b9e5abf2-fork",
+  "checks": [
+    {
+      "name": "baseline leaves the failing test unresolved (the fork point)",
+      "ok": true,
+      "detail": "tests_passed=False"
+    },
+    {
+      "name": "baseline submitted the report exactly once",
+      "ok": true,
+      "detail": "applications=1"
+    },
+    {
+      "name": "agent worker dies for real at the report step (exit 137)",
+      "ok": true,
+      "detail": "rc=137"
+    },
+    {
+      "name": "resume recovers the crashed session",
+      "ok": true,
+      "detail": "status=started last_step=7"
+    },
+    {
+      "name": "resume re-invoked only the crashed step (1..N-1 not re-run)",
+      "ok": true,
+      "detail": "invoked=[8]"
+    },
+    {
+      "name": "the report did not fire twice on recovery (ambiguous window reconciled)",
+      "ok": true,
+      "detail": "applications=1"
+    },
+    {
+      "name": "the fork applies the correct fix and the tests pass",
+      "ok": true,
+      "detail": "tests_passed=True"
+    },
+    {
+      "name": "the fork changed the outcome from the baseline",
+      "ok": true,
+      "detail": "fork hash differs from baseline hash"
+    },
+    {
+      "name": "the fork re-ran only steps after the boundary (prefix not re-invoked)",
+      "ok": true,
+      "detail": "invoked=[6, 7, 8]"
+    },
+    {
+      "name": "the inherited report replayed instead of firing again",
+      "ok": true,
+      "detail": "tool.replayed=1"
+    },
+    {
+      "name": "the task service did not receive a second report for the inherited key",
+      "ok": true,
+      "detail": "applications=1"
+    },
+    {
+      "name": "the fork receipt is an exact, restorable boundary",
+      "ok": true,
+      "detail": "restorable=True requested=10 resolved=10"
+    }
+  ],
+  "passed": 12,
+  "total": 12,
+  "verdict": "PASS"
+}

@@ -1,0 +1,280 @@
+{
+  "schema": "actae.reliability.v1",
+  "run_id": "reliability-90e1046a",
+  "generated_at": "2026-10-07T16:09:40.281739+00:00",
+  "actae_url": "http://127.0.0.1:8002",
+  "server_version": "0.1.0",
+  "suites": [
+    {
+      "name": "crash",
+      "checks": [
+        {
+          "name": "worker dies for real (exit 137)",
+          "ok": true,
+          "detail": "returncode=137"
+        },
+        {
+          "name": "the external effect applied exactly once",
+          "ok": true,
+          "detail": "count=1"
+        },
+        {
+          "name": "both recorded steps survived the crash",
+          "ok": true,
+          "detail": "n=2"
+        },
+        {
+          "name": "resume returns a started session",
+          "ok": true,
+          "detail": "status=started"
+        },
+        {
+          "name": "resume recovers the real step count after a hard kill",
+          "ok": true,
+          "detail": "step_count=2 (want 2)"
+        },
+        {
+          "name": "re-claim after crash replays the recorded result",
+          "ok": true,
+          "detail": "status=replayed"
+        },
+        {
+          "name": "the effect did not fire again on recovery",
+          "ok": true,
+          "detail": "count=1"
+        }
+      ],
+      "passed": 7,
+      "total": 7,
+      "ok": true,
+      "error": null
+    },
+    {
+      "name": "fork",
+      "checks": [
+        {
+          "name": "auto replays an inherited effect instead of re-firing it",
+          "ok": true,
+          "detail": "status=replayed"
+        },
+        {
+          "name": "auto does not start the tool on the child",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "block refuses a new irreversible call",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "the blocked boundary is persisted as an event",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "intervention is exposed on the fork session",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "intervention is recorded on fork metadata",
+          "ok": true,
+          "detail": ""
+        }
+      ],
+      "passed": 6,
+      "total": 6,
+      "ok": true,
+      "error": null
+    },
+    {
+      "name": "coordination",
+      "checks": [
+        {
+          "name": "consumer A claims the whole batch",
+          "ok": true,
+          "detail": "n=5"
+        },
+        {
+          "name": "consumer B cannot double-claim A's active range",
+          "ok": true,
+          "detail": "n=0"
+        },
+        {
+          "name": "acked work is not redelivered",
+          "ok": true,
+          "detail": "n=0"
+        },
+        {
+          "name": "a lapsed lease's unacked work is redelivered",
+          "ok": true,
+          "detail": "first=3 reclaimed=3"
+        }
+      ],
+      "passed": 4,
+      "total": 4,
+      "ok": true,
+      "error": null
+    },
+    {
+      "name": "stale_worker",
+      "checks": [
+        {
+          "name": "worker A claims the effect",
+          "ok": true,
+          "detail": "status=claimed"
+        },
+        {
+          "name": "worker B reclaims after the lease lapses",
+          "ok": true,
+          "detail": "status=reclaimed"
+        },
+        {
+          "name": "the stale owner's complete is fenced (execution_not_owned)",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "a heartbeated lease is not stolen (in_progress)",
+          "ok": true,
+          "detail": "status=in_progress"
+        },
+        {
+          "name": "bare channel writes are not fenced (documented boundary)",
+          "ok": true,
+          "detail": "n=2 actors=['stale-worker', 'worker-a'] \u2014 fence side effects via claim_execution"
+        }
+      ],
+      "passed": 5,
+      "total": 5,
+      "ok": true,
+      "error": null
+    },
+    {
+      "name": "atomicity",
+      "checks": [
+        {
+          "name": "transition worker dies for real (exit 137)",
+          "ok": true,
+          "detail": "returncode=137"
+        },
+        {
+          "name": "exactly one event committed",
+          "ok": true,
+          "detail": "n=1"
+        },
+        {
+          "name": "state snapshot committed with the event",
+          "ok": true,
+          "detail": "state={'cursor': 1, 'state': {'done': True, 'step': 3}}"
+        },
+        {
+          "name": "snapshot cursor equals the event cursor",
+          "ok": true,
+          "detail": "event_cursor=1 state_cursor=1"
+        },
+        {
+          "name": "the recovery re-send replays the original event",
+          "ok": true,
+          "detail": "replayed_id=264ce4e3-f498-4aee-885a-c3134c2177e6 original_id=264ce4e3-f498-4aee-885a-c3134c2177e6"
+        },
+        {
+          "name": "no duplicate event was written on recovery",
+          "ok": true,
+          "detail": "n=1"
+        },
+        {
+          "name": "a reused operation_id with different content is rejected",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "no transition leaves neither event nor snapshot",
+          "ok": true,
+          "detail": "events=0 state=None"
+        }
+      ],
+      "passed": 8,
+      "total": 8,
+      "ok": true,
+      "error": null
+    },
+    {
+      "name": "long_tool",
+      "checks": [
+        {
+          "name": "the owner claims the long tool",
+          "ok": true,
+          "detail": "status=claimed"
+        },
+        {
+          "name": "a tool that outlives its lease is reclaimable",
+          "ok": true,
+          "detail": "status=reclaimed"
+        },
+        {
+          "name": "the stale owner's completion is fenced",
+          "ok": true,
+          "detail": "owner=['fenced']"
+        },
+        {
+          "name": "the non-idempotent downstream fired twice (the documented lease cost)",
+          "ok": true,
+          "detail": "applications=2"
+        },
+        {
+          "name": "a heartbeated long tool is not reclaimed",
+          "ok": true,
+          "detail": "status=in_progress"
+        },
+        {
+          "name": "the heartbeating owner completes normally",
+          "ok": true,
+          "detail": "owner=['completed']"
+        },
+        {
+          "name": "the downstream fired once when the lease was held",
+          "ok": true,
+          "detail": "applications=1"
+        }
+      ],
+      "passed": 7,
+      "total": 7,
+      "ok": true,
+      "error": null
+    },
+    {
+      "name": "session_fence",
+      "checks": [
+        {
+          "name": "a second live owner cannot start",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "a lapsed lease can be reclaimed by a new owner",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "the stale owner's step is rejected",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "the rejected step appended no event",
+          "ok": true,
+          "detail": "6->6"
+        }
+      ],
+      "passed": 4,
+      "total": 4,
+      "ok": true,
+      "error": null
+    }
+  ],
+  "passed": 41,
+  "total": 41,
+  "verdict": "PASS"
+}
