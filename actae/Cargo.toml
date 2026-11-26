@@ -92,7 +92,7 @@ postgres = "0.19.9"
 # second reqwest / aws-lc-sys like pg-embed dragged in), or provided
 # explicitly via ACTAE_PG_BIN_DIR. The zonky jar is a ZIP containing an
 # XZ-compressed tar; `zip`/`lzma-rs`/`tar` unpack it (all pure Rust).
-zip = { version = "2.2", default-features = false, features = ["deflate"] }
+zip = { version = "9.8", default-features = false, features = ["deflate"] }
 lzma-rs = "0.3"
 tar = "0.4"
 # Cross-platform advisory file locking (flock on Unix, LockFileEx on
