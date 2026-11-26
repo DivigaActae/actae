@@ -122,7 +122,7 @@ tower-http = { version = "0.6.2", features = ["compression-br", "cors", "trace",
 # NATS Core live transport for the fleet gateway (optional; JetStream never
 # used for payload subjects). Default build omits it — local tests use the
 # in-memory live bus.
-async-nats = { version = "0.47", optional = true }
+async-nats = { version = "0.53", optional = true }
 # Dashboard static export embedded in the binary (dashboard-embed feature).
 # include_dir embeds the files raw (the server's compression middleware gzips
 # responses on the fly); mime_guess provides content types.
