@@ -57,6 +57,9 @@ jobs:
         env:
           ACTAE_PG_EMBED_JAR: .pg.jar
           ACTAE_PG_EMBED_PLATFORM: ${{ matrix.pg }}
+          # cross mounts only the crate dir at /project; expose the built
+          # dashboard where include_dir! looks for it.
+          CROSS_CONTAINER_OPTS: "-v ${{ github.workspace }}/dashboard:/dashboard"
 
       - name: Package
         run: |
