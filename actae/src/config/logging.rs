@@ -33,8 +33,8 @@ pub fn init(config: &AppConfig) -> Result<LoggingGuard> {
     // hidden until the server is operational. A debug build (`cargo run`) keeps
     // the verbose JSON stream for development. An explicit LOG_FORMAT /
     // LOG_LEVEL / RUST_LOG always wins.
-    let explicit_level = std::env::var_os("RUST_LOG").is_some()
-        || std::env::var_os("LOG_LEVEL").is_some();
+    let explicit_level =
+        std::env::var_os("RUST_LOG").is_some() || std::env::var_os("LOG_LEVEL").is_some();
     let explicit_format = std::env::var_os("LOG_FORMAT").is_some();
     let is_debug_build = cfg!(debug_assertions);
 

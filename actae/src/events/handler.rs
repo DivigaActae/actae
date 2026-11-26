@@ -8,15 +8,14 @@ use tracing::{debug, instrument, warn};
 use uuid::Uuid;
 
 use super::schema::{
-    AddExperimentMemberRequest, AgentEvent, ForkInfo, CancelExecutionRequest, CausalGraph,
-    ChannelMetadata, ClaimExecutionRequest, ClaimedWork, CompareResponse, CompleteExecutionRequest,
+    AddExperimentMemberRequest, AgentEvent, CancelExecutionRequest, CausalGraph, ChannelMetadata,
+    ClaimExecutionRequest, ClaimedWork, CompareResponse, CompleteExecutionRequest,
     CreateExperimentRequest, CreateWakeupRequest, DecisionTrail, EventMetadata,
     ExecutionClaimResult, ExecutionGroup, ExecutionGroupMember, ExecutionInfo, ExperimentGroup,
-    FailExecutionRequest,
-    ForkReplayResult, ForkRequest, GroupForkReceipt, GroupInfo, GroupMessage, GroupOffsetInfo,
-    HeartbeatExecutionRequest, MemberLease, PublishEventRequest, QueryRequest,
-    RankedExperimentMember, ReplayRequest, SetOutcomeRequest, StateDiffResponse, TransitionRequest,
-    UpdateMetadataRequest, WakeupInfo,
+    FailExecutionRequest, ForkInfo, ForkReplayResult, ForkRequest, GroupForkReceipt, GroupInfo,
+    GroupMessage, GroupOffsetInfo, HeartbeatExecutionRequest, MemberLease, PublishEventRequest,
+    QueryRequest, RankedExperimentMember, ReplayRequest, SetOutcomeRequest, StateDiffResponse,
+    TransitionRequest, UpdateMetadataRequest, WakeupInfo,
 };
 use super::store::{ChannelStat, EventStats, EventStore, EventStoreError};
 use crate::broadcast::delivery_tracker::DeliveryTracker;

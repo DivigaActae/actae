@@ -1377,7 +1377,9 @@ mod tests {
         assert_eq!(bodies.len(), 4, "expected 4 accounting trigger functions");
         for body in &bodies {
             assert!(
-                body.contains("pg_advisory_xact_lock(hashtextextended('actae_usage_accounting', 0))"),
+                body.contains(
+                    "pg_advisory_xact_lock(hashtextextended('actae_usage_accounting', 0))"
+                ),
                 "every accounting trigger must take the advisory lock first"
             );
         }

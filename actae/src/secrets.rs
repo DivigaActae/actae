@@ -127,7 +127,9 @@ pub fn resolve(
 }
 
 fn operator_set(name: &str) -> bool {
-    std::env::var(name).map(|v| !v.trim().is_empty()).unwrap_or(false)
+    std::env::var(name)
+        .map(|v| !v.trim().is_empty())
+        .unwrap_or(false)
         || std::env::var(format!("{name}_FILE")).is_ok()
 }
 
@@ -205,19 +207,29 @@ mod tests {
 
     #[test]
     fn resolve_keeps_the_default_when_keys_already_exist() {
-        let dir = std::env::temp_dir().join(format!("actae-secrets-test-ke-{}", std::process::id()));
+        let dir =
+            std::env::temp_dir().join(format!("actae-secrets-test-ke-{}", std::process::id()));
         let _ = std::fs::remove_dir_all(&dir);
         let (secret, outcome) = resolve(None, &dir, true).unwrap();
         assert_eq!(outcome, SecretOutcome::LegacyDefault);
         assert_eq!(secret, DEFAULT_JWT_SECRET);
-        assert!(load_persisted(&dir).is_none(), "must not persist the default");
+        assert!(
+            load_persisted(&dir).is_none(),
+            "must not persist the default"
+        );
         let _ = std::fs::remove_dir_all(&dir);
     }
 
     #[test]
     fn resolve_prefers_the_operator_secret() {
-        let dir = std::env::temp_dir().join(format!("actae-secrets-test-op-{}", std::process::id()));
-        let (secret, outcome) = resolve(Some("operator-secret-1234567890abcdefghij".into()), &dir, true).unwrap();
+        let dir =
+            std::env::temp_dir().join(format!("actae-secrets-test-op-{}", std::process::id()));
+        let (secret, outcome) = resolve(
+            Some("operator-secret-1234567890abcdefghij".into()),
+            &dir,
+            true,
+        )
+        .unwrap();
         assert_eq!(outcome, SecretOutcome::Operator);
         assert_eq!(secret, "operator-secret-1234567890abcdefghij");
     }

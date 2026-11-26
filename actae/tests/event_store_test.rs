@@ -344,7 +344,10 @@ async fn execution_group_fork_materializes_replay_and_promotes_member() {
         .await
         .unwrap()
         .get(0);
-    assert_eq!(group_fork_meters, 1, "one fork_operations meter per group fork");
+    assert_eq!(
+        group_fork_meters, 1,
+        "one fork_operations meter per group fork"
+    );
     drop(client);
     cleanup(&store).await;
 }
@@ -3392,7 +3395,10 @@ async fn fork_is_idempotent_by_operation_id() {
         .await
         .unwrap()
         .get(0);
-    assert_eq!(fork_meter, 1, "one fork must produce exactly one fork_operations meter row");
+    assert_eq!(
+        fork_meter, 1,
+        "one fork must produce exactly one fork_operations meter row"
+    );
 
     cleanup(&store).await;
 }

@@ -227,7 +227,9 @@ pub fn verify_dashboard_token(token: &str) -> Result<DashboardClaims> {
     }
     let now = Utc::now().timestamp();
     if claims.iat > now + CLOCK_SKEW_SECS {
-        return Err(anyhow!("dashboard token is not yet valid (iat in the future)"));
+        return Err(anyhow!(
+            "dashboard token is not yet valid (iat in the future)"
+        ));
     }
     if claims.exp < now - CLOCK_SKEW_SECS {
         return Err(anyhow!("dashboard token expired at {}", claims.exp));
@@ -534,7 +536,10 @@ mod tests {
     fn test_verify_valid_dashboard_token() {
         let key = test_signing_key();
         let now = now();
-        let token = build_token(dashboard_payload(now, DASHBOARD_SSO_SCOPE, "jti_1", 120), &key);
+        let token = build_token(
+            dashboard_payload(now, DASHBOARD_SSO_SCOPE, "jti_1", 120),
+            &key,
+        );
         let claims = verify_dashboard_token(&token).unwrap();
         assert_eq!(claims.install_id, "ins_1");
         assert_eq!(claims.sub, "cus_1");
@@ -546,7 +551,10 @@ mod tests {
     fn test_verify_dashboard_token_rejects_wrong_scope() {
         let key = test_signing_key();
         let now = now();
-        let token = build_token(dashboard_payload(now, "upgrade-manifest", "jti_1", 120), &key);
+        let token = build_token(
+            dashboard_payload(now, "upgrade-manifest", "jti_1", 120),
+            &key,
+        );
         assert!(verify_dashboard_token(&token).is_err());
     }
 
@@ -554,7 +562,10 @@ mod tests {
     fn test_verify_dashboard_token_rejects_expired() {
         let key = test_signing_key();
         let now = now();
-        let token = build_token(dashboard_payload(now - 3600, DASHBOARD_SSO_SCOPE, "jti_1", 120), &key);
+        let token = build_token(
+            dashboard_payload(now - 3600, DASHBOARD_SSO_SCOPE, "jti_1", 120),
+            &key,
+        );
         assert!(verify_dashboard_token(&token).is_err());
     }
 
@@ -563,7 +574,12 @@ mod tests {
         let key = test_signing_key();
         let now = now();
         let token = build_token(
-            dashboard_payload(now, DASHBOARD_SSO_SCOPE, "jti_1", MAX_DASHBOARD_TOKEN_TTL_SECS + 1),
+            dashboard_payload(
+                now,
+                DASHBOARD_SSO_SCOPE,
+                "jti_1",
+                MAX_DASHBOARD_TOKEN_TTL_SECS + 1,
+            ),
             &key,
         );
         assert!(verify_dashboard_token(&token).is_err());

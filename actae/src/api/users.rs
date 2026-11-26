@@ -144,9 +144,10 @@ async fn require_admin(headers: &HeaderMap) -> Result<(String, Pool, Option<IpAd
         ));
     }
 
-    let client = pool.get().await.map_err(|e| {
-        backend_error("users: db connection failed", format_args!("{e:#}"))
-    })?;
+    let client = pool
+        .get()
+        .await
+        .map_err(|e| backend_error("users: db connection failed", format_args!("{e:#}")))?;
     let role = client
         .query_opt("SELECT role FROM public.user WHERE id = $1", &[&claims.sub])
         .await
@@ -216,10 +217,7 @@ async fn list_users_handler(headers: HeaderMap) -> ApiError {
         Err(e) => return backend_error("users: list failed", format_args!("{e:#}")),
     };
     let users: Vec<CleanJson> = rows.iter().map(user_json).collect();
-    (
-        StatusCode::OK,
-        Json(clean_json!({ "users": users })),
-    )
+    (StatusCode::OK, Json(clean_json!({ "users": users })))
 }
 
 async fn create_user_handler(headers: HeaderMap, body: axum::body::Bytes) -> ApiError {
@@ -372,7 +370,10 @@ async fn update_user_handler(
         admin = %caller, target = %id, role = %role, ip = ?ip,
         "user management: updated user"
     );
-    (StatusCode::OK, Json(clean_json!({ "user": user_json(&row) })))
+    (
+        StatusCode::OK,
+        Json(clean_json!({ "user": user_json(&row) })),
+    )
 }
 
 async fn delete_user_handler(headers: HeaderMap, Path(id): Path<String>) -> ApiError {

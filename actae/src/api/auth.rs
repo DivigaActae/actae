@@ -487,7 +487,14 @@ async fn signup_handler(
     match app.user_repo.create(&user).await {
         Ok(created) => match generate_jwt(&created.id, app, Some("password"), None) {
             Ok((token, claims)) => {
-                record_session(&app.db_manager.client_pool, claims.jti.as_deref(), claims.exp, &created.id, "password").await;
+                record_session(
+                    &app.db_manager.client_pool,
+                    claims.jti.as_deref(),
+                    claims.exp,
+                    &created.id,
+                    "password",
+                )
+                .await;
                 (
                     StatusCode::CREATED,
                     Json(make_token_response(&created, &token)),
@@ -551,9 +558,7 @@ async fn login_handler(
             .await
         {
             Ok(claims) => match mint_portal_session(app, &claims).await {
-                Ok((user, token)) => {
-                    (StatusCode::OK, Json(make_token_response(&user, &token)))
-                }
+                Ok((user, token)) => (StatusCode::OK, Json(make_token_response(&user, &token))),
                 Err((status, body)) => (status, Json(body)),
             },
             Err(e) if e.to_string().contains("invalid credentials") => (
@@ -623,7 +628,14 @@ async fn login_handler(
 
     match generate_jwt(&user.id, app, Some("password"), None) {
         Ok((token, claims)) => {
-            record_session(&app.db_manager.client_pool, claims.jti.as_deref(), claims.exp, &user.id, "password").await;
+            record_session(
+                &app.db_manager.client_pool,
+                claims.jti.as_deref(),
+                claims.exp,
+                &user.id,
+                "password",
+            )
+            .await;
             (StatusCode::OK, Json(make_token_response(&user, &token)))
         }
         Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, Json(e)),
@@ -684,7 +696,14 @@ async fn mint_portal_session(
 
     match generate_jwt(&user.id, app, Some("sso"), None) {
         Ok((token, claims)) => {
-            record_session(&app.db_manager.client_pool, claims.jti.as_deref(), claims.exp, &user.id, "sso").await;
+            record_session(
+                &app.db_manager.client_pool,
+                claims.jti.as_deref(),
+                claims.exp,
+                &user.id,
+                "sso",
+            )
+            .await;
             Ok((user, token))
         }
         Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, e)),
@@ -696,10 +715,7 @@ async fn mint_portal_session(
 /// in the binary (`ACTAE_LICENSE_PUBKEY`), bound to this installation, and
 /// single-use; the browser never sees any credential beyond the short-lived
 /// token in the URL fragment.
-async fn sso_handler(
-    headers: HeaderMap,
-    body: axum::body::Bytes,
-) -> (StatusCode, Json<CleanJson>) {
+async fn sso_handler(headers: HeaderMap, body: axum::body::Bytes) -> (StatusCode, Json<CleanJson>) {
     let state = global_state();
     let app = &state.app_state;
 
@@ -842,7 +858,14 @@ async fn api_key_login_handler(
 
     match generate_jwt(&key.user_id, app, Some("api_key"), Some(&key.name)) {
         Ok((token, claims)) => {
-            record_session(&app.db_manager.client_pool, claims.jti.as_deref(), claims.exp, &key.user_id, "api_key").await;
+            record_session(
+                &app.db_manager.client_pool,
+                claims.jti.as_deref(),
+                claims.exp,
+                &key.user_id,
+                "api_key",
+            )
+            .await;
             (
                 StatusCode::OK,
                 Json(clean_json!({
@@ -952,8 +975,7 @@ async fn auth_config_handler() -> (StatusCode, Json<CleanJson>) {
     let sso = app.control_plane.is_enrolled();
     // First-run setup: a standalone instance whose initial admin has no
     // password yet shows the "set your admin password" page.
-    let setup_required =
-        !sso && crate::auth::setup::is_required(&app.db_manager.client_pool).await;
+    let setup_required = !sso && crate::auth::setup::is_required(&app.db_manager.client_pool).await;
     // The dashboard attempts a loopback auto-login when this is true, so a local
     // self-hosted instance never shows a login/setup form.
     let local_auto_login = !sso && crate::auth::local_dashboard_auto_login_enabled();
@@ -1082,7 +1104,11 @@ async fn setup_handler(
     let user_id: String = row.get("id");
 
     // Hash before taking the transaction so no slow work happens under locks.
-    let hash = match app.password_hasher.hash_password(&request.password, &user_id).await {
+    let hash = match app
+        .password_hasher
+        .hash_password(&request.password, &user_id)
+        .await
+    {
         Ok(h) => h,
         Err(e) => {
             return (
@@ -1108,7 +1134,14 @@ async fn setup_handler(
             name,
         }) => match generate_jwt(&user_id, app, Some("password"), None) {
             Ok((token, claims)) => {
-                record_session(pool, claims.jti.as_deref(), claims.exp, &user_id, "password").await;
+                record_session(
+                    pool,
+                    claims.jti.as_deref(),
+                    claims.exp,
+                    &user_id,
+                    "password",
+                )
+                .await;
                 let user = crate::database::models::User {
                     id: user_id,
                     email,
@@ -1150,7 +1183,8 @@ async fn setup_handler(
     }
 }
 
-async fn me_handler(headers: HeaderMap) -> (StatusCode, Json<CleanJson>) {    let state = global_state();
+async fn me_handler(headers: HeaderMap) -> (StatusCode, Json<CleanJson>) {
+    let state = global_state();
     let app = &state.app_state;
     let token = match extract_token(&headers) {
         Some(t) => t,
@@ -1174,9 +1208,7 @@ async fn me_handler(headers: HeaderMap) -> (StatusCode, Json<CleanJson>) {    le
 
     // Enforce server-side revocation: the session must have a live ledger row.
     let session_ok = match claims.jti.as_deref() {
-        Some(jti) => {
-            crate::auth::session_store::is_active(&app.db_manager.client_pool, jti).await
-        }
+        Some(jti) => crate::auth::session_store::is_active(&app.db_manager.client_pool, jti).await,
         None => false,
     };
     if !session_ok {

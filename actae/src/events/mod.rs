@@ -10,9 +10,9 @@ pub mod store;
 pub use handler::EventHandler;
 pub use page_token::{PageTokenClaims, PageTokenError, PAGE_TOKEN_TTL_SECS};
 pub use schema::{
-    AgentEvent, AgentEventType, ForkInfo, ChannelMetadata, ClaimedWork, CreateGroupRequest,
-    CreateWakeupRequest, EventMetadata, EventRecord, ForkRequest, GroupInfo, GroupOffsetInfo,
-    TransitionRequest, UpdateMetadataRequest, WakeupInfo,
+    AgentEvent, AgentEventType, ChannelMetadata, ClaimedWork, CreateGroupRequest,
+    CreateWakeupRequest, EventMetadata, EventRecord, ForkInfo, ForkRequest, GroupInfo,
+    GroupOffsetInfo, TransitionRequest, UpdateMetadataRequest, WakeupInfo,
 };
 pub use store::EventStore;
 

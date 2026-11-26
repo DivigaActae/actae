@@ -9,15 +9,15 @@ use tracing::{info, instrument, warn};
 use uuid::Uuid;
 
 use super::schema::{
-    AddExperimentMemberRequest, AgentEvent, ForkInfo, CancelExecutionRequest, CausalGraph,
-    ChannelMetadata, ClaimExecutionRequest, ClaimedWork, CompareResponse, CompleteExecutionRequest,
+    AddExperimentMemberRequest, AgentEvent, CancelExecutionRequest, CausalGraph, ChannelMetadata,
+    ClaimExecutionRequest, ClaimedWork, CompareResponse, CompleteExecutionRequest,
     CreateExperimentRequest, CreateWakeupRequest, DecisionTrail, EventDependency, EventMetadata,
     ExecutionClaimResult, ExecutionGroup, ExecutionGroupMember, ExecutionInfo, ExperimentGroup,
-    ExperimentMember, FailExecutionRequest, ForkBoundary, ForkReplayResult, ForkRequest,
-    GroupForkReceipt, GroupInfo,
-    GroupMessage, GroupOffsetInfo, HeartbeatExecutionRequest, LineageHop, MemberLease,
-    PublishEventRequest, QueryRequest, RankedExperimentMember, ReplayRequest, StateDiffEntry,
-    StateDiffResponse, StatePoint, TransitionRequest, UpdateMetadataRequest, WakeupInfo,
+    ExperimentMember, FailExecutionRequest, ForkBoundary, ForkInfo, ForkReplayResult, ForkRequest,
+    GroupForkReceipt, GroupInfo, GroupMessage, GroupOffsetInfo, HeartbeatExecutionRequest,
+    LineageHop, MemberLease, PublishEventRequest, QueryRequest, RankedExperimentMember,
+    ReplayRequest, StateDiffEntry, StateDiffResponse, StatePoint, TransitionRequest,
+    UpdateMetadataRequest, WakeupInfo,
 };
 use crate::database::json_compat::JsonValue;
 use sha2::{Digest, Sha256};
@@ -3916,10 +3916,7 @@ impl EventStore {
         // `completed` channel is NOT counted — and deliberately so: a retried
         // `started` write is indistinguishable from those, so counting
         // `started -> started` would double-count under retry.
-        let interrupted = matches!(
-            prev_status.as_deref(),
-            Some("crashed") | Some("stepping")
-        );
+        let interrupted = matches!(prev_status.as_deref(), Some("crashed") | Some("stepping"));
         if incoming_is_session
             && prev_is_session
             && interrupted
@@ -4612,10 +4609,7 @@ impl EventStore {
              (idempotency_key, usage_date, metric, quantity, source_generation)
              VALUES ($1, $2::date, 'fork_operations', 1, 1)
              ON CONFLICT (idempotency_key) DO NOTHING",
-            &[
-                &format!("groupfork:{fork_group_id}"),
-                &now.date_naive(),
-            ],
+            &[&format!("groupfork:{fork_group_id}"), &now.date_naive()],
         )
         .await
         .map_err(EventStoreError::Execute)?;
@@ -5432,7 +5426,10 @@ impl EventStore {
         const MAX_REPLAY_RETRIES: u32 = 4;
         let mut retries: u32 = 0;
         loop {
-            match self.replay_fork_execution_once(request, source_channels).await {
+            match self
+                .replay_fork_execution_once(request, source_channels)
+                .await
+            {
                 Err(EventStoreError::ExecutionInsertRace) if retries < MAX_REPLAY_RETRIES => {
                     retries += 1;
                     continue;
@@ -5514,7 +5511,9 @@ impl EventStore {
             }
             let source_info = row_to_execution(&source);
             let source_event = source_info.completed_event_id.ok_or_else(|| {
-                EventStoreError::InconsistentState("source tool result has no completion event".into())
+                EventStoreError::InconsistentState(
+                    "source tool result has no completion event".into(),
+                )
             })?;
             let execution_id = Uuid::new_v4();
             let now = Utc::now();

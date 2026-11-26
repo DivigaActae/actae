@@ -560,10 +560,7 @@ mod tests {
 
         // Browser same-origin: loopback Origin: allowed.
         let mut ok_origin = ok.clone();
-        ok_origin.insert(
-            axum::http::header::ORIGIN,
-            host("http://localhost:3000"),
-        );
+        ok_origin.insert(axum::http::header::ORIGIN, host("http://localhost:3000"));
         assert!(is_loopback_dashboard_request(&ok_origin));
 
         // Non-loopback peer: refused.

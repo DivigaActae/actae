@@ -2,7 +2,6 @@
 // Copyright 2026 Diviga
 // SPDX-License-Identifier: Apache-2.0
 
-
 use actae::auth::api_key::validate_api_key;
 use actae::clean_json;
 use actae::config::AppConfig;
@@ -380,7 +379,6 @@ async fn main() -> Result<()> {
         eprintln!();
     }
 
-
     // Security posture: without TLS, binding a non-loopback address sends
     // API keys and JWTs in clear text. The config default is loopback when
     // TLS is off — this fires only when an operator explicitly exposed it.
@@ -682,7 +680,6 @@ async fn main() -> Result<()> {
             },
         );
     }
-
 
     // Register: credential reauthorizer — periodically re-checks every
     // authenticated WebSocket connection's API key status against the DB and
@@ -1057,12 +1054,10 @@ async fn main() -> Result<()> {
         // still printed below) and never aborts the boot.
         let mut client_creds_note: Option<String> = None;
         if let Some(key) = provisioned_key.as_deref() {
-            if config.control_plane_url.is_none()
-                && actae::client_credentials::auto_write_enabled()
+            if config.control_plane_url.is_none() && actae::client_credentials::auto_write_enabled()
             {
                 let endpoint = format!("{scheme}://{display_host}:{}", config.port);
-                let mut creds =
-                    actae::client_credentials::ClientCredentials::new(endpoint, key);
+                let mut creds = actae::client_credentials::ClientCredentials::new(endpoint, key);
                 if let Some((http_port, pg_port, data_dir)) = managed_identity.as_ref() {
                     creds = creds.with_instance(actae::client_credentials::InstanceInfo {
                         http_port: *http_port,

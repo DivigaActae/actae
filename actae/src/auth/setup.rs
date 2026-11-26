@@ -191,8 +191,7 @@ pub async fn complete(
     let expired = expires_at.map(|e| e <= Utc::now()).unwrap_or(true);
     match stored {
         Some(stored)
-            if !expired
-                && constant_time_eq(stored.as_bytes(), hash_token(token).as_bytes()) => {}
+            if !expired && constant_time_eq(stored.as_bytes(), hash_token(token).as_bytes()) => {}
         _ => return Ok(SetupOutcome::InvalidToken),
     }
 

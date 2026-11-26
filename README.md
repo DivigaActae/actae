@@ -9,11 +9,10 @@ One binary. Embedded PostgreSQL. No account, no card, no phone-home.
 ## Install
 
 ```bash
-curl -fsSL https://actae.dev/install.sh | sh
-# or
-brew install divigaactae/tap/actae
-# or
-docker run -p 8080:8080 -v actae-data:/data ghcr.io/divigaactae/actae:latest
+curl -fsSL https://raw.githubusercontent.com/DivigaActae/actae/main/install.sh | sh
+# or build from source
+git clone https://github.com/DivigaActae/actae.git
+cd actae/actae && cargo build --release && ./target/release/actae
 ```
 
 Open http://localhost:8080. The first screen walks you through recording a run,

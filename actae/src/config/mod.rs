@@ -1028,8 +1028,8 @@ pub fn storage_is_managed() -> bool {
 /// environment, for startup notices. Never includes a password.
 pub fn redacted_database_target() -> String {
     if let Some(url) = nonempty_env("DATABASE_URL") {
-        let re = regex::Regex::new(r"(://[^:]+):([^@]+)@")
-            .expect("hardcoded DB URL regex must compile");
+        let re =
+            regex::Regex::new(r"(://[^:]+):([^@]+)@").expect("hardcoded DB URL regex must compile");
         return re.replace(&url, "$1:***@").to_string();
     }
     let host = nonempty_env("POSTGRES_HOST").unwrap_or_else(|| "localhost".to_string());

@@ -375,11 +375,8 @@ impl WebSocketAuthenticator {
         // session is rejected immediately on reconnect.
         let session_ok = match claims.jti.as_deref() {
             Some(jti) => {
-                crate::auth::session_store::is_active(
-                    &self.app_state.db_manager.client_pool,
-                    jti,
-                )
-                .await
+                crate::auth::session_store::is_active(&self.app_state.db_manager.client_pool, jti)
+                    .await
             }
             None => false,
         };

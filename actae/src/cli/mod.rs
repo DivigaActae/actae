@@ -62,7 +62,9 @@ async fn revoke_key_by_prefix(pool: &deadpool_postgres::Pool, prefix: &str) -> R
 fn normalize_endpoint(raw: &str) -> Result<String> {
     let trimmed = raw.trim().trim_end_matches('/');
     if !(trimmed.starts_with("http://") || trimmed.starts_with("https://")) {
-        return Err(anyhow!("--url must start with http:// or https:// (got '{raw}')"));
+        return Err(anyhow!(
+            "--url must start with http:// or https:// (got '{raw}')"
+        ));
     }
     if trimmed.len() <= "https://".len() {
         return Err(anyhow!("--url has no host"));
@@ -103,7 +105,10 @@ async fn verify_key_against(endpoint: &str, key: &str) -> Result<()> {
             if resp.status() == reqwest::StatusCode::UNAUTHORIZED
                 || resp.status() == reqwest::StatusCode::FORBIDDEN =>
         {
-            Err(anyhow!("server rejected the API key (HTTP {})", resp.status()))
+            Err(anyhow!(
+                "server rejected the API key (HTTP {})",
+                resp.status()
+            ))
         }
         Ok(resp) => Err(anyhow!(
             "unexpected response while verifying the key (HTTP {})",
@@ -1446,8 +1451,14 @@ mod tests {
 
     #[test]
     fn same_server_ignores_trailing_slash() {
-        assert!(same_server("http://127.0.0.1:8002", "http://127.0.0.1:8002/"));
-        assert!(!same_server("http://127.0.0.1:8002", "http://127.0.0.1:8003"));
+        assert!(same_server(
+            "http://127.0.0.1:8002",
+            "http://127.0.0.1:8002/"
+        ));
+        assert!(!same_server(
+            "http://127.0.0.1:8002",
+            "http://127.0.0.1:8003"
+        ));
     }
 
     #[test]
