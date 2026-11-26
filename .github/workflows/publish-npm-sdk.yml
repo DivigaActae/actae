@@ -1,11 +1,8 @@
 name: publish-npm-sdk
 
-# Publishes the MIT TypeScript SDK (@actae/sdk) on `v*` tags, or manually.
-# Requires a repo secret NPM_TOKEN (an npm automation token). Without it the
-# job is a no-op, so a release tag never fails just because npm isn't wired up.
+# Publishes the TypeScript SDK (@actae/sdk). Manual dispatch only until the
+# npm automation token exists; a release tag must not depend on registry access.
 on:
-  push:
-    tags: ["v*"]
   workflow_dispatch:
     inputs:
       dry_run:

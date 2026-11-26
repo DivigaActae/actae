@@ -88,11 +88,10 @@ runtime. The API key they create in the portal is both their credential and
 their license. Onboarding the binary:
 
 ```bash
-# 1. Sign up on the portal → you get a paste key + a binary download link.
-# 2. Download Actae from the portal (detected platform, presigned URL).
-chmod +x ./actae
-actae enroll sk-…  # paste the portal key → enrollment written to ~/.actae
-./actae # enrolled; keys sync from the control plane automatically
+# 1. Install the community build (no account required).
+curl -fsSL https://raw.githubusercontent.com/DivigaActae/actae/main/install.sh | sh
+# 2. Start it; the banner prints the dashboard URL and an API key.
+./actae
 # Keep it current: actae upgrade   (or actae upgrade --check)
 ```
 
@@ -135,7 +134,7 @@ production** (via `.env` or the orchestrator's secret store):
 | `POSTGRES_PASSWORD` | `actae_dev_password` | Long random password (e.g. `openssl rand -base64 32`) |
 | `JWT_SECRET` | `dev-jwt-secret-must-be-at-least-32-chars!!` | ≥ 64 random bytes (`openssl rand -base64 64`) |
 | `API_KEY_HASH_SECRET` | inherits `JWT_SECRET` | Optional: separate random value (≥ 32 chars). See §7 for the trade-off |
-| API keys | `test-api-key-for-integration-tests` (compose default) | From the portal (`actae enroll`) or `actae keys create` |
+| API keys | `test-api-key-for-integration-tests` (compose default) | `actae keys create` |
 
 Generate a production `.env`:
 
@@ -230,9 +229,8 @@ API keys are stored hashed in Postgres (`api_keys`). Two sources, both
 `source='local'` or `source='control_plane'`, all subject to subscription
 enforcement:
 
-- **Portal (recommended)**: `actae enroll <key>` or the control-plane sync
-  — keys are minted on the SaaS and synced automatically (see
-  `docs/CONTROL_PLANE.md`).
+- **Local keys**: `actae keys create` (the community build has no control
+  plane; see `docs/CONTROL_PLANE.md`).
 - **`actae keys` CLI** (host-side, no restart):
 
   ```bash

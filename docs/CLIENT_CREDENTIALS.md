@@ -75,7 +75,7 @@ The writer is `actae/src/client_credentials.rs`. Properties:
   points at a *different* instance that is currently live (`GET /healthz`), this
   instance writes `client-<http_port>.json` instead.
 * **Never logged.** `ClientCredentials` has a redacting `Debug` impl and a
-  `redacted_summary()` used by `actae doctor`.
+  `redacted_summary()` used by the dashboard.
 * **Never fatal.** A publish failure is a warning; the startup banner still
   prints the raw key.
 
@@ -127,7 +127,7 @@ actae logout [--all]
   my active credential" action.
 * `actae logout` removes `client.json`; `--all` also removes per-instance
   `client-*.json` files.
-* `actae doctor` reports the SDK login state (endpoint, never the key) and warns
+* The dashboard reports the SDK login state (endpoint, never the key) and warns
   when the file is group/world-readable.
 
 ## Non-goals and known limitations

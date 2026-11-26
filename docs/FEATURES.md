@@ -716,14 +716,12 @@ with matching PID) before reclaiming an orphan; Unix sockets disabled
 password is generated once into `pg.pwfile` (0600) and printed only on the
 boot that minted it; the startup banner (URL, pg port, data dir, psql
 command) prints at the very end of startup; each instance writes
-`<data-dir>/url` for `actae doctor`.
+`<data-dir>/url` for tooling and the dashboard.
 
 ### 13.2 CLI
 
 | Subcommand | Purpose |
 |---|---|
-| `actae auth login/status/logout/sync` | control-plane device flow, enrollment state |
-| `actae enroll <key>` | paste-to-enroll (one-shot portal key) |
 | `actae keys create/list/revoke` | local API-key management (raw key prints once) |
 | `actae login [--url] [--api-key]` / `actae logout [--all]` | save/remove SDK client credentials (`<ACTAE_CONFIG_DIR>/client.json`); no flags = local auto-mint + verify + rotate the prior key, `--url` = remote (verifies the key) |
 | `actae upgrade` | self-update from the control plane (legacy/grandfathered Self-Hosted entitlement; the sold plans are Cloud tiers) |

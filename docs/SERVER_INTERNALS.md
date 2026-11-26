@@ -637,12 +637,10 @@ the control-plane and security set):
 
 ## 8. CLI (`cli/mod.rs`)
 
-`actae auth login|status|logout|sync` (device flow, 5 s poll),
-`actae enroll <key>` (paste-to-enroll; `--install-id`/`--enroll-secret` for
-air-gapped), `actae keys create|list|revoke`, `actae upgrade` (self-update via
-the control-plane manifest), `actae doctor` (instance scan). `auth status`
-uses `verify_license_signature` so an expired enrollment license is reported,
-not fatal.
+`actae keys create|list|revoke`, `actae upgrade` (self-update from the public
+release feed), `actae login|logout` (SDK credentials), `actae passwd`,
+`actae add|explain integration`. The community build has no enrollment,
+license, or control-plane command.
 
 **Env loading**: `main.rs` calls `dotenvy::dotenv()` (loads `.env` from the
 CWD) **before** the CLI dispatch, so CLI subcommands see the same
