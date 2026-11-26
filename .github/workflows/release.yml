@@ -27,7 +27,7 @@ jobs:
           tar -czf "actae-${GITHUB_REF_NAME}-${{ matrix.target }}.tar.gz" \
             -C "actae/target/${{ matrix.target }}/release" actae
           sha256sum actae-*.tar.gz > "SHA256SUMS-${{ matrix.target }}"
-      - uses: actions/attest-build-provenance@v1
+      - uses: actions/attest-build-provenance@v4
         with:
           subject-path: "actae-*.tar.gz"
       - uses: softprops/action-gh-release@v2
