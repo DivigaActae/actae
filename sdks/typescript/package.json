@@ -97,11 +97,21 @@
     "@openai/agents": ">=0.14 <1"
   },
   "peerDependenciesMeta": {
-    "@anthropic-ai/claude-agent-sdk": { "optional": true },
-    "@github/copilot-sdk": { "optional": true },
-    "@langchain/core": { "optional": true },
-    "@langchain/langgraph": { "optional": true },
-    "@openai/agents": { "optional": true }
+    "@anthropic-ai/claude-agent-sdk": {
+      "optional": true
+    },
+    "@github/copilot-sdk": {
+      "optional": true
+    },
+    "@langchain/core": {
+      "optional": true
+    },
+    "@langchain/langgraph": {
+      "optional": true
+    },
+    "@openai/agents": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@anthropic-ai/claude-agent-sdk": "^0.3.226",
@@ -113,6 +123,9 @@
     "@types/ws": "^8.5.13",
     "@vitest/coverage-v8": "^3.2.7",
     "typescript": "^5.7.2",
-    "vitest": "^3.0.0"
+    "vitest": "^3.2.7"
+  },
+  "overrides": {
+    "proxy-addr": "^2.0.8"
   }
 }
