@@ -36,7 +36,7 @@ DEFAULT_TOPIC = "large language model agents"
 DEFAULT_MAX_RESULTS = 40
 
 _ARXIV_API = "https://export.arxiv.org/api/query"
-_USER_AGENT = "actae-research-demo/1.0 (+https://github.com/actae-dev/actae)"
+_USER_AGENT = "actae-research-demo/1.0 (+https://github.com/divigaactae/actae)"
 _DATA_DIR = Path(__file__).resolve().parent / "data"
 
 _ATOM = "{http://www.w3.org/2005/Atom}"

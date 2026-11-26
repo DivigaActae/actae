@@ -235,7 +235,7 @@ export default function OverviewPage() {
               <p className="text-[13px] font-semibold text-gray-100">Connect your SDK</p>
               <p className="mt-1 text-[11px] leading-5 text-gray-500">
                 Instrument your agent with <code className="text-gray-300">pip install actae-client</code>,{" "}
-                <code className="text-gray-300">go get github.com/actae-dev/actae/sdks/go</code>, or{" "}
+                <code className="text-gray-300">go get github.com/divigaactae/actae/sdks/go</code>, or{" "}
                 <code className="text-gray-300">npm install @actae/sdk</code>. Point the client at this instance&apos;s URL with your API key and recorded runs appear here. Run <code className="text-gray-300">actae add</code> in your project to detect your stack and print the exact setup.
               </p>
             </div>

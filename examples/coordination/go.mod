@@ -1,8 +1,8 @@
-module github.com/actae-dev/actae/examples/coordination
+module github.com/divigaactae/actae/examples/coordination
 
 go 1.25.13
 
-require github.com/actae-dev/actae/sdks/go v0.0.0
+require github.com/divigaactae/actae/sdks/go v0.0.0
 
 require (
 	github.com/google/uuid v1.6.0 // indirect
@@ -11,4 +11,4 @@ require (
 	go.opentelemetry.io/otel/trace v1.35.0 // indirect
 )
 
-replace github.com/actae-dev/actae/sdks/go => ../../sdks/go
+replace github.com/divigaactae/actae/sdks/go => ../../sdks/go

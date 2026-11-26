@@ -5,7 +5,7 @@ edition = "2021"
 authors = ["The Actae Authors"]
 description = "Durable execution history for AI agents — record, subscribe, replay"
 license = "Apache-2.0"
-repository = "https://github.com/actae-dev/actae"
+repository = "https://github.com/divigaactae/actae"
 rust-version = "1.75.0"
 default-run = "actae"
 

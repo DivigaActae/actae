@@ -16,12 +16,12 @@ channel: its events are recorded, replayable, forkable at any event, and
 resumable with cursor-aligned state snapshots.
 
 ```
-module github.com/actae-dev/actae/sdks/go   (the go.mod at sdks/go/)
+module github.com/divigaactae/actae/sdks/go   (the go.mod at sdks/go/)
 imports: actae (root package) + github.com/github/copilot-sdk/go
 ```
 
 `actae/copilot` is a sub-package of the single `sdks/go` module — import it
-as `github.com/actae-dev/actae/sdks/go/copilot`; it is not a separate
+as `github.com/divigaactae/actae/sdks/go/copilot`; it is not a separate
 module.
 
 ## Concepts
@@ -111,8 +111,8 @@ Transient events are skipped unless `RecorderOptions.IncludeEphemeral`.
 
 ```go
 import (
-    actae "github.com/actae-dev/actae/sdks/go"
-    copilot "github.com/actae-dev/actae/sdks/go/copilot"
+    actae "github.com/divigaactae/actae/sdks/go"
+    copilot "github.com/divigaactae/actae/sdks/go/copilot"
     copilotsdk "github.com/github/copilot-sdk/go"
 )
 

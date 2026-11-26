@@ -1,4 +1,4 @@
-module github.com/actae-dev/actae/sdks/go
+module github.com/divigaactae/actae/sdks/go
 
 go 1.25.13
 

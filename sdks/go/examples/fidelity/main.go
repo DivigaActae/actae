@@ -34,7 +34,7 @@ import (
 	"strconv"
 	"strings"
 
-	actae "github.com/actae-dev/actae/sdks/go"
+	actae "github.com/divigaactae/actae/sdks/go"
 )
 
 // repoRoot walks up from this source file to the repository root (the first

@@ -9,7 +9,7 @@ latest tag are supported.
 
 Use GitHub private vulnerability reporting:
 
-https://github.com/actae-dev/actae/security/advisories/new
+https://github.com/divigaactae/actae/security/advisories/new
 
 If that is unavailable, email security@actae.dev with:
 

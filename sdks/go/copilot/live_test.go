@@ -21,7 +21,7 @@ import (
 	"testing"
 	"time"
 
-	actae "github.com/actae-dev/actae/sdks/go"
+	actae "github.com/divigaactae/actae/sdks/go"
 	copilotsdk "github.com/github/copilot-sdk/go"
 )
 

@@ -900,7 +900,7 @@ Comparison is purely client-side (dashboard `diff.ts`). No dedicated comparison 
 
 ### 11.6 pg-embed Data Corruption
 
-Dev mode uses pg-embed. Force-killing Actae (`pkill -9`) can corrupt the pg data directory at `/tmp/actae-dev/`. Fix: `rm -rf /tmp/actae-dev && restart`.
+Dev mode uses pg-embed. Force-killing Actae (`pkill -9`) can corrupt the pg data directory at `/tmp/divigaactae/`. Fix: `rm -rf /tmp/divigaactae && restart`.
 
 ### 11.7 Network Failure Tests
 

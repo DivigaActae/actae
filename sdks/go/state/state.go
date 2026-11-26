@@ -24,7 +24,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/actae-dev/actae/sdks/go"
+	"github.com/divigaactae/actae/sdks/go"
 )
 
 const (

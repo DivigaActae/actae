@@ -32,7 +32,7 @@ import (
 	"os"
 	"time"
 
-	actae "github.com/actae-dev/actae/sdks/go"
+	actae "github.com/divigaactae/actae/sdks/go"
 )
 
 const workType = "invoice.created"

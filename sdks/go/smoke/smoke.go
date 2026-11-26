@@ -15,8 +15,8 @@ import (
 
 	"github.com/google/uuid"
 
-	actae "github.com/actae-dev/actae/sdks/go"
-	"github.com/actae-dev/actae/sdks/go/state"
+	actae "github.com/divigaactae/actae/sdks/go"
+	"github.com/divigaactae/actae/sdks/go/state"
 )
 
 func check(step string, err error) {

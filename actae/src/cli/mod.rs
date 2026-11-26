@@ -600,7 +600,7 @@ fn detect_integration(
             }
         }
         "typescript" => "npm install @actae/sdk".to_string(),
-        "go" => "go get github.com/actae-dev/actae/sdks/go".to_string(),
+        "go" => "go get github.com/divigaactae/actae/sdks/go".to_string(),
         _ => unreachable!(),
     };
     Ok(IntegrationDetection {
@@ -720,9 +720,9 @@ fn integration_setup(root: &Path, detection: &IntegrationDetection) -> Result<St
                 )
             });
             let imports = if has_copilot {
-                "import (\n\tactae \"github.com/actae-dev/actae/sdks/go\"\n\tactaecopilot \"github.com/actae-dev/actae/sdks/go/copilot\"\n)"
+                "import (\n\tactae \"github.com/divigaactae/actae/sdks/go\"\n\tactaecopilot \"github.com/divigaactae/actae/sdks/go/copilot\"\n)"
             } else {
-                "import actae \"github.com/actae-dev/actae/sdks/go\""
+                "import actae \"github.com/divigaactae/actae/sdks/go\""
             };
             let mut setup = format!("package {package}\n\n{imports}\n\nfunc NewActae() (*actae.Runtime, error) {{\n\treturn actae.NewRuntimeFromEnv(actae.ClientOptions{{}})\n}}\n");
             if has_copilot {
@@ -1722,7 +1722,7 @@ mod tests {
         let detection = IntegrationDetection {
             language: "go".into(),
             frameworks: vec!["copilot".into()],
-            install_command: "go get github.com/actae-dev/actae/sdks/go".into(),
+            install_command: "go get github.com/divigaactae/actae/sdks/go".into(),
             setup_file: "actae_setup.go".into(),
             deterministic_orchestrator: false,
         };

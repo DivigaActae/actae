@@ -750,7 +750,7 @@ class TestCommunityEditionFirstRun:
         assert f"Dashboard:   {embedded_instance.url}" in out
         # A running server alone is useless — the SDK installs must be shown.
         assert "pip install actae-client" in out
-        assert "go get github.com/actae-dev/actae/sdks/go" in out
+        assert "go get github.com/divigaactae/actae/sdks/go" in out
         assert "npm install @actae/sdk" in out
         assert "actae add" in out
         # The one-time API key is surfaced in the next-steps block.

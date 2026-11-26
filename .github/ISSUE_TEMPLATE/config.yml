@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Security report
-    url: https://github.com/actae-dev/actae/security/advisories/new
+    url: https://github.com/divigaactae/actae/security/advisories/new
     about: Do not report vulnerabilities in public issues.
   - name: Questions
-    url: https://github.com/actae-dev/actae/discussions
+    url: https://github.com/divigaactae/actae/discussions
     about: Usage questions and ideas.

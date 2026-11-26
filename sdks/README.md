@@ -10,9 +10,9 @@ operated separately. See `LICENSE` and `NOTICE` at the repository root.
 
 | SDK | Package | Public source | Install |
 |---|---|---|---|
-| Python | `actae-client` | <https://github.com/actae-dev/actae/tree/main/sdks/python> | `pip install actae-client` |
-| Go | `github.com/actae-dev/actae/sdks/go` | <https://github.com/actae-dev/actae/sdks/go> | `go get github.com/actae-dev/actae/sdks/go` |
-| TypeScript | `@actae/sdk` | <https://github.com/actae-dev/actae/tree/main/sdks/typescript> | `npm install @actae/sdk` |
+| Python | `actae-client` | <https://github.com/divigaactae/actae/tree/main/sdks/python> | `pip install actae-client` |
+| Go | `github.com/divigaactae/actae/sdks/go` | <https://github.com/divigaactae/actae/sdks/go> | `go get github.com/divigaactae/actae/sdks/go` |
+| TypeScript | `@actae/sdk` | <https://github.com/divigaactae/actae/tree/main/sdks/typescript> | `npm install @actae/sdk` |
 
 Each SDK has its own `README`. Framework adapters ship **inside** the SDKs:
 

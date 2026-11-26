@@ -18,8 +18,8 @@
 // # Quick start
 //
 //	import (
-//	    actae "github.com/actae-dev/actae/sdks/go"
-//	    copilot "github.com/actae-dev/actae/sdks/go/copilot"
+//	    actae "github.com/divigaactae/actae/sdks/go"
+//	    copilot "github.com/divigaactae/actae/sdks/go/copilot"
 //	    copilotsdk "github.com/github/copilot-sdk/go"
 //	)
 //
@@ -47,7 +47,7 @@ import (
 	"sync"
 	"time"
 
-	actae "github.com/actae-dev/actae/sdks/go"
+	actae "github.com/divigaactae/actae/sdks/go"
 	copilotsdk "github.com/github/copilot-sdk/go"
 )
 

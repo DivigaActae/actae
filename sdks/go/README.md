@@ -9,7 +9,7 @@ and adds a first-class integration with the
 (`actae/copilot`).
 
 ```bash
-go get github.com/actae-dev/actae/sdks/go
+go get github.com/divigaactae/actae/sdks/go
 ```
 
 Go 1.25.12+ · dependency: `github.com/gorilla/websocket v1.5.3`.
@@ -63,7 +63,7 @@ identical for either deployment.
 ```go
 import (
     "context"
-    actae "github.com/actae-dev/actae/sdks/go"
+    actae "github.com/divigaactae/actae/sdks/go"
 )
 
 func main() {
@@ -210,7 +210,7 @@ Version, Timestamp, State}` (nil when absent) and `ListStates` returns
 ### Transactional store (`state.Store[T]`)
 
 ```go
-import "github.com/actae-dev/actae/sdks/go/state"
+import "github.com/divigaactae/actae/sdks/go/state"
 
 s, _ := state.New(client, "counter-chan", func(cur *counter) (state.Command, error) {
     cur.Count++

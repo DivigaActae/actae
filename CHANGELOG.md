@@ -17,7 +17,7 @@ Versioning: SemVer, with the caveat that pre-1.0 minor versions may break.
 - The community build no longer contains the control-plane client, enrollment,
   sync loop, subscription enforcement, or the `auth`/`enroll`/`doctor` commands.
   See `docs/control-plane-split.md`.
-- Go module path is `github.com/actae-dev/actae/sdks/go`.
+- Go module path is `github.com/divigaactae/actae/sdks/go`.
 
 ### Security
 

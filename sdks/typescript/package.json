@@ -6,11 +6,11 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/actae-dev/actae/tree/main/sdks/typescript"
+    "url": "https://github.com/divigaactae/actae/tree/main/sdks/typescript"
   },
   "homepage": "https://actae.dev/docs/sdks/typescript/",
   "bugs": {
-    "url": "https://github.com/actae-dev/actae/tree/main/sdks/typescript/issues"
+    "url": "https://github.com/divigaactae/actae/tree/main/sdks/typescript/issues"
   },
   "engines": {
     "node": ">=20"

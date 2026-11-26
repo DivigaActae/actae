@@ -773,7 +773,7 @@ backend):
 ## 15. Feature: SDKs (Python / Go / TypeScript)
 
 Feature-parity trio. Python (`actae_client`, aiohttp, async-first with sync
-facades), Go (module `github.com/actae-dev/actae/sdks/go`,
+facades), Go (module `github.com/divigaactae/actae/sdks/go`,
 context-based), TypeScript (`@actae/sdk`, Node 20+ ESM-only, single runtime
 dependency `ws`). All three expose the **complete server surface**: events
 (record/replay/query/cursor/transition), state (save/load/versions/delete),

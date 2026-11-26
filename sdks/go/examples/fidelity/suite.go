@@ -19,7 +19,7 @@ import (
 
 	"github.com/google/uuid"
 
-	actae "github.com/actae-dev/actae/sdks/go"
+	actae "github.com/divigaactae/actae/sdks/go"
 )
 
 // ---------------------------------------------------------------------------

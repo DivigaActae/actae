@@ -1172,7 +1172,7 @@ async fn main() -> Result<()> {
         }
         println!("  Install an SDK:");
         println!("    Python       pip install actae-client");
-        println!("    Go           go get github.com/actae-dev/actae/sdks/go");
+        println!("    Go           go get github.com/divigaactae/actae/sdks/go");
         println!("    TypeScript   npm install @actae/sdk");
         println!("  Or detect your stack:  actae add");
         println!("  Quickstart:            https://actae.dev/docs/quickstart/");

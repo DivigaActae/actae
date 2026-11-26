@@ -16,8 +16,8 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/actae-dev/actae/sdks/go"
-	"github.com/actae-dev/actae/sdks/go/state"
+	"github.com/divigaactae/actae/sdks/go"
+	"github.com/divigaactae/actae/sdks/go/state"
 )
 
 // sha256Hex mirrors the store's commandDigest so tests can assert the exact
