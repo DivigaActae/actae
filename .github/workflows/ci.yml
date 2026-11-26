@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: actae } }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
         with: { components: "clippy,rustfmt" }
       - uses: Swatinem/rust-cache@v2
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: sdks/go } }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-go@v5
         with: { go-version: "stable" }
       - run: go vet ./...
@@ -42,7 +42,7 @@ jobs:
   python:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: pip install -e "./sdks/python[dev]"
@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: dashboard } }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with: { node-version: "22", cache: npm, cache-dependency-path: dashboard/package-lock.json }
       - run: npm ci
@@ -63,7 +63,7 @@ jobs:
   hygiene:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with: { fetch-depth: 0 }
       - uses: gitleaks/gitleaks-action@v2
         env: { GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
