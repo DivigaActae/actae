@@ -2,26 +2,15 @@
 # Copyright 2026 Diviga
 # SPDX-License-Identifier: Apache-2.0
 
-"""Refund agent demo: a real crash inside the ambiguous window, then recovery.
+"""Refund agent demo: a real crash inside the ambiguous window, recovery, fork.
 
-The agent processes a customer refund. The refund is an external side effect
-(the mock payment provider), guarded by Actae's execution ledger with a stable
-idempotency key.
+Paced and narrated for screen recording. Every step prints what it is doing,
+the kill is explicit, and the audit at the end is read back from the mock
+payment provider.
 
-Sequence:
-
-    run --crash     the provider applies the refund, then the worker is killed
-                    (exit 137) before the result is recorded
-    recover         the ledger sees the unfinished claim, the lease is
-                    reclaimed, and the retry presents the same idempotency key
-                    — the provider deduplicates, so the customer is charged once
-    fork            a second continuation from the same saved prefix, with a
-                    different refund amount, compared against the first
-
-Usage:
-    python agent.py --endpoint http://127.0.0.1:8022 --api-key sk-... --mode run --crash
-    python agent.py ... --mode recover
-    python agent.py ... --mode fork
+    ./run --mode run --crash      # provider applies the refund, then SIGKILL
+    ./run --mode recover          # reclaim, replay, no second charge
+    ./run --mode fork --amount 1225 --full 4900
 """
 
 from __future__ import annotations
@@ -30,10 +19,11 @@ import argparse
 import asyncio
 import json
 import os
+import signal
 import sys
 import time
 import urllib.request
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "sdks", "python", "src"))
 
@@ -41,16 +31,25 @@ from actae_client import ActaeClient  # noqa: E402
 
 
 PROVIDER = "http://127.0.0.1:9099"
+DIM, BOLD, GREEN, RED, YELLOW, CYAN, RESET = (
+    "\033[2m", "\033[1m", "\033[32m", "\033[31m", "\033[33m", "\033[36m", "\033[0m"
+)
+
+START = time.time()
+PACE = 1.6
+
+
+def log(tag: str, message: str, color: str = "") -> None:
+    elapsed = int(time.time() - START)
+    stamp = f"{elapsed // 60:02d}:{elapsed % 60:02d}"
+    print(f"{DIM}[{stamp}]{RESET} {color}{tag:<12}{RESET} {message}", flush=True)
 
 
 def post(path: str, body: Dict[str, Any], idempotency_key: str) -> Dict[str, Any]:
     request = urllib.request.Request(
         f"{PROVIDER}{path}",
         data=json.dumps(body).encode(),
-        headers={
-            "Content-Type": "application/json",
-            "Idempotency-Key": idempotency_key,
-        },
+        headers={"Content-Type": "application/json", "Idempotency-Key": idempotency_key},
         method="POST",
     )
     with urllib.request.urlopen(request, timeout=10) as response:
@@ -62,18 +61,10 @@ def stats(order: str) -> Dict[str, Any]:
         return json.loads(response.read())
 
 
-async def claim_with_reclaim(
-    client: ActaeClient, channel: str, key: str, tool: str, params: Dict[str, Any]
-):
-    """Claim, waiting out a short lease if the previous worker still holds it."""
+async def claim_with_reclaim(client: ActaeClient, channel: str, key: str, tool: str, params: Dict[str, Any]):
     for _ in range(30):
         claim = await client.claim_execution(
-            channel,
-            key,
-            tool,
-            params,
-            lease_seconds=1,
-            actor="refund-agent",
+            channel, key, tool, params, lease_seconds=1, actor="refund-agent"
         )
         if claim.status != "in_progress":
             return claim
@@ -93,54 +84,66 @@ async def refund_step(
     key = f"refund:{order}{key_suffix}"
     params = {"order": order, "amount_cents": amount_cents, "currency": "EUR"}
 
+    log("agent", f"tool call · payment.refund · €{amount_cents / 100:.2f}", CYAN)
+    log("ledger", f"claim key={key} (lease 1s)", DIM)
     claim = await claim_with_reclaim(client, channel, key, "payment.refund", params)
+    time.sleep(PACE)
 
     if claim.status == "replayed":
-        print("[ledger] replayed — recorded refund result reused")
-        print("[provider] not called again")
+        log("ledger", "replayed · recorded result reused", GREEN)
+        log("provider", "not called again — no second charge", GREEN)
         return claim.result or {}
 
-    print(f"[ledger] claim {claim.status} (key={key})")
+    log("ledger", f"claim {claim.status} · fencing token issued", GREEN)
     if claim.status == "reclaimed":
-        print("[ledger] previous worker died mid-call; ownership moved with a fencing token")
+        log("ledger", "previous worker died mid-call; ownership moved", YELLOW)
 
+    log("provider", f"POST /refund key={key}", DIM)
     record = post(
         "/refund",
         {"order": order, "amount_cents": amount_cents, "currency": "EUR"},
         idempotency_key=key,
     )
-    amount = record.get("amount_cents", amount_cents) / 100
-    print(f"[provider] refund {record.get('refund_id')} applied: €{amount:.2f}")
+    log("provider", f"refund {record.get('refund_id')} · €{record['amount_cents'] / 100:.2f} applied", YELLOW)
+    time.sleep(PACE)
 
     if crash:
-        print("[worker] killed (exit 137) before the result was recorded")
-        sys.stdout.flush()
-        os._exit(137)
+        log("worker", f"kill -9 {os.getpid()}", RED)
+        print(f"{RED}{BOLD}         the effect landed; the result was never recorded{RESET}", flush=True)
+        time.sleep(1.2)
+        os.kill(os.getpid(), signal.SIGKILL)
+        raise SystemExit(137)
 
-    await client.complete_execution(
-        claim.execution.id, claim.claim_token, result=record
-    )
-    print("[ledger] completed — result recorded")
+    await client.complete_execution(claim.execution.id, claim.claim_token, result=record)
+    log("ledger", "completed · result recorded", GREEN)
+    time.sleep(PACE)
     return record
 
 
 async def email_step(client: ActaeClient, channel: str, order: str) -> None:
     key = f"email:{order}"
     params = {"order": order, "to": "customer@example.com"}
+    log("agent", "tool call · email.send · confirmation", CYAN)
     claim = await claim_with_reclaim(client, channel, key, "email.send", params)
     if claim.status == "replayed":
-        print("[ledger] email already sent — replayed, not resent")
+        log("ledger", "email inherited from the parent · replayed, not resent", GREEN)
+        time.sleep(PACE)
         return
     record = post("/email", params, idempotency_key=key)
-    await client.complete_execution(
-        claim.execution.id, claim.claim_token, result=record
-    )
-    print(f"[provider] confirmation email {record.get('message_id')} sent")
+    await client.complete_execution(claim.execution.id, claim.claim_token, result=record)
+    log("provider", f"confirmation {record.get('message_id')} sent", YELLOW)
+    time.sleep(PACE)
 
 
 async def run(args: argparse.Namespace) -> None:
     channel = f"refund-agent:{args.order}"
-    async with ActaeClient(api_key=args.api_key, endpoint=args.endpoint) as client:
+    async with ActaeClient(api_key=args.api_key or None, endpoint=args.endpoint) as client:
+        log("order", f"#{args.order} · €{args.amount / 100:.2f} · customer@example.com")
+        time.sleep(PACE)
+        log("policy", "refund allowed (delivered 6 days ago, under €200)", DIM)
+        time.sleep(PACE)
+        log("agent", "plan: refund → notify → close", CYAN)
+
         read_event = await client.record(
             channel,
             "order.read",
@@ -152,10 +155,10 @@ async def run(args: argparse.Namespace) -> None:
             read_event.cursor,
             {"order": args.order, "decision": "refund", "amount_cents": args.amount},
         )
+        log("actae", f"state saved at cursor {read_event.cursor}", GREEN)
+        time.sleep(PACE)
 
-        refund = await refund_step(
-            client, channel, args.order, args.amount, crash=args.crash
-        )
+        refund = await refund_step(client, channel, args.order, args.amount, crash=args.crash)
         await email_step(client, channel, args.order)
         await client.record(
             channel,
@@ -166,34 +169,32 @@ async def run(args: argparse.Namespace) -> None:
 
         totals = stats(args.order)
         print()
-        print(f"[audit] charges applied for #{args.order}: {totals['orders_charged']}")
-        print(f"[audit] provider deduplicated retries:       {totals['deduplicated_retries']}")
-        print(f"[audit] emails sent:                         {len(totals['emails'])}")
-        print(f"[audit] channel: {channel}")
-        print(f"[audit] dashboard: {args.endpoint}")
+        log("audit", f"charges applied for #{args.order}: {totals['orders_charged']}", GREEN)
+        log("audit", f"provider deduplicated retries: {totals['deduplicated_retries']}", GREEN)
+        log("audit", f"emails sent: {len(totals['emails'])}", GREEN)
+        log("audit", f"channel {channel} · dashboard: {args.endpoint}/dashboard/flow/?channel={channel}", DIM)
 
 
 async def fork(args: argparse.Namespace) -> None:
     source = f"refund-agent:{args.order}"
     target = f"refund-agent:{args.order}:partial"
-    async with ActaeClient(api_key=args.api_key, endpoint=args.endpoint) as client:
+    async with ActaeClient(api_key=args.api_key or None, endpoint=args.endpoint) as client:
+        log("agent", "reconsider the decision: partial refund instead of full", CYAN)
+        time.sleep(PACE)
         events = await client.replay(source)
         boundary = next(
-            (e.cursor for e in events if getattr(e, "event_type", "") == "order.read"),
-            0,
+            (e.cursor for e in events if getattr(e, "event_type", "") == "order.read"), 0
         )
         receipt = await client.fork(
             source,
             target,
             at_cursor=boundary,
             display_name="partial refund",
-            reason="customer asked for a partial refund after the full refund ran",
+            reason="customer asked for a partial refund",
         )
-        print(f"[fork] {source} → {target} at cursor {boundary}")
-        print(
-            f"[fork] resolved cursor {receipt.resolved_cursor} · state v{receipt.source_state_version}"
-            f" · restorable={receipt.restorable}"
-        )
+        log("fork", f"{source} → {target}", YELLOW)
+        log("fork", f"cursor {receipt.resolved_cursor} · state v{receipt.source_state_version} · restorable={receipt.restorable}", DIM)
+        time.sleep(PACE)
 
         refund = await refund_step(
             client, target, args.order, args.amount, crash=False, key_suffix=":partial"
@@ -206,29 +207,30 @@ async def fork(args: argparse.Namespace) -> None:
             actor="refund-agent",
         )
 
-        totals = stats(args.order)
         print()
-        print(f"[compare] full refund:    €{args.full / 100:.2f} on {source}")
-        print(f"[compare] partial refund: €{args.amount / 100:.2f} on {target}")
-        print(f"[audit] charges applied for #{args.order}: {totals['orders_charged']}")
-        print(f"[audit] dashboard: {args.endpoint}")
+        log("compare", f"full    €{args.full / 100:.2f} · {source}", DIM)
+        log("compare", f"partial €{args.amount / 100:.2f} · {target}", DIM)
+        totals = stats(args.order)
+        log("audit", f"total sandbox charges: {totals['orders_charged']}", GREEN)
+        log("audit", f"dashboard: {args.endpoint}/dashboard/flow/?channel={target}", DIM)
 
 
 def main() -> None:
+    global PACE
     parser = argparse.ArgumentParser()
     parser.add_argument("--endpoint", default="http://127.0.0.1:8022")
     parser.add_argument("--api-key", default=os.environ.get("ACTAE_API_KEY", ""))
     parser.add_argument("--order", default="4471")
     parser.add_argument("--amount", type=int, default=4900)
-    parser.add_argument("--full", type=int, default=4900, help="baseline amount for fork compare")
+    parser.add_argument("--full", type=int, default=4900)
     parser.add_argument("--mode", choices=["run", "recover", "fork"], default="run")
     parser.add_argument("--crash", action="store_true")
+    parser.add_argument("--pace", type=float, default=1.6, help="seconds between steps")
     args = parser.parse_args()
+    PACE = args.pace
 
-    print("=== Actae refund agent ===")
-    print(f"order #{args.order}  €{args.amount / 100:.2f}  mode={args.mode}")
-    print()
-
+    print(f"{BOLD}=== Actae refund agent ==={RESET}")
+    print(f"order #{args.order} · €{args.amount / 100:.2f} · mode={args.mode}\n")
     if args.mode == "fork":
         asyncio.run(fork(args))
     else:

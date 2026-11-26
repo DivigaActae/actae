@@ -1,6 +1,6 @@
 # Refund agent demo
 
-[Watch the 90-second recording](../../docs/demo/actae-refund-demo.mp4) — crash, recovery, dashboard, fork.
+[Watch the 100-second recording](../../docs/demo/actae-refund-demo.mp4) — crash, recovery, dashboard, fork.
 
 A production-shaped case: a customer refund that hits an external payment
 provider, a worker killed inside the ambiguous window (effect applied, result
