@@ -588,14 +588,21 @@ describe('EventsPage', () => {
     await waitFor(() => {
       expect(screen.getByText('Offline')).toBeInTheDocument()
     })
+    await waitFor(() => {
+      expect(statusCb).not.toBeNull()
+    })
     act(() => {
       statusCb?.({ connected: true, authenticated: false, error: null })
     })
-    expect(screen.getByText('Connecting…')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText('Connecting…')).toBeInTheDocument()
+    })
     act(() => {
       statusCb?.({ connected: true, authenticated: true, error: null })
     })
-    expect(screen.getByText('Live')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText('Live')).toBeInTheDocument()
+    })
   })
 
   it('applies ?q= once and does not re-apply a cleared search on later URL changes', async () => {
