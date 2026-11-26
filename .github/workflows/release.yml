@@ -28,7 +28,11 @@ jobs:
       - run: |
           tar -czf "actae-${GITHUB_REF_NAME}-${{ matrix.target }}.tar.gz" \
             -C "actae/target/${{ matrix.target }}/release" actae
-          sha256sum actae-*.tar.gz > "SHA256SUMS-${{ matrix.target }}"
+          if command -v sha256sum >/dev/null 2>&1; then
+            sha256sum actae-*.tar.gz > "SHA256SUMS-${{ matrix.target }}"
+          else
+            shasum -a 256 actae-*.tar.gz > "SHA256SUMS-${{ matrix.target }}"
+          fi
       - uses: actions/attest-build-provenance@v1
         with:
           subject-path: "actae-*.tar.gz"
