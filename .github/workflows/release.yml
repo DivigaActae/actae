@@ -12,20 +12,54 @@ permissions:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         include:
-          - { os: ubuntu-latest, target: x86_64-unknown-linux-gnu }
-          - { os: ubuntu-latest, target: aarch64-unknown-linux-gnu }
-          - { os: macos-latest, target: aarch64-apple-darwin }
-          - { os: macos-latest, target: x86_64-apple-darwin }
+          - { os: ubuntu-latest, target: x86_64-unknown-linux-gnu,  pg: linux-amd64 }
+          - { os: ubuntu-latest, target: aarch64-unknown-linux-gnu, pg: linux-arm64v8 }
+          - { os: macos-latest,  target: aarch64-apple-darwin,       pg: darwin-arm64v8 }
+          - { os: macos-latest,  target: x86_64-apple-darwin,        pg: darwin-amd64 }
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+
       - uses: dtolnay/rust-toolchain@stable
-        with: { targets: "${{ matrix.target }}" }
-      - run: cargo build --release --target ${{ matrix.target }}
+        with:
+          targets: "${{ matrix.target }}"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: dashboard/package-lock.json
+
+      - name: Build the embedded dashboard
+        run: |
+          npm ci
+          npm run build
+        working-directory: dashboard
+
+      - name: Fetch the embedded PostgreSQL jar
+        run: bash scripts/fetch-pg-jar.sh "${{ matrix.pg }}" /tmp/pg.jar
+
+      - name: Install cross (linux arm64 only)
+        if: matrix.target == 'aarch64-unknown-linux-gnu'
+        run: cargo install cross --locked
+
+      - name: Build the production binary
+        run: |
+          if [ "${{ matrix.target }}" = "aarch64-unknown-linux-gnu" ]; then
+            cross build --release --features production --target "${{ matrix.target }}"
+          else
+            cargo build --release --features production --target "${{ matrix.target }}"
+          fi
         working-directory: actae
-      - run: |
+        env:
+          ACTAE_PG_EMBED_JAR: /tmp/pg.jar
+          ACTAE_PG_EMBED_PLATFORM: ${{ matrix.pg }}
+
+      - name: Package
+        run: |
           tar -czf "actae-${GITHUB_REF_NAME}-${{ matrix.target }}.tar.gz" \
             -C "actae/target/${{ matrix.target }}/release" actae
           if command -v sha256sum >/dev/null 2>&1; then
@@ -33,9 +67,13 @@ jobs:
           else
             shasum -a 256 actae-*.tar.gz > "SHA256SUMS-${{ matrix.target }}"
           fi
+
+      # Attestations are not available for private repositories on the free plan.
       - uses: actions/attest-build-provenance@v1
+        if: ${{ github.event.repository.visibility == 'public' }}
         with:
           subject-path: "actae-*.tar.gz"
+
       - uses: softprops/action-gh-release@v2
         with:
           files: |
