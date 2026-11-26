@@ -1,34 +1,34 @@
 WEBVTT
 
-00:00:00.300 --> 00:00:04.000
+00:00:00.500 --> 00:00:03.900
 Actae. A refund that survives a crash.
 
-00:00:04.200 --> 00:00:09.200
+00:00:04.000 --> 00:00:08.900
 The agent reads the order, records its decision, and calls the payment provider.
 
-00:00:09.600 --> 00:00:15.800
-At eight seconds the worker is killed — after the refund landed, before the result was recorded.
+00:00:09.500 --> 00:00:16.700
+At eight seconds the worker is killed. The refund has landed. The result was never recorded.
 
-00:00:19.000 --> 00:00:23.500
+00:00:19.000 --> 00:00:23.900
 On restart, the ledger reclaims the operation with a fencing token.
 
-00:00:24.000 --> 00:00:32.300
+00:00:24.000 --> 00:00:31.800
 The retry presents the same idempotency key, so the provider returns the recorded refund instead of charging again.
 
-00:00:33.000 --> 00:00:39.300
-In the dashboard, this run shows two attempts of the same payment operation.
+00:00:33.000 --> 00:00:38.400
+In the dashboard, this run now shows two attempts of the same payment operation.
 
-00:00:40.000 --> 00:00:47.500
+00:00:40.000 --> 00:00:46.100
 Attempt two is the reclaim. The inspector shows the key and the original refund.
 
-00:00:59.000 --> 00:01:03.500
-Now a fork: keep the prefix, change the decision at the boundary.
+00:00:59.000 --> 00:01:05.000
+Now a fork. Keep the prefix, and change the decision at the boundary.
 
-00:01:04.000 --> 00:01:11.500
+00:01:06.000 --> 00:01:13.600
 The child run applies a partial refund. The confirmation email is inherited and replayed, never resent.
 
-00:01:22.000 --> 00:01:29.500
+00:01:22.000 --> 00:01:29.100
 The fork event records the boundary, the reason, and the inherited state. The original run is untouched.
 
-00:01:30.000 --> 00:01:37.000
+00:01:30.000 --> 00:01:35.300
 One charge, one email, and a second branch you can compare, then promote.
