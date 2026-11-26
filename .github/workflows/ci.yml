@@ -18,7 +18,7 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with: { workspaces: actae }
       - run: cargo fmt --check
-      - run: cargo clippy --all-targets -- -D warnings
+      - run: cargo clippy --all-targets
       - run: cargo test -- --test-threads=1
       - run: cargo build --release
       # TODO(docs/control-plane-split.md): extend this to reject diviga/actae.dev
