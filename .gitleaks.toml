@@ -7,6 +7,9 @@ useDefault = true
 description = "Test fixtures and documented development placeholders"
 paths = [
   '''actae/target/.*''',
+  '''dashboard/\.next/.*''',
+  '''sdks/.*/node_modules/.*''',
+  '''dashboard/node_modules/.*''',
   '''tests/.*''',
   '''sdks/python/tests/.*''',
   '''sdks/go/.*_test\.go''',

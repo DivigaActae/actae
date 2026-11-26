@@ -952,7 +952,7 @@ mod tests {
 
     #[test]
     fn test_hmac_and_sha256_produce_different_hashes() {
-        let key = "diviga_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
+        let key = "actae_0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
         let secret = b"this-is-a-32-char-minimum-jwt-secret!!";
 
         use sha2::{Digest, Sha256};
